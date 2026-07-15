@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Utopia Engine: Beast Hunter - 乌托邦引擎：怪兽猎人</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <script>
+    (function () {
+      const isIPad = /iPad/.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      if (!isIPad) return;
+
+      const root = document.documentElement;
+      const syncIPadOrientation = () => {
+        const portrait = window.matchMedia('(orientation: portrait)').matches;
+        root.classList.add('ipad-layout');
+        root.classList.toggle('ipad-portrait', portrait);
+        root.classList.toggle('ipad-landscape', !portrait);
+      };
+
+      syncIPadOrientation();
+      window.addEventListener('resize', syncIPadOrientation, { passive: true });
+      window.addEventListener('orientationchange', syncIPadOrientation, { passive: true });
+    })();
+  </script>
+  <style>
+    /* Inline critical overrides */
+    .regions-row { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 900px) {
+      .regions-row { grid-template-columns: 1fr; }
+      .towers-row { grid-template-columns: 1fr; }
+      .bottom-section { grid-template-columns: 1fr; }
+      .main-layout { grid-template-columns: 1fr; }
+      .time-track { flex-direction: row; flex-wrap: wrap; }
+      .top-bar { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body class="cover-active">
+
+<button class="language-toggle" id="language-toggle" type="button" aria-label="Switch to English">EN</button>
+
+<!-- Opening Cover -->
+<section class="cover-screen" id="cover-screen" aria-labelledby="game-cover-title">
+  <header class="game-cover">
+    <img
+      class="game-cover-image"
+      src="assets/UEBH_cover.png"
+      alt="冰封群峰、风暴海域与燃烧裂谷环绕着猎人村落"
+      width="1672"
+      height="939"
+    >
+    <div class="game-cover-title-block">
+      <p class="game-cover-kicker">UTOPIA ENGINE</p>
+      <h1 class="game-cover-title" id="game-cover-title">乌托邦引擎</h1>
+      <div class="game-cover-ornament" aria-hidden="true"><span></span><b>◆</b><span></span></div>
+      <p class="game-cover-subtitle">怪兽猎人 <span>BEAST HUNTER</span></p>
+      <p class="game-cover-credit">A solitaire dice game by Nick Hayes</p>
+    </div>
+    <span class="cover-version" data-game-version aria-label="游戏版本"></span>
+    <button class="cover-start-button" id="btn-start-game" type="button">
+      <span>开始游戏</span>
+      <small>BEGIN THE HUNT</small>
+    </button>
+  </header>
+</section>
+
+<div class="game-container" id="game-interface" hidden>
+
+  <!-- Top Bar: HP, DP, Doubt, Day -->
+  <div class="top-bar">
+    <div class="stat-group">
+      <span class="stat-label">HP</span>
+      <div class="hp-bar" id="hp-bar"></div>
+      <span id="hp-text" style="font-size:12px; min-width:40px;"></span>
+    </div>
+
+    <div class="stat-group">
+      <span class="stat-label">决心</span>
+      <div class="dp-display">
+        <span class="dp-value" id="dp-value">0</span>
+      </div>
+    </div>
+
+    <div class="stat-group">
+      <span class="stat-label">怀疑</span>
+      <div class="doubt-bar" id="doubt-bar"></div>
+      <span id="doubt-text" style="font-size:12px; min-width:40px;"></span>
+    </div>
+
+    <div class="stat-group">
+      <span class="stat-label">天数</span>
+      <span id="day-display" style="font-weight:bold; font-size:16px; color:var(--ink-dark);">Day 1/14</span>
+    </div>
+
+    <span class="game-version" data-game-version aria-label="游戏版本"></span>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="main-layout">
+    <!-- Time Track (Left Sidebar) -->
+    <div class="time-track" id="time-track"></div>
+
+    <!-- Content Area -->
+    <div class="content-area">
+      <!-- Regions Row -->
+      <div class="regions-row">
+        <!-- Halebeard Peak -->
+        <div class="region-panel halebeard">
+          <div class="region-header">
+            <div class="region-title">海尔比尔德峰<br><span style="font-size:11px; color:var(--ink-light);">Halebeard Peak</span></div>
+            <div class="region-materials">石 / 银</div>
+          </div>
+          <div class="region-approach" id="halebeard-approach"></div>
+          <div class="region-events" id="halebeard-events"></div>
+          <div class="search-boxes" id="halebeard-boxes"></div>
+          <div class="tracking-circles" id="halebeard-tracking"></div>
+          <div class="lair-status" id="halebeard-lair"></div>
+          <div id="halebeard-beast-hunt"></div>
+          <div id="halebeard-track" style="font-size:11px; color:var(--ink-faint); margin-top:4px;"></div>
+        </div>
+
+        <!-- Coastal Caverns -->
+        <div class="region-panel coastal">
+          <div class="region-header">
+            <div class="region-title">海岸洞穴<br><span style="font-size:11px; color:var(--ink-light);">Coastal Caverns</span></div>
+            <div class="region-materials">绳 / 磁石</div>
+          </div>
+          <div class="region-approach" id="coastal-approach"></div>
+          <div class="region-events" id="coastal-events"></div>
+          <div class="search-boxes" id="coastal-boxes"></div>
+          <div class="tracking-circles" id="coastal-tracking"></div>
+          <div class="lair-status" id="coastal-lair"></div>
+          <div id="coastal-beast-hunt"></div>
+          <div id="coastal-track" style="font-size:11px; color:var(--ink-faint); margin-top:4px;"></div>
+        </div>
+
+        <!-- The Scar -->
+        <div class="region-panel scar">
+          <div class="region-header">
+            <div class="region-title">裂痕之地<br><span style="font-size:11px; color:var(--ink-light);">The Scar</span></div>
+            <div class="region-materials">焦油 / 黄铁矿</div>
+          </div>
+          <div class="region-approach" id="scar-approach"></div>
+          <div class="region-events" id="scar-events"></div>
+          <div class="search-boxes" id="scar-boxes"></div>
+          <div class="tracking-circles" id="scar-tracking"></div>
+          <div class="lair-status" id="scar-lair"></div>
+          <div id="scar-beast-hunt"></div>
+          <div id="scar-track" style="font-size:11px; color:var(--ink-faint); margin-top:4px;"></div>
+        </div>
+      </div>
+
+      <!-- Towers Row -->
+      <div class="tower-rule-note">
+        完成的塔只阻挡对应来袭方向：东方塔挡东，南方塔挡南，西南塔挡西南。未完成或被摧毁的塔不能阻挡；鹰图腾塔免疫巨兽攻击。
+      </div>
+      <div class="towers-row">
+        <div class="tower-panel">
+          <div class="tower-header">🏯 南方塔<br><span style="font-size:10px; color:var(--ink-light);">Southern Tower</span></div>
+          <div class="tower-grid" id="tower-south-grid"></div>
+          <div id="tower-south-status" style="font-size:11px; text-align:center; margin-top:4px; color:var(--ink-faint);"></div>
+          <div id="tower-south-hawk" style="text-align:center; margin-top:4px;"></div>
+        </div>
+
+        <div class="tower-panel">
+          <div class="tower-header">🏯 西南塔<br><span style="font-size:10px; color:var(--ink-light);">South Western Tower</span></div>
+          <div class="tower-grid" id="tower-west-grid"></div>
+          <div id="tower-west-status" style="font-size:11px; text-align:center; margin-top:4px; color:var(--ink-faint);"></div>
+          <div id="tower-west-hawk" style="text-align:center; margin-top:4px;"></div>
+        </div>
+
+        <div class="tower-panel">
+          <div class="tower-header">🏯 东方塔<br><span style="font-size:10px; color:var(--ink-light);">Eastern Tower</span></div>
+          <div class="tower-grid" id="tower-east-grid"></div>
+          <div id="tower-east-status" style="font-size:11px; text-align:center; margin-top:4px; color:var(--ink-faint);"></div>
+          <div id="tower-east-hawk" style="text-align:center; margin-top:4px;"></div>
+        </div>
+      </div>
+
+      <!-- Bottom Section -->
+      <div class="bottom-section">
+        <!-- Elders Panel -->
+        <div class="elders-panel">
+          <div class="panel-title">村庄长老审批</div>
+          <div class="elder-approval-note">
+            获得方式：每击败1只恐怖巨兽，或三座防御塔全部建成时，可获得1位未审批长老的奖励。
+          </div>
+          <div class="elder-row">
+            <div class="elder-checkbox" id="elder-epiphoros"></div>
+            <div>
+              <div class="elder-name">埃皮霍罗斯 Epiphoros</div>
+              <div class="elder-reward">恢复 2 HP</div>
+            </div>
+          </div>
+          <div class="elder-row">
+            <div class="elder-checkbox" id="elder-sipporos"></div>
+            <div>
+              <div class="elder-name">西波罗斯 Sipporos</div>
+              <div class="elder-reward">获得 2 决心点</div>
+            </div>
+          </div>
+          <div class="elder-row">
+            <div class="elder-checkbox" id="elder-nikandros"></div>
+            <div>
+              <div class="elder-name">尼坎德罗斯 Nikandros</div>
+              <div class="elder-reward">恢复 1 个已使用物品</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Materials Panel -->
+        <div class="materials-panel">
+          <div class="panel-title">材料库存</div>
+          <div class="materials-grid" id="materials-grid"></div>
+        </div>
+
+        <!-- Village Huts Panel -->
+        <div class="village-panel">
+          <div class="panel-title">村民小屋</div>
+          <div class="huts-grid" id="huts-grid"></div>
+          <div class="hut-note" id="hut-note"></div>
+        </div>
+      </div>
+
+      <div class="crafted-panel">
+        <div class="panel-title">合成道具</div>
+        <div class="crafted-grid" id="crafted-grid"></div>
+      </div>
+
+      <!-- Action Bar -->
+      <div class="action-bar">
+        <button class="btn primary" id="btn-search">🔍 搜索</button>
+        <button class="btn" id="btn-build">🏗 建造</button>
+        <button class="btn" id="btn-forge">⚒ 锻造</button>
+        <button class="btn" id="btn-craft">🧪 合成</button>
+        <button class="btn" id="btn-rest">💤 休息</button>
+        <button class="btn" id="btn-inventory">📦 物品栏</button>
+        <button class="btn" id="btn-save">💾 保存</button>
+        <button class="btn" id="btn-load">📂 加载</button>
+        <button class="btn" id="btn-new-game">🔄 新游戏</button>
+        <button class="btn" id="btn-debug">🛠 调试</button>
+        <button class="btn" id="btn-help">❓ 帮助</button>
+      </div>
+
+      <!-- Game Log -->
+      <div class="status-bar">
+        <div id="game-log" style="max-height:120px; overflow-y:auto; width:100%; font-family:var(--font-mono); font-size:11px; line-height:1.6;">
+          <div id="status-text"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Overlay -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-content" id="modal-content"></div>
+</div>
+
+<!-- Scripts -->
+<script src="js/version.js"></script>
+<script src="js/data.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/i18n-en.js"></script>
+<script src="js/state.js"></script>
+<script src="js/dice.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/search.js"></script>
+<script src="js/combat.js"></script>
+<script src="js/build.js"></script>
+<script src="js/forge.js"></script>
+<script src="js/craft.js"></script>
+<script src="js/events.js"></script>
+<script src="js/scoring.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

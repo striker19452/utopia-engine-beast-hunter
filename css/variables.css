@@ -1,0 +1,61 @@
+/* ============================================
+   Utopia Engine: Beast Hunter - CSS Variables
+   ============================================ */
+
+:root {
+  /* Parchment / paper tones */
+  --bg-primary: #f5f0e1;
+  --bg-secondary: #e8e0cc;
+  --bg-dark: #d4c9a8;
+  --bg-darker: #c4b896;
+  --bg-card: #faf7ee;
+
+  /* Ink colors */
+  --ink-black: #2a2520;
+  --ink-dark: #3d3630;
+  --ink-medium: #5a5248;
+  --ink-light: #7a7060;
+  --ink-faint: #a09880;
+
+  /* Accent colors */
+  --red: #b33a3a;
+  --red-light: #d46060;
+  --red-dark: #8a2020;
+  --green: #3a7a3a;
+  --green-light: #60b060;
+  --blue: #3a5a8a;
+  --blue-light: #6090c0;
+  --gold: #c4a030;
+  --gold-light: #e0c860;
+  --orange: #c07030;
+
+  /* Region colors */
+  --halebeard: #6a8aaa;
+  --coastal: #5a9a7a;
+  --scar: #aa6a4a;
+
+  /* UI colors */
+  --border: #a09880;
+  --border-dark: #7a7060;
+  --shadow: rgba(42, 37, 32, 0.15);
+  --overlay: rgba(42, 37, 32, 0.6);
+
+  /* HP colors */
+  --hp-full: #4a8a4a;
+  --hp-mid: #c0a030;
+  --hp-low: #b33a3a;
+
+  /* Fonts */
+  --font-title: 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Segoe UI', 'Arial', sans-serif;
+  --font-mono: 'Consolas', 'Courier New', monospace;
+
+  /* Sizes */
+  --cell-size: 36px;
+  --dice-size: 48px;
+  --border-radius: 4px;
+  --gap-sm: 4px;
+  --gap-md: 8px;
+  --gap-lg: 16px;
+  --gap-xl: 24px;
+}
