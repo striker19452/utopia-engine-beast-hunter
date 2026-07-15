@@ -10,6 +10,7 @@ const I18n = {
   exact: {
     '开始游戏': 'Begin Game',
     '游戏版本': 'Game Version',
+    '代码实现：striker1945': 'Code by striker1945',
     '乌托邦引擎': 'UTOPIA ENGINE',
     '怪兽猎人': 'BEAST HUNTER',
     '决心': 'Resolve',

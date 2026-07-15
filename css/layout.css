@@ -185,6 +185,14 @@ body.cover-active {
   letter-spacing: 0.08em;
 }
 
+.game-cover-code-credit {
+  margin: 0.2em 0 0;
+  color: oklch(80% 0.022 78);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(0.4rem, 0.72vw, 0.56rem);
+  letter-spacing: 0.08em;
+}
+
 .cover-version {
   position: absolute;
   z-index: 3;
@@ -254,7 +262,8 @@ body.cover-active {
     width: 88%;
   }
 
-  .game-cover-credit {
+  .game-cover-credit,
+  .game-cover-code-credit {
     display: none;
   }
 
