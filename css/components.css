@@ -929,11 +929,14 @@ html.ipad-layout .die {
 }
 
 html.ipad-layout .search-cell,
-html.ipad-layout .tower-cell,
 html.ipad-layout .lair-checkbox,
 html.ipad-layout .elder-checkbox {
   min-width: 36px;
   min-height: 36px;
+}
+
+html.ipad-layout .tower-grid {
+  --tower-cell-size: 36px;
 }
 
 html.ipad-layout #modal-content .tower-grid {
