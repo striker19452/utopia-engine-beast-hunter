@@ -981,6 +981,63 @@ html.ipad-layout .action-bar .btn {
 }
 
 @media (orientation: portrait) and (min-width: 700px) and (max-width: 900px) {
+  /* Keep the primary game state visible without letting iPad portrait
+     widths produce an unpredictable multi-row sticky header. */
+  html.ipad-layout .top-bar {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 8px 10px;
+  }
+
+  html.ipad-layout .top-bar .stat-group {
+    flex: 0 0 auto;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  html.ipad-layout .top-bar .stat-label {
+    min-width: auto;
+    font-size: 12px;
+  }
+
+  html.ipad-layout .hp-bar,
+  html.ipad-layout .doubt-bar {
+    flex: 0 0 auto;
+  }
+
+  html.ipad-layout .hp-cell {
+    width: 16px;
+  }
+
+  html.ipad-layout .doubt-cell {
+    width: 7px;
+  }
+
+  html.ipad-layout #hp-text,
+  html.ipad-layout #doubt-text {
+    min-width: 32px !important;
+    font-size: 11px !important;
+  }
+
+  html.ipad-layout #day-display {
+    font-size: 14px !important;
+    white-space: nowrap;
+  }
+
+  html.ipad-layout .game-version {
+    display: none;
+  }
+
+  html[lang="en"].ipad-layout .top-bar .stat-label {
+    font-size: 11px;
+  }
+
+  html[lang="en"].ipad-layout .top-bar .day-stat .stat-label {
+    display: none;
+  }
+
   html.ipad-layout .regions-row {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
