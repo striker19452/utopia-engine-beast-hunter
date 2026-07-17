@@ -1034,10 +1034,6 @@ html.ipad-layout .action-bar .btn {
     font-size: 11px;
   }
 
-  html[lang="en"].ipad-layout .top-bar .day-stat .stat-label {
-    display: none;
-  }
-
   html.ipad-layout .regions-row {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }

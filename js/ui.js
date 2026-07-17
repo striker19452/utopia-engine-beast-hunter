@@ -46,7 +46,7 @@ const UI = {
     document.getElementById('doubt-text').textContent = `${GameState.doubt.current}/${GameState.doubt.max}`;
 
     // Day
-    document.getElementById('day-display').textContent = `Day ${GameState.currentDay}/14`;
+    document.getElementById('day-display').textContent = `${GameState.currentDay}/14`;
   },
 
   // === Time Track ===
