@@ -9,11 +9,22 @@
   <link rel="stylesheet" href="css/components.css">
   <script>
     (function () {
+      const root = document.documentElement;
+      const visualViewport = window.visualViewport;
+      const syncCoverViewportHeight = () => {
+        const viewportHeight = visualViewport?.height || window.innerHeight;
+        root.style.setProperty('--cover-viewport-height', `${Math.round(viewportHeight)}px`);
+      };
+
+      syncCoverViewportHeight();
+      window.addEventListener('resize', syncCoverViewportHeight, { passive: true });
+      window.addEventListener('orientationchange', syncCoverViewportHeight, { passive: true });
+      visualViewport?.addEventListener('resize', syncCoverViewportHeight, { passive: true });
+
       const isIPad = /iPad/.test(navigator.userAgent) ||
         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
       if (!isIPad) return;
 
-      const root = document.documentElement;
       const syncIPadOrientation = () => {
         const portrait = window.matchMedia('(orientation: portrait)').matches;
         root.classList.add('ipad-layout');
