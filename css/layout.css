@@ -62,9 +62,17 @@ body.cover-active {
 .cover-screen {
   display: grid;
   width: 100%;
+  height: 100vh;
+  height: 100dvh;
   min-height: 100dvh;
   place-items: center;
+  overflow: hidden;
   padding: clamp(8px, 2vw, 24px);
+  padding:
+    max(clamp(8px, 2vw, 24px), env(safe-area-inset-top))
+    max(clamp(8px, 2vw, 24px), env(safe-area-inset-right))
+    max(clamp(8px, 2vw, 24px), env(safe-area-inset-bottom))
+    max(clamp(8px, 2vw, 24px), env(safe-area-inset-left));
   background: oklch(15% 0.025 238);
 }
 
@@ -276,6 +284,71 @@ body.cover-active {
     min-height: 50px;
     padding: 7px 20px 6px;
     font-size: 0.92rem;
+  }
+}
+
+/* On phones and short landscape viewports the image's natural aspect ratio can
+   be taller than the usable browser area. Fill that area instead, keeping the
+   primary action anchored above the device safe area. */
+@media (max-width: 520px), (max-height: 620px) {
+  .cover-screen {
+    min-height: 0;
+  }
+
+  .game-cover {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .game-cover-image {
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .game-cover-title-block {
+    top: max(4%, 8px);
+  }
+
+  .game-cover-credit,
+  .game-cover-code-credit {
+    display: none;
+  }
+
+  .cover-start-button {
+    bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-height: 360px) {
+  .game-cover-title-block {
+    top: 8px;
+  }
+
+  .game-cover-ornament {
+    margin-block: 0.12em;
+  }
+
+  .cover-start-button {
+    min-height: 48px;
+    padding-block: 6px;
+  }
+}
+
+@media (max-width: 360px) and (max-height: 360px) {
+  .game-cover-title-block {
+    width: 92%;
+  }
+
+  .game-cover-title {
+    font-size: 1.3rem;
+    letter-spacing: 0.08em;
+  }
+
+  .game-cover-kicker,
+  .game-cover-subtitle {
+    font-size: 0.68rem;
   }
 }
 
