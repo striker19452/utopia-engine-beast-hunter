@@ -85,7 +85,7 @@ const GameState = {
     optic_disruptor: false,
   },
 
-  // === Crafted Items (null = not crafted, number = uses remaining) ===
+  // === Crafted Items (null = not crafted, number = uses remaining; Crab Plate uses are automatic absorbs) ===
   craftedItems: {
     blood_lure: null,
     potent_bait: null,

@@ -217,8 +217,9 @@ const CombatUI = {
       }
     }
 
-    if (combat.crabPlateActive) {
-      ruleNotes.push('蟹甲：下次受到伤害时忽略最多2点');
+    const crabPlateUses = Number(GameState.craftedItems.crab_plate) || 0;
+    if (crabPlateUses > 0) {
+      ruleNotes.push(`蟹甲：受到伤害时自动吸收最多2点（剩余${crabPlateUses}次）`);
     }
 
     return {
@@ -410,13 +411,8 @@ const CombatUI = {
         beastDamage = 1;
       }
 
-      // Crab Plate: absorb up to 2 damage
-      if (combat.crabPlateActive && beastDamage > 0) {
-        const absorbed = Math.min(beastDamage, 2);
-        beastDamage -= absorbed;
-        combat.crabPlateActive = false;
-        combat.log.push(`<span class="log-info">蟹甲吸收了 ${absorbed} 点伤害！</span>`);
-      }
+      // Crab Plate: automatically absorb up to 2 damage, then lose one use.
+      beastDamage = this.applyCrabPlate(beastDamage, combat).damage;
 
       // Apply damage
       if (playerDamage > 0) {
@@ -473,11 +469,6 @@ const CombatUI = {
       html += `<button class="btn" onclick="CombatUI.activateItem('firebox')">火焰盒 - 立即造成2点伤害</button>`;
     }
 
-    // Crab Plate
-    if (GameState.craftedItems.crab_plate !== null && GameState.craftedItems.crab_plate > 0) {
-      html += `<button class="btn" onclick="CombatUI.activateItem('crab_plate')">蟹甲 - 忽略最多2点伤害</button>`;
-    }
-
     html += `</div><div class="confirm-actions"><button class="btn" onclick="CombatUI.renderCombat()">返回</button></div>`;
     UI.showModal(html);
   },
@@ -488,6 +479,32 @@ const CombatUI = {
 
   enemyLabel(combat = GameState.combat) {
     return combat && combat.beastType === 'terrible' ? '巨兽' : '怪物';
+  },
+
+  applyCrabPlate(damage, combat = GameState.combat) {
+    const uses = Number(GameState.craftedItems.crab_plate) || 0;
+    if (damage <= 0 || uses <= 0) {
+      return { damage, absorbed: 0, usesRemaining: uses, shattered: false };
+    }
+
+    const absorbed = Math.min(damage, 2);
+    const usesRemaining = uses - 1;
+    const shattered = usesRemaining <= 0;
+    GameState.craftedItems.crab_plate = shattered ? null : usesRemaining;
+
+    if (combat?.log) {
+      const message = shattered
+        ? `蟹甲自动吸收了 ${absorbed} 点伤害，随后碎裂！`
+        : `蟹甲自动吸收了 ${absorbed} 点伤害（剩余${usesRemaining}次）。`;
+      combat.log.push(`<span class="log-info">${message}</span>`);
+    }
+
+    return {
+      damage: damage - absorbed,
+      absorbed,
+      usesRemaining,
+      shattered,
+    };
   },
 
   activateItem(itemKey) {
@@ -531,12 +548,6 @@ const CombatUI = {
         }
         break;
 
-      case 'crab_plate':
-        GameState.craftedItems.crab_plate--;
-        if (GameState.craftedItems.crab_plate <= 0) GameState.craftedItems.crab_plate = null;
-        combat.crabPlateActive = true; // Absorb up to 2 damage from next attack
-        combat.log.push('<span class="log-info">使用蟹甲，下次受到伤害时忽略最多2点！</span>');
-        break;
     }
 
     this.renderCombat();
@@ -625,6 +636,8 @@ const CombatUI = {
           beastDamage++;
         }
       }
+
+      beastDamage = this.applyCrabPlate(beastDamage, combat).damage;
 
       if (beastDamage > 0) {
         GameState.takeDamage(beastDamage);

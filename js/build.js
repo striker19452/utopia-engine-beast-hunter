@@ -88,7 +88,8 @@ const BuildUI = {
 
   startBuild(towerKey, material) {
     if (GameState.startBuild(towerKey, material)) {
-      GameLog.add(`开始建造 ${towerKey}，消耗了 ${GAME_DATA.materialNames[material]}。`);
+      const towerNames = { south: '南方塔', west: '西南塔', east: '东方塔' };
+      GameLog.add(`开始建造 ${towerNames[towerKey]}，消耗了 ${GAME_DATA.materialNames[material]}。`);
       this.renderBuild();
     }
   },

@@ -143,14 +143,42 @@ const I18n = {
   translateString(value) {
     if (!value || this.language === 'zh') return value;
     const trimmed = value.trim();
-    let translated = this.exact[trimmed] || trimmed;
-    if (translated === trimmed) {
+    const prefixMatch = trimmed.match(/^>\s*/);
+    const prefix = prefixMatch?.[0] || '';
+    const source = prefix ? trimmed.slice(prefix.length) : trimmed;
+    let translated = this.exact[source] || source;
+    if (translated === source) {
       for (const [pattern, replacement] of this.phrases) translated = translated.replace(pattern, replacement);
       for (const [zh, en] of Object.entries(this.exact).sort((a, b) => b[0].length - a[0].length)) {
         translated = translated.replaceAll(zh, en);
       }
     }
-    return value.replace(trimmed, translated);
+    translated = this.normalizeEnglishPunctuation(translated);
+    return value.replace(trimmed, `${prefix}${translated}`);
+  },
+
+  normalizeEnglishPunctuation(value) {
+    return value
+      .replaceAll('，', ',')
+      .replaceAll('。', '.')
+      .replaceAll('；', ';')
+      .replaceAll('：', ':')
+      .replaceAll('！', '!')
+      .replaceAll('？', '?')
+      .replaceAll('（', ' (')
+      .replaceAll('）', ')')
+      .replaceAll('、', ',')
+      .replace(/([,:;!?])(?=\S)/g, '$1 ')
+      .replace(/\s+([,.:;!?])/g, '$1')
+      .replace(/\s{2,}/g, ' ');
+  },
+
+  setText(element, value) {
+    element.textContent = '';
+    const textNode = document.createTextNode(value);
+    this.originals.set(textNode, value);
+    textNode.nodeValue = this.language === 'en' ? this.translateString(value) : value;
+    element.appendChild(textNode);
   },
 
   translateNode(node) {

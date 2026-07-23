@@ -52,11 +52,22 @@ const UI = {
   // === Time Track ===
   renderTimeTrack() {
     const container = document.getElementById('time-track');
-    container.innerHTML = '<div class="tt-label">时间轨道<br>The March of the Blazing Star Regiment</div>';
+    container.innerHTML = `
+      <div class="tt-label">
+        <span>时间轨道</span>
+        <span class="tt-subtitle">The March of the Blazing Star Regiment</span>
+      </div>
+    `;
+    const daysContainer = document.createElement('div');
+    daysContainer.className = 'time-days';
+    daysContainer.setAttribute('role', 'list');
+    daysContainer.setAttribute('aria-label', '时间轨道');
+    daysContainer.tabIndex = 0;
 
     GAME_DATA.timeTrack.forEach((day, i) => {
       const el = document.createElement('div');
       el.className = 'time-day';
+      el.setAttribute('role', 'listitem');
       if (GameState.daysCrossed.includes(day.day)) el.classList.add('crossed');
       if (day.day === GameState.currentDay) el.classList.add('current');
       if (day.skull) el.classList.add('skull');
@@ -71,8 +82,10 @@ const UI = {
       }
       el.innerHTML = html;
       el.title = `第 ${day.day} 天${day.skull ? ' - 最后一天' : ''}${day.event ? (day.event === 'E' ? ' - 事件日' : ' - 巨兽袭击日') : ''}`;
-      container.appendChild(el);
+      daysContainer.appendChild(el);
     });
+
+    container.appendChild(daysContainer);
   },
 
   // === Regions ===
@@ -573,8 +586,11 @@ const UI = {
     if (key === 'hawk_totem') {
       return '<button class="btn" disabled>在塔上安装</button>';
     }
-    if (key === 'firebox' || key === 'crab_plate') {
+    if (key === 'firebox') {
       return '<button class="btn" disabled>战斗中使用</button>';
+    }
+    if (key === 'crab_plate') {
+      return '<button class="btn" disabled>自动防护</button>';
     }
     if (key === 'reviving_dose') {
       return '<button class="btn" disabled>濒死自动</button>';

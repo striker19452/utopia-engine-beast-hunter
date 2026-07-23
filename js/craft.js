@@ -32,7 +32,7 @@ const CraftUI = {
     }
     GameState.craftedItemHistory[itemKey] = true;
 
-    GameLog.add(`合成了 ${recipe.nameZh}！`);
+    GameLog.add(itemKey === 'crab_plate' ? '合成了蟹甲并自动装备！' : `合成了 ${recipe.nameZh}！`);
     UI.render();
 
     UI.showModal(`

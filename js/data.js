@@ -128,7 +128,7 @@ const GAME_DATA = {
     { name: 'Potent Bait', nameZh: '强力诱饵', requires: { oily_meat: 1, cord: 1 }, effect: '搜索前使用，以1次搜索遭遇该区域恐怖巨兽' },
     { name: 'Heavy Coat', nameZh: '厚外套', requires: { beast_pelt: 1, cord: 1 }, effect: '恶劣天气下可搜索3次（无限使用）' },
     { name: 'Firebox', nameZh: '火焰盒', requires: { dragon_smoke: 1, tar: 1 }, effect: '战斗中使用，立即造成2点伤害' },
-    { name: 'Crab Plate', nameZh: '蟹甲', requires: { nightmare_chitin: 1, stone: 1 }, effect: '战斗中使用，忽略最多2点伤害（2次）' },
+    { name: 'Crab Plate', nameZh: '蟹甲', requires: { nightmare_chitin: 1, stone: 1 }, effect: '合成后自动装备；受到伤害时吸收最多2点，吸收2次后碎裂' },
     { name: 'Reviving Dose', nameZh: '复活药', requires: { troll_ash: 1, cord: 1 }, effect: 'HP降为0时使用，恢复3HP' },
     { name: 'Hawk Totem', nameZh: '鹰图腾', requires: { sacred_feathers: 1, tar: 1 }, effect: '安装到已完成的塔，该塔免疫巨兽攻击' },
   ],

@@ -651,7 +651,7 @@ const Game = {
         <p>三位长老奖励分别为：埃皮霍罗斯恢复2HP；西波罗斯获得2决心点；尼坎德罗斯恢复1个已使用的初始物品或曾打造过的合成物品。</p>
 
         <h3 style="margin:12px 0 8px;">合成物品</h3>
-        <p>每个合成物品需要1个普通材料和1个怪物材料；同一物品当前最多拥有1个。物品用掉或毁坏后可再次合成；血饵和强力诱饵在搜索前使用，火焰盒和蟹甲在战斗中使用，复活药在HP归零时触发，鹰图腾安装到完成的塔上。</p>
+        <p>每个合成物品需要1个普通材料和1个怪物材料；同一物品当前最多拥有1个。物品用掉或毁坏后可再次合成；血饵和强力诱饵在搜索前使用，火焰盒在战斗中使用；蟹甲合成后自动装备，受到伤害时吸收最多2点，吸收2次后碎裂；复活药在HP归零时触发，鹰图腾安装到完成的塔上。</p>
 
         <h3 style="margin:12px 0 8px;">战斗规则</h3>
         <p>恐怖巨兽战入口：搜索结果触发巢穴发现时，可立即进入该区域恐怖巨兽战斗且不额外消耗搜索；巢穴已发现后，可花费1次搜索主动挑战；或合成强力诱饵后消耗它，无需发现巢穴也能以1次搜索挑战。搜索结果0触发巢穴发现并立即挑战时，获得伏击加成。</p>
@@ -833,7 +833,9 @@ const GameLog = {
     if (el) {
       const entry = document.createElement('div');
       entry.className = 'log-entry';
-      entry.textContent = `> ${message}`;
+      const text = `> ${message}`;
+      if (typeof I18n !== 'undefined') I18n.setText(entry, text);
+      else entry.textContent = text;
       el.appendChild(entry);
       el.scrollTop = el.scrollHeight;
     }

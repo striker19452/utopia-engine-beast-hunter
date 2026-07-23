@@ -561,6 +561,8 @@ body.cover-active {
 }
 
 .time-track .tt-label {
+  display: flex;
+  flex-direction: column;
   font-family: var(--font-title);
   font-weight: bold;
   font-size: 11px;
@@ -568,6 +570,21 @@ body.cover-active {
   color: var(--ink-dark);
   margin-bottom: var(--gap-sm);
   line-height: 1.2;
+}
+
+.time-track .tt-subtitle {
+  display: block;
+}
+
+.time-days {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.time-days:focus-visible {
+  outline: 3px solid var(--gold-light);
+  outline-offset: 3px;
 }
 
 .time-day {
