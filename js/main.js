@@ -846,16 +846,5 @@ const GameLog = {
 document.addEventListener('DOMContentLoaded', () => {
   Version.render();
   I18n.init();
-  const coverScreen = document.getElementById('cover-screen');
-  const gameInterface = document.getElementById('game-interface');
-  const startButton = document.getElementById('btn-start-game');
-
-  startButton?.addEventListener('click', () => {
-    coverScreen.remove();
-    gameInterface.hidden = false;
-    document.body.classList.remove('cover-active');
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  });
-
   Game.init();
 });

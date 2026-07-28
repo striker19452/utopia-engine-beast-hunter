@@ -21,6 +21,28 @@
       window.addEventListener('orientationchange', syncCoverViewportHeight, { passive: true });
       visualViewport?.addEventListener('resize', syncCoverViewportHeight, { passive: true });
 
+      let coverStartRequested = false;
+      const enterGameFromCover = () => {
+        const coverScreen = document.getElementById('cover-screen');
+        const gameInterface = document.getElementById('game-interface');
+        if (!coverScreen || !gameInterface) return;
+
+        coverScreen.remove();
+        gameInterface.hidden = false;
+        document.body.classList.remove('cover-active');
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      };
+
+      document.addEventListener('click', (event) => {
+        if (!event.target.closest?.('#btn-start-game')) return;
+        coverStartRequested = true;
+        enterGameFromCover();
+      });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        if (coverStartRequested) enterGameFromCover();
+      }, { once: true });
+
       const isIPad = /iPad/.test(navigator.userAgent) ||
         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
       if (!isIPad) return;
@@ -62,6 +84,8 @@
       alt="冰封群峰、风暴海域与燃烧裂谷环绕着猎人村落"
       width="1672"
       height="939"
+      decoding="async"
+      fetchpriority="low"
     >
     <div class="game-cover-title-block">
       <p class="game-cover-kicker">UTOPIA ENGINE</p>

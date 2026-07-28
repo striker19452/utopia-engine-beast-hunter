@@ -393,7 +393,6 @@
 
 ## 技术说明
 
-- 当前版本：`v1.0.0`，版本记录见 [CHANGELOG.md](CHANGELOG.md)
 - 纯 HTML/CSS/JavaScript 实现，无需安装
 - 直接用浏览器打开 `index.html` 即可游玩
 - 数据保存在浏览器 localStorage 中
