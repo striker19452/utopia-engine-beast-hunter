@@ -12,6 +12,7 @@ from PIL import Image
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SOURCE = PROJECT_ROOT / "assets" / "utopia_bh_monsters.png"
 OUTPUT_DIR = PROJECT_ROOT / "assets" / "monsters"
+WEBP_QUALITY = 82
 
 # The coordinates are the clean inner edges of the printed cut lines. Pillow's
 # crop boxes use an exclusive right/bottom edge, so no grid ink is retained.
@@ -49,8 +50,8 @@ def main() -> None:
             left, right = COLUMNS[column]
             top, bottom = ROWS[row]
             crop = sheet.crop((left, top, right, bottom))
-            target = OUTPUT_DIR / f"{slug}.png"
-            crop.save(target, format="PNG", optimize=True)
+            target = OUTPUT_DIR / f"{slug}.webp"
+            crop.save(target, format="WEBP", quality=WEBP_QUALITY, method=6)
             print(f"{target.relative_to(PROJECT_ROOT)}: {crop.width}x{crop.height}")
 
 
