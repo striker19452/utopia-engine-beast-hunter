@@ -257,7 +257,7 @@ const CombatUI = {
     const combat = GameState.combat;
     if (!combat) return;
 
-    const results = Dice.roll(2);
+    const results = Dice.rollFor('combat', 2);
     combat.pendingRoll = results;
     combat.originalPendingRoll = [...results];
     combat.pendingRollType = 'combat';
@@ -270,7 +270,9 @@ const CombatUI = {
     `).join('');
     UI.keepModalCurrent('#combat-dice');
 
+    const generation = typeof Tutorial !== 'undefined' ? Tutorial.generation : 0;
     setTimeout(() => {
+      if (GameState.combat !== combat || (typeof Tutorial !== 'undefined' && Tutorial.generation !== generation)) return;
       this.renderPendingCombatRoll();
     }, 600);
   },

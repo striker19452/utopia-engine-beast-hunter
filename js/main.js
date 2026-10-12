@@ -755,7 +755,9 @@ const Game = {
     const dayData = GAME_DATA.timeTrack[crossedDay - 1];
     if (dayData && dayData.event) {
       // Process events (E or ! day)
+      const generation = typeof Tutorial !== 'undefined' ? Tutorial.generation : 0;
       setTimeout(() => {
+        if (typeof Tutorial !== 'undefined' && Tutorial.generation !== generation) return;
         Events.processDayEnd(crossedDay);
       }, 300);
     } else {
