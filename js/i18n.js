@@ -3,7 +3,7 @@
 // ============================================
 
 const I18n = {
-  language: localStorage.getItem('uebh-language') === 'en' ? 'en' : 'zh',
+  language: (() => { try { return localStorage.getItem('uebh-language') === 'en' ? 'en' : 'zh'; } catch (_) { return 'zh'; } })(),
   observer: null,
   originals: new WeakMap(),
 
@@ -214,7 +214,7 @@ const I18n = {
 
   setLanguage(language) {
     this.language = language === 'en' ? 'en' : 'zh';
-    localStorage.setItem('uebh-language', this.language);
+    try { localStorage.setItem('uebh-language', this.language); } catch (_) { /* Language can still change without storage. */ }
     document.title = this.language === 'en'
       ? 'Utopia Engine: Beast Hunter'
       : 'Utopia Engine: Beast Hunter - 乌托邦引擎：怪兽猎人';

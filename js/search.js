@@ -192,7 +192,7 @@ const SearchUI = {
     const search = GameState.search;
     if (!search || search.rollCount >= 3) return;
 
-    const results = Dice.roll(2);
+    const results = Dice.rollFor('search', 2);
     GameState.search.pendingRoll = results;
     GameState.search.pendingDieIndex = 0;
     GameState.search.usedDeterminationThisRoll = false;
@@ -206,7 +206,9 @@ const SearchUI = {
     UI.keepModalCurrent('#search-dice');
 
     // Show placement options
+    const generation = typeof Tutorial !== 'undefined' ? Tutorial.generation : 0;
     setTimeout(() => {
+      if (GameState.search !== search || (typeof Tutorial !== 'undefined' && Tutorial.generation !== generation)) return;
       this.renderPendingRollPlacement();
     }, 600);
   },
@@ -775,7 +777,9 @@ const SearchUI = {
       let level = box.encounterLevel || Dice.getEncounterLevel(result);
       if (level === 'random') level = this.rollRandomEncounterLevel();
       const beast = regionData.commonBeasts.find(b => b.level === level) || regionData.commonBeasts[0];
+      const generation = typeof Tutorial !== 'undefined' ? Tutorial.generation : 0;
       setTimeout(() => {
+        if (GameState.search !== search || (typeof Tutorial !== 'undefined' && Tutorial.generation !== generation)) return;
         CombatUI.startCombat(search.region, 'common', beast);
       }, 200);
       return;

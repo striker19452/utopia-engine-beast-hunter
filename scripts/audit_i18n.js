@@ -5,6 +5,7 @@ global.localStorage = { getItem: () => 'en', setItem: () => {} };
 eval(fs.readFileSync(path.join(__dirname, '..', 'js', 'i18n.js'), 'utf8') + '; globalThis.__i18n = I18n;');
 global.I18n = global.__i18n;
 eval(fs.readFileSync(path.join(__dirname, '..', 'js', 'i18n-en.js'), 'utf8'));
+eval(fs.readFileSync(path.join(__dirname, '..', 'js', 'i18n-tutorial.js'), 'utf8'));
 
 const han = /[\u3400-\u9fff]/;
 const chinesePunctuation = /[，。；：！？、（）]/;

@@ -3,6 +3,10 @@
 // ============================================
 
 const Dice = {
+  rollFor(context, n = 2) {
+    const practice = typeof Tutorial !== 'undefined' ? Tutorial.practiceRoll(context) : null;
+    return practice || this.roll(n);
+  },
   /**
    * Roll n six-sided dice
    * @param {number} n - number of dice
@@ -95,7 +99,7 @@ const Dice = {
    * Roll for events (E day) - 1 die per event
    */
   rollEvents() {
-    return this.roll(4); // 4 events
+    return this.rollFor('events', 4); // 4 events
   },
 
   /**
