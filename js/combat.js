@@ -146,7 +146,7 @@ const CombatUI = {
         <summary>战斗速查</summary>
         <ul>
           <li>掷2骰；每个落在你的攻击范围内的骰子，对${enemyLabel}造成1点伤害。</li>
-          <li>同一轮中，每个落在${enemyLabel}攻击范围内的骰子也会对你造成1点伤害；即使本轮击杀${enemyLabel}，本轮命中仍会结算。</li>
+          <li>先结算你的攻击；若${enemyLabel}被击杀，本轮不再攻击。若仍存活，每个落在${enemyLabel}攻击范围内的骰子对你造成1点伤害。</li>
           <li>${critText}</li>
           <li>${dpCritText}</li>
           <li>逃离：掷2骰，至少一个骰子为5或6则成功；失败时按${enemyLabel}攻击范围结算伤害，逃离前造成的伤害会保留到下次遭遇。</li>
@@ -356,22 +356,10 @@ const CombatUI = {
         combat.log.push(`<span class="log-info">本轮修正：你的攻击 ${this.formatRange(playerAtkRange)}；${enemyLabel}攻击 ${this.formatRange(beastAtkRange)}。${modifierNotes.join('；')}</span>`);
       }
 
-      // Check each die
+      // Resolve player hits before the beast can attack.
       for (const die of results) {
-        // Player attack
         if (die >= playerAtkRange[0] && die <= playerAtkRange[1]) {
           playerDamage++;
-        }
-        // Beast attack (ignore damage during first 2 rounds of ambush bonus)
-        if (die >= beastAtkRange[0] && die <= beastAtkRange[1]) {
-          if (!combat.ambushBonus || combat.roundCount > 2) {
-            beastDamage++;
-            // Cruel nature: 1 = grievous damage
-            if (combat.nature === 'Cruel' && die === 1) {
-              combat.log.push('<span class="log-damage">💀 残忍的巨兽造成了重伤！永久-1 HP上限！</span>');
-              GameState.takeGrievousDamage(1);
-            }
-          }
         }
       }
 
@@ -408,19 +396,33 @@ const CombatUI = {
         combat.log.push('<span class="log-info">巨兽被震慑，攻击范围缩小！</span>');
       }
 
-      // Silver Plate mastercraft: max 1 damage per attack
-      if (GameState.equipment.silver_plate === 'mastercraft' && beastDamage > 1) {
-        beastDamage = 1;
-      }
-
-      // Crab Plate: automatically absorb up to 2 damage, then lose one use.
-      beastDamage = this.applyCrabPlate(beastDamage, combat).damage;
-
-      // Apply damage
       if (playerDamage > 0) {
         combat.beastHp -= playerDamage;
         combat.log.push(`<span class="log-info">你造成了 ${playerDamage} 点伤害！</span>`);
       }
+
+      // Only surviving beasts attack; ambush prevents damage in the first two rounds.
+      if (combat.beastHp > 0 && (!combat.ambushBonus || combat.roundCount > 2)) {
+        for (const die of results) {
+          if (die >= beastAtkRange[0] && die <= beastAtkRange[1]) {
+            beastDamage++;
+            // Cruel nature: 1 = grievous damage
+            if (combat.nature === 'Cruel' && die === 1) {
+              combat.log.push('<span class="log-damage">💀 残忍的巨兽造成了重伤！永久-1 HP上限！</span>');
+              GameState.takeGrievousDamage(1);
+            }
+          }
+        }
+
+        // Silver Plate mastercraft: max 1 damage per attack
+        if (GameState.equipment.silver_plate === 'mastercraft' && beastDamage > 1) {
+          beastDamage = 1;
+        }
+
+        // Crab Plate: automatically absorb up to 2 damage, then lose one use.
+        beastDamage = this.applyCrabPlate(beastDamage, combat).damage;
+      }
+
       if (beastDamage > 0) {
         GameState.takeDamage(beastDamage);
         if (GameState.revivingDoseUsed) {

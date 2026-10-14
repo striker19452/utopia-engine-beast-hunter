@@ -1219,6 +1219,24 @@ body.cover-active {
   gap: 8px;
 }
 
+.materials-regions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.material-region-label {
+  min-width: 0;
+  padding: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink-medium);
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
 .material-group {
   display: flex;
   flex-direction: column;
@@ -1274,6 +1292,24 @@ body.cover-active {
   color: var(--ink-dark);
 }
 
+.material-shared {
+  grid-column: 1 / -1;
+}
+
+.material-shared .material-name {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.material-source-note {
+  font-size: 10px;
+  font-weight: normal;
+  color: var(--ink-medium);
+  white-space: nowrap;
+}
+
 .material-quantity {
   display: flex;
   align-items: center;
@@ -1302,6 +1338,15 @@ body.cover-active {
 }
 
 @container (max-width: 323px) {
+  .material-item {
+    gap: 2px;
+    padding-inline: 2px;
+  }
+
+  .material-name {
+    font-size: 11px;
+  }
+
   .material-dots {
     gap: 2px;
   }

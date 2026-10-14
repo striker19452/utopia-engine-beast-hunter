@@ -487,9 +487,20 @@ const UI = {
     if (!container) return;
     container.innerHTML = '';
 
+    const regions = Object.values(GAME_DATA.regions);
+    const regionHeaders = document.createElement('div');
+    regionHeaders.className = 'materials-regions';
+    regions.forEach(region => {
+      const heading = document.createElement('div');
+      heading.className = 'material-region-label';
+      heading.textContent = region.nameZh;
+      regionHeaders.appendChild(heading);
+    });
+    container.appendChild(regionHeaders);
+
     const groups = [
-      { title: '普通材料', subtitle: 'Common', items: GAME_DATA.materials.common },
-      { title: '稀有材料', subtitle: 'Rare', items: GAME_DATA.materials.rare },
+      { title: '普通材料', subtitle: 'Common', items: regions.map(region => region.commonMaterial) },
+      { title: '稀有材料', subtitle: 'Rare', items: regions.map(region => region.rareMaterial) },
       { title: '怪物材料', subtitle: 'Beast', items: GAME_DATA.materials.beast },
     ];
 
@@ -508,11 +519,19 @@ const UI = {
       group.items.forEach(mat => {
         const item = document.createElement('div');
         item.className = `material-item ${GameState.materials[mat] > 0 ? 'has-stock' : ''}`;
+        item.dataset.material = mat;
         item.title = `${GAME_DATA.materialNames[mat]}: ${GameState.materials[mat]}/${GAME_DATA.materialLimit || 4}`;
 
         const name = document.createElement('span');
         name.className = 'material-name';
         name.textContent = GAME_DATA.materialNames[mat];
+        if (mat === 'foul_blood') {
+          item.classList.add('material-shared');
+          const sourceNote = document.createElement('small');
+          sourceNote.className = 'material-source-note';
+          sourceNote.textContent = '三地共有';
+          name.appendChild(sourceNote);
+        }
         item.appendChild(name);
 
         const dots = document.createElement('div');

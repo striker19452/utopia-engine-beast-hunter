@@ -38,6 +38,7 @@ const I18n = {
     '获得 2 决心点': 'Gain 2 Resolve',
     '恢复 1 个已使用物品': 'Restore 1 used item',
     '材料库存': 'Material Inventory',
+    '三地共有': 'All regions',
     '村民小屋': 'The Village',
     '合成道具': 'Crafted Items',
     '普通材料': 'Common Materials',
