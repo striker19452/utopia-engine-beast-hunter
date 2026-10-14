@@ -507,7 +507,7 @@ const UI = {
 
       group.items.forEach(mat => {
         const item = document.createElement('div');
-        item.className = 'material-item';
+        item.className = `material-item ${GameState.materials[mat] > 0 ? 'has-stock' : ''}`;
         item.title = `${GAME_DATA.materialNames[mat]}: ${GameState.materials[mat]}/${GAME_DATA.materialLimit || 4}`;
 
         const name = document.createElement('span');
@@ -517,12 +517,16 @@ const UI = {
 
         const dots = document.createElement('div');
         dots.className = 'material-dots';
+        dots.setAttribute('aria-hidden', 'true');
         for (let i = 0; i < (GAME_DATA.materialLimit || 4); i++) {
           const dot = document.createElement('div');
           dot.className = `material-dot ${i < GameState.materials[mat] ? 'filled' : ''}`;
           dots.appendChild(dot);
         }
-        item.appendChild(dots);
+        const quantity = document.createElement('div');
+        quantity.className = 'material-quantity';
+        quantity.appendChild(dots);
+        item.appendChild(quantity);
         itemsEl.appendChild(item);
       });
 
