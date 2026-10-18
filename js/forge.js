@@ -5,7 +5,7 @@
 const ForgeUI = {
   start(equipmentKey) {
     const eq = this.getEquipment(equipmentKey);
-    if (!eq || GameState.phase !== 'idle') return;
+    if (!eq || !GameState.canStartDayAction()) return;
     if (!GameState.removeMaterial(eq.requires, 1)) return;
 
     GameState.forge = {
@@ -105,33 +105,37 @@ const ForgeUI = {
     const box = GameState.forge.box;
     const border = box.complete ? 'var(--green)' : 'var(--border)';
     return `
-      <div style="display:flex; justify-content:center; margin-top:12px;">
-        <div style="border:2px solid ${border}; border-radius:4px; padding:10px; background:${box.complete ? '#edf7ed' : 'transparent'};">
-          <div style="font-size:12px; text-align:center; margin-bottom:6px;">精炼格</div>
-          ${this.renderBoxRow(box.top)}
-          ${this.renderBoxRow(box.bottom)}
+      <div class="forge-refining-field">
+        <div class="forge-box" style="border-color:${border};">
+          <div class="forge-box-title">精炼格</div>
+          ${this.renderBoxRow('top', box.top, '上方')}
+          ${this.renderBoxRow('bottom', box.bottom, '下方')}
           ${this.renderResultRow(box)}
         </div>
       </div>
     `;
   },
 
-  renderBoxRow(values) {
-    let html = '<div style="display:flex; gap:3px; margin-bottom:4px;">';
-    for (const val of values) {
-      html += `<div class="forge-cell ${val !== null ? 'filled' : ''}" style="width:32px; height:32px; font-size:14px; cursor:default;">${val !== null ? val : ''}</div>`;
-    }
-    html += '</div>';
-    return html;
+  renderBoxRow(row, values, label) {
+    const forge = GameState.forge;
+    const placing = forge.pendingRoll && forge.selectedDieIndex !== null && forge.refinedValue === null;
+    return `<div class="forge-box-row"><span class="forge-row-label">${label}</span>${values.map((value, col) => {
+      const available = placing && value === null && forge.box.results[col] === null;
+      const accessibleLabel = `${label} · ${col + 1} · ${value === null ? '空位' : value}`;
+      return `<button type="button" class="forge-cell ${value !== null ? 'filled' : ''} ${available ? 'forge-drop-target' : ''}"
+        data-row="${row}" data-col="${col}" aria-label="${accessibleLabel}"
+        ${available ? `onclick="ForgeUI.placeDie('${row}', ${col})"` : 'disabled'}>
+        ${value === null ? (available ? '<span class="forge-drop-hint" aria-hidden="true">+</span>' : '') : value}
+      </button>`;
+    }).join('')}</div>`;
   },
 
   renderResultRow(box) {
-    let html = '<div style="display:flex; gap:3px; margin-top:4px;">';
+    let html = '<div class="forge-box-row forge-result-row"><span class="forge-row-label">差值</span>';
     for (let i = 0; i < 3; i++) {
       const result = box.results[i];
       html += `
-        <div class="forge-cell ${result !== null ? 'filled' : ''}"
-             style="width:32px; height:24px; font-size:12px; cursor:default; color:${result === null ? 'var(--ink-faint)' : 'var(--ink-dark)'};">
+        <div class="forge-cell ${result !== null ? 'filled' : ''}">
           ${result === null ? '○' : result}
         </div>
       `;
@@ -200,14 +204,8 @@ const ForgeUI = {
     const die = forge.pendingRoll[forge.selectedDieIndex];
     return `
       <div style="margin:12px 0; font-size:13px;">
-        将 <b>${die}</b> 放入任意可选空位：
+        <span>点击精炼格空位，填入 <b>${die}</b>。</span>
         <button class="btn" style="padding:3px 8px; margin-left:8px;" onclick="ForgeUI.clearSelectedDie()">重选骰子</button>
-      </div>
-      <div style="display:flex; justify-content:center; margin-bottom:12px;">
-        <div style="padding:8px; border:1px solid var(--border); border-radius:4px; background:var(--bg-card);">
-          ${this.renderPlacementRow('top', forge.box.top, die, '上方')}
-          ${this.renderPlacementRow('bottom', forge.box.bottom, die, '下方')}
-        </div>
       </div>
     `;
   },
@@ -239,20 +237,6 @@ const ForgeUI = {
     if (!forge || !forge.pendingRoll) return;
     forge.selectedDieIndex = null;
     this.renderForge();
-  },
-
-  renderPlacementRow(row, values, die, label) {
-    let html = `<div style="display:flex; align-items:center; gap:4px; margin-bottom:4px;"><span style="width:30px; font-size:11px; color:var(--ink-medium);">${label}</span>`;
-    for (let col = 0; col < values.length; col++) {
-      const columnClosed = GameState.forge.box.results[col] !== null;
-      if (values[col] === null && !columnClosed) {
-        html += `<button class="btn" style="padding:4px 8px;" onclick="ForgeUI.placeDie('${row}', ${col})">${die}</button>`;
-      } else {
-        html += `<button class="btn" style="padding:4px 8px;" disabled>${values[col] !== null ? values[col] : columnClosed ? '✓' : ''}</button>`;
-      }
-    }
-    html += '</div>';
-    return html;
   },
 
   placeDie(row, col) {

@@ -254,9 +254,9 @@ const SearchUI = {
     }
 
     let placeHtml = `<div style="margin-top:12px; font-size:13px;">将 <b>${results[0]}</b> 和 <b>${results[1]}</b> 分别放入空格：</div>`;
-    placeHtml += `<div style="display:flex; gap:16px; justify-content:center; margin-top:8px;">`;
+    placeHtml += `<div class="search-placement-grid">`;
 
-    placeHtml += `<div><div style="font-size:11px; color:var(--ink-medium); margin-bottom:4px;">上方（百十个）</div><div style="display:flex; gap:4px;">`;
+    placeHtml += `<div class="search-placement-row"><div class="search-placement-label">上方（百十个）</div><div style="display:flex; gap:4px;">`;
     for (let i = 0; i < 3; i++) {
       if (box.top[i] === null) {
         placeHtml += `<button class="btn" onclick="SearchUI.placeDie('top', ${i}, 0)">${results[0]}</button>`;
@@ -266,7 +266,7 @@ const SearchUI = {
     }
     placeHtml += `</div></div>`;
 
-    placeHtml += `<div><div style="font-size:11px; color:var(--ink-medium); margin-bottom:4px;">下方（百十个）</div><div style="display:flex; gap:4px;">`;
+    placeHtml += `<div class="search-placement-row"><div class="search-placement-label">下方（百十个）</div><div style="display:flex; gap:4px;">`;
     for (let i = 0; i < 3; i++) {
       if (box.bottom[i] === null) {
         placeHtml += `<button class="btn" onclick="SearchUI.placeDie('bottom', ${i}, 0)">${results[0]}</button>`;
@@ -303,10 +303,10 @@ const SearchUI = {
       const remainingValue = search.pendingRoll[1];
 
       let placeHtml = `<div style="margin-top:12px; font-size:13px;">将 <b>${remainingValue}</b> 放入空格：</div>`;
-      placeHtml += `<div style="display:flex; gap:16px; justify-content:center; margin-top:8px;">`;
+      placeHtml += `<div class="search-placement-grid">`;
 
       // Top row
-      placeHtml += `<div><div style="font-size:11px; color:var(--ink-medium); margin-bottom:4px;">上方</div><div style="display:flex; gap:4px;">`;
+      placeHtml += `<div class="search-placement-row"><div class="search-placement-label">上方</div><div style="display:flex; gap:4px;">`;
       for (let i = 0; i < 3; i++) {
         if (box.top[i] === null) {
           placeHtml += `<button class="btn" onclick="SearchUI.placeDie('top', ${i}, 1)">${remainingValue}</button>`;
@@ -317,7 +317,7 @@ const SearchUI = {
       placeHtml += `</div></div>`;
 
       // Bottom row
-      placeHtml += `<div><div style="font-size:11px; color:var(--ink-medium); margin-bottom:4px;">下方</div><div style="display:flex; gap:4px;">`;
+      placeHtml += `<div class="search-placement-row"><div class="search-placement-label">下方</div><div style="display:flex; gap:4px;">`;
       for (let i = 0; i < 3; i++) {
         if (box.bottom[i] === null) {
           placeHtml += `<button class="btn" onclick="SearchUI.placeDie('bottom', ${i}, 1)">${remainingValue}</button>`;

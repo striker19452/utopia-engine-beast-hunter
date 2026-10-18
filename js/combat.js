@@ -92,7 +92,7 @@ const CombatUI = {
           ${portraitHtml}
           <div class="beast-info">
             <div class="beast-name">${beast.nameZh} <span>${beast.name}</span></div>
-            <div class="beast-hp-bar" aria-label="${beast.nameZh} 生命值 ${combat.beastHp}/${combat.maxHp}">${hpCells}</div>
+            <div class="beast-life"><div class="beast-hp-bar" aria-label="${beast.nameZh} 生命值 ${combat.beastHp}/${combat.maxHp}">${hpCells}</div><span>HP ${combat.beastHp}/${combat.maxHp}</span></div>
             <div class="beast-statline">
               怪物攻击: ${beast.attackRange[0]}-${beast.attackRange[1]}
               <span aria-hidden="true">|</span> 你的攻击: ${this.formatRange(beast.playerAttackRange || beast.playerRange || [5, 6])}
@@ -239,7 +239,7 @@ const CombatUI = {
     const notes = [...info.rangeNotes, ...info.ruleNotes];
 
     return `
-      <div class="combat-reference" style="margin-bottom:8px;">
+      <div class="combat-reference combat-modifiers" style="margin-bottom:8px;">
         <div style="font-weight:bold; color:var(--ink-dark); margin-bottom:4px;">当前战斗修正</div>
         <div style="font-size:12px; line-height:1.5;">
           你的攻击：${this.formatRange(info.playerRange)}
@@ -248,7 +248,8 @@ const CombatUI = {
           <span style="color:var(--ink-light);">（基础 ${this.formatRange(info.baseBeastRange)}）</span>
           ${!rangeChanged && notes.length === 0 ? '<br><span style="color:var(--ink-faint);">暂无额外修正。</span>' : ''}
         </div>
-        ${notes.length ? `<ul style="margin:6px 0 0; padding-left:18px; font-size:12px; line-height:1.45;">${notes.map(note => `<li>${note}</li>`).join('')}</ul>` : ''}
+        ${notes.length ? `<ul class="combat-modifier-sources" tabindex="0" style="margin:6px 0 0; padding-left:18px; font-size:12px; line-height:1.45;">${notes.map(note => `<li>${note}</li>`).join('')}</ul>` : ''}
+        <p class="combat-order-note">交叠范围内的骰子同时命中双方；我方先结算，击杀后不受反击。</p>
       </div>
     `;
   },

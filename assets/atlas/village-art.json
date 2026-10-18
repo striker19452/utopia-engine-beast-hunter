@@ -1,0 +1,35 @@
+{
+  "tool": "built-in image_gen.imagegen",
+  "mode": "generate; three separate assets",
+  "integration": "js/village.js and css/atlas.css; generated images converted to WebP without compositional edits",
+  "assets": [
+    {
+      "output": "assets/atlas/village-base.webp",
+      "source": "/Users/str/.codex/generated_images/01a149cb-65f1-7671-b86a-2e69e4059af3/exec-f8ea9c09-235d-4fdb-b1c8-5fe960b5b933.png",
+      "dimensions": [1536, 1024],
+      "transparent_background": false,
+      "prompt": "Use case: stylized-concept. Asset type: production background illustration for the village page of Utopia Engine: Beast Hunter, landscape 3:2, 1536x1024. Paint an exquisite antique cartographer's close aerial village landscape on aged ivory vellum, fine graphite and charcoal engraving plus restrained mineral watercolor, muted sage and bone parchment, sophisticated organic hand drawing. A secluded medieval refuge in a rocky pine valley, distant mountains and blue-grey river at the far edges. High three-quarter aerial perspective, view down into a gently sloping oval village clearing, morning haze, luminous warm ivory center, dark forest around the outer edges. IMPORTANT COMPOSITING LAYOUT: this is the terrain and permanent buildings layer; nine small dwelling sprites and three watchtower sprites will be overlaid separately by the game, so DO NOT DRAW ANY SMALL DWELLINGS OR WATCHTOWERS. Keep the central ground open with naturally curving dirt paths and many clear flat grassy plots. Draw one low timber longhouse for the elders at x54% y30%, one modest stone smithy with anvil yard at x76% y39%, one small hunter's canvas camp at x30% y34%. The longhouse, smithy and tent are the ONLY buildings. Low irregular palisade along the clearing perimeter, with three empty openings / flat building sites at southwest x16% y61%, southern x60% y87%, eastern x84% y49%. Empty residential plots along paths within x28%-72% y48%-78%. Keep these positions clear of boulders, buildings, tall trees and thick palisade. Detailed pebbles, tufts of moss and grass, sun-worn timbers, ink hatching, subtle contact shadows. Art should look like a museum-quality illustrated map, not a glossy 3D game. No people, no monsters, no fire, no flames, no UI, no panels, no frames, no labels, no numbers, no words or letters, no watermark. Fill the rectangular image with complete terrain; softly weathered parchment edges. Palette ivory #e4ddc7, charcoal #45483f, subtle sage greens and desaturated blue-grey. This will be displayed as an actual game scene with interactive buildings."
+    },
+    {
+      "output": "assets/atlas/village-huts.webp",
+      "source": "/Users/str/.codex/generated_images/01a149cb-65f1-7671-b86a-2e69e4059af3/exec-ef49dee3-c2fb-4f2f-964d-9cb97d27f308.png",
+      "dimensions": [1774, 887],
+      "transparent_background": true,
+      "cells": ["intact", "destroyed"],
+      "prompt": "Use case: stylized-concept. Asset type: transparent building sprite strip for an antique hand-drawn fantasy village game. Produce ONE horizontal 2:1 transparent PNG strip, two equal square cells side by side, no borders and no labels. At the SAME high three-quarter isometric aerial angle, render TWO STATES OF THE SAME SMALL MEDIEVAL COTTAGE. Left cell: intact modest thatched timber-and-plaster hut, muted warm straw roof, stone base, single wooden door, little lean-to. Right cell: the very same cottage after destruction, collapsed roof, broken rafters, scattered stone and charred timber, low ruin footprint, absolutely no flames or smoke. Match identical scale, viewpoint, light direction and footprint; both bases aligned at 82% of total image height, both centered horizontally within their own half, complete silhouettes with generous transparent padding and NO overlap between cells. Fine charcoal engraving and graphite linework with low-saturation mineral watercolor, natural antique vellum illustration technique, palette warm bone beige, sage, dark brown-grey. Hand drawn realistic construction at map scale, no cartoon, no plastic 3D. Include only soft contact shadows directly under each building, no solid terrain tiles or rectangular backgrounds. True alpha transparency all around buildings. No text, letters, numbers, UI, arrows, or watermark."
+    },
+    {
+      "output": "assets/atlas/village-towers.webp",
+      "source": "/Users/str/.codex/generated_images/01a149cb-65f1-7671-b86a-2e69e4059af3/exec-2bd6a8da-0be0-4b16-a335-eeb86866891a.png",
+      "dimensions": [2172, 724],
+      "transparent_background": true,
+      "cells": ["unfinished", "complete", "destroyed"],
+      "prompt": "Use case: stylized-concept. Asset type: transparent watchtower sprite strip for a premium antique fantasy map game. Produce ONE horizontal 3:1 transparent PNG strip with THREE EQUAL SQUARE CELLS in a single row, all at the SAME high three-quarter aerial perspective and scale. Cell 1 LEFT: UNFINISHED WATCHTOWER, a low stone footing with simple wood scaffolding, stacked beams and partial supports, clearly not a finished tower. Cell 2 CENTER: the same tower FULLY BUILT, a rugged medieval timber watchtower on a stone footing, square defensive platform and small pitched slate roof, wooden ladder, beautifully etched wood bracing. Cell 3 RIGHT: the same tower DESTROYED, low broken stone base, collapsed wooden beams and fragments of the roof, no remaining tall structure, no fire or smoke. The three states must be clearly distinguishable, consistent identity, footprint and light. Bases aligned at y84% of the whole strip; each object centered in its square cell with generous transparent margins and no overlap. True transparent alpha background, only soft contact shadows directly underneath each state, no terrain tile. Sophisticated organic charcoal engraving plus restrained mineral watercolor washes, aged ivory and warm grey timber, sage-grey roof, fine graphite hatching, illustrative museum-quality medieval cartographer plate. Match natural hand-painted village map art, not cartoon, not glossy 3D. No text, labels, numbers, frames, UI, emblems or watermarks."
+    }
+  ],
+  "runtime_layout": {
+    "towers": { "west": [16, 61], "south": [60, 83], "east": [88, 54] },
+    "huts": [[34,48],[45,48],[57,49],[68,54],[29,62],[42,64],[56,63],[70,66],[46,74]],
+    "coordinate_system": "percent of the 3:2 ground plane; sprite position uses the building's base"
+  }
+}

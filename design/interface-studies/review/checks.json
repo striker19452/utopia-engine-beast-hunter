@@ -1,0 +1,100 @@
+{
+  "results": [
+    {
+      "concept": "journal",
+      "viewport": "desktop",
+      "visibleStats": 3,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "concept": "expedition",
+      "viewport": "desktop",
+      "visibleStats": 3,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "concept": "atlas",
+      "viewport": "desktop",
+      "visibleStats": 3,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "concept": "journal",
+      "viewport": 320,
+      "visibleStats": 3,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "concept": "expedition",
+      "viewport": 320,
+      "visibleStats": 3,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "concept": "atlas",
+      "viewport": 320,
+      "visibleStats": 3,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "concept": "journal",
+      "viewport": 390,
+      "visibleStats": 3,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "concept": "expedition",
+      "viewport": 390,
+      "visibleStats": 3,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "concept": "atlas",
+      "viewport": 390,
+      "visibleStats": 3,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "concept": "journal",
+      "viewport": 768,
+      "visibleStats": 3,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "concept": "expedition",
+      "viewport": 768,
+      "visibleStats": 3,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "concept": "atlas",
+      "viewport": 768,
+      "visibleStats": 3,
+      "overflow": false,
+      "brokenImages": []
+    }
+  ],
+  "errors": [],
+  "badResponses": [],
+  "interactions": [
+    "region selection",
+    "three dice rolls",
+    "six placements",
+    "subtraction result",
+    "search record update",
+    "inventory modal",
+    "defense diagrams",
+    "Escape close"
+  ]
+}

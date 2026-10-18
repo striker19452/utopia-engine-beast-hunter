@@ -32,7 +32,7 @@ const Game = {
 
   // === Search ===
   showSearchDialog() {
-    if (GameState.phase !== 'idle') return;
+    if (!GameState.canStartDayAction()) return;
 
     let html = `
       <div class="modal-title">搜索荒野</div>
@@ -66,7 +66,7 @@ const Game = {
   },
 
   confirmTerribleBeastHunt(region, useBait = false) {
-    if (GameState.phase !== 'idle') return;
+    if (!GameState.canStartDayAction()) return;
 
     const regionData = GAME_DATA.regions[region];
     const stateData = GameState.regions[region];
@@ -106,7 +106,7 @@ const Game = {
   },
 
   startTerribleBeastHunt(region, useBait = false) {
-    if (GameState.phase !== 'idle') return;
+    if (!GameState.canStartDayAction()) return;
     if (GameState.beastsDefeated[region]) return;
 
     const stateData = GameState.regions[region];
@@ -137,7 +137,7 @@ const Game = {
   },
 
   showPotentBaitDialog() {
-    if (GameState.phase !== 'idle' || GameState.craftedItems.potent_bait === null) return;
+    if (!GameState.canStartDayAction() || GameState.craftedItems.potent_bait === null) return;
 
     const buttons = Object.entries(GAME_DATA.regions)
       .filter(([key]) => !GameState.beastsDefeated[key])
@@ -158,7 +158,7 @@ const Game = {
   },
 
   showBloodLureDialog() {
-    if (GameState.phase !== 'idle' || GameState.craftedItems.blood_lure === null) return;
+    if (!GameState.canStartDayAction() || GameState.craftedItems.blood_lure === null) return;
 
     const buttons = Object.entries(GAME_DATA.regions).map(([key, data]) => `
       <button class="btn primary" onclick="Game.showBloodLureBeasts('${key}')">
@@ -177,7 +177,7 @@ const Game = {
   },
 
   showBloodLureBeasts(region) {
-    if (GameState.phase !== 'idle' || GameState.craftedItems.blood_lure === null) return;
+    if (!GameState.canStartDayAction() || GameState.craftedItems.blood_lure === null) return;
     const regionData = GAME_DATA.regions[region];
     const buttons = regionData.commonBeasts.map((beast, index) => `
       <button class="btn primary" onclick="UI.closeModal(); Game.startBloodLureCombat('${region}', ${index});">
@@ -198,7 +198,7 @@ const Game = {
   },
 
   startBloodLureCombat(region, beastIndex) {
-    if (GameState.phase !== 'idle' || GameState.craftedItems.blood_lure === null) return;
+    if (!GameState.canStartDayAction() || GameState.craftedItems.blood_lure === null) return;
     const beast = GAME_DATA.regions[region].commonBeasts[beastIndex];
     if (!beast) return;
 
@@ -222,6 +222,7 @@ const Game = {
   },
 
   doRest() {
+    if (!GameState.canStartDayAction()) return;
     GameState.heal(2);
     GameState.advanceDay('rest');
     GameLog.add('休息了一天，恢复了 2 HP。');
@@ -231,7 +232,7 @@ const Game = {
 
   // === Build ===
   showBuildDialog() {
-    if (GameState.phase !== 'idle') return;
+    if (!GameState.canStartDayAction()) return;
 
     let html = `
       <div class="modal-title">建造防御塔</div>
@@ -262,7 +263,7 @@ const Game = {
 
   // === Forge ===
   showForgeDialog() {
-    if (GameState.phase !== 'idle') return;
+    if (!GameState.canStartDayAction()) return;
 
     let html = `
       <div class="modal-title">锻造装备</div>
@@ -296,7 +297,7 @@ const Game = {
 
   // === Craft ===
   showCraftDialog() {
-    if (GameState.phase !== 'idle') return;
+    if (!GameState.canStartDayAction()) return;
 
     let html = `
       <div class="modal-title">合成物品</div>
@@ -401,103 +402,12 @@ const Game = {
 
   // === Debug ===
   showDebug() {
-    const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-    const materialInputs = Object.keys(GameState.materials).map(mat => `
-      <label style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
-        <span>${GAME_DATA.materialNames[mat]}</span>
-        <input type="number" min="0" max="${GAME_DATA.materialLimit}" value="${GameState.materials[mat]}"
-               onchange="Game.debugSetMaterial('${mat}', this.value)" style="width:64px;">
-      </label>
-    `).join('');
+    DebugUI.open();
+  },
 
-    const regionControls = Object.entries(GAME_DATA.regions).map(([key, region]) => {
-      const state = GameState.regions[key];
-      return `
-        <div style="padding:8px; border:1px solid var(--border); border-radius:4px; background:var(--bg-card);">
-          <div style="font-weight:bold; margin-bottom:6px;">${region.nameZh}</div>
-          <label><input type="checkbox" ${state.lairFound ? 'checked' : ''}
-                 onchange="Game.debugSetRegion('${key}', 'lairFound', this.checked)"> 巢穴已发现</label>
-          <div style="display:flex; gap:6px; margin-top:6px;">
-            ${state.tracking.map((v, i) => `
-              <label><input type="checkbox" ${v ? 'checked' : ''}
-                     onchange="Game.debugSetTracking('${key}', ${i}, this.checked)"> 追踪${i + 1}</label>
-            `).join('')}
-          </div>
-          <label style="display:block; margin-top:6px;"><input type="checkbox" ${GameState.beastsDefeated[key] ? 'checked' : ''}
-                 onchange="Game.debugSetBeastDefeated('${key}', this.checked)"> 巨兽已击败</label>
-        </div>
-      `;
-    }).join('');
-
-    const equipmentControls = Object.keys(GameState.equipment).map(key => `
-      <label style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
-        <span>${key.replace(/_/g, ' ')}</span>
-        <select onchange="Game.debugSetEquipment('${key}', this.value)">
-          <option value="" ${GameState.equipment[key] === null ? 'selected' : ''}>无</option>
-          <option value="standard" ${GameState.equipment[key] === 'standard' ? 'selected' : ''}>标准</option>
-          <option value="mastercraft" ${GameState.equipment[key] === 'mastercraft' ? 'selected' : ''}>精工</option>
-        </select>
-      </label>
-    `).join('');
-
-    const towerNames = { south: '南方塔', west: '西南塔', east: '东方塔' };
-    const towerControls = Object.entries(GameState.towers).map(([key, tower]) => {
-      const activeCount = BuildUI.getActiveIndices(key).length;
-      const xCount = BuildUI.countFaults(key, tower.grid);
-      return `
-        <div style="padding:8px; border:1px solid var(--border); border-radius:4px; background:var(--bg-card);">
-          <div style="font-weight:bold; margin-bottom:6px;">${towerNames[key]}</div>
-          <label style="display:block;"><input type="checkbox" ${tower.complete ? 'checked' : ''}
-                 onchange="Game.debugSetTowerComplete('${key}', this.checked)"> 已完成 / 可阻挡</label>
-          <label style="display:block; margin-top:6px;"><input type="checkbox" ${tower.destroyed ? 'checked' : ''}
-                 onchange="Game.debugSetTowerDestroyed('${key}', this.checked)"> 已摧毁标记</label>
-          <label style="display:block; margin-top:6px;"><input type="checkbox" ${tower.hawkTotem ? 'checked' : ''}
-                 onchange="Game.debugSetTowerHawk('${key}', this.checked)"> 鹰图腾</label>
-          <label style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:6px;">
-            <span>塔内X数量</span>
-            <input type="number" min="0" max="${activeCount}" value="${xCount}"
-                   onchange="Game.debugSetTowerFaults('${key}', this.value)" style="width:64px;">
-          </label>
-        </div>
-      `;
-    }).join('');
-
-    const html = `
-      <div class="modal-title">调试模式</div>
-      <div style="font-size:13px; line-height:1.6; max-height:65vh; overflow-y:auto;">
-        <h3 style="margin:8px 0;">核心数值</h3>
-        <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
-          <label>HP 当前 <input type="number" min="0" max="${GameState.hp.max}" value="${GameState.hp.current}" onchange="Game.debugSetStat('hp.current', this.value)"></label>
-          <label>HP 上限 <input type="number" min="0" max="20" value="${GameState.hp.max}" onchange="Game.debugSetStat('hp.max', this.value)"></label>
-          <label>决心 <input type="number" min="0" max="99" value="${GameState.determination}" onchange="Game.debugSetStat('determination', this.value)"></label>
-          <label>怀疑 <input type="number" min="0" max="${GameState.doubt.max}" value="${GameState.doubt.current}" onchange="Game.debugSetStat('doubt.current', this.value)"></label>
-          <label>怀疑上限 <input type="number" min="1" max="99" value="${GameState.doubt.max}" onchange="Game.debugSetStat('doubt.max', this.value)"></label>
-          <label>当前天数 <input type="number" min="1" max="15" value="${GameState.currentDay}" onchange="Game.debugSetStat('currentDay', this.value)"></label>
-        </div>
-
-        <h3 style="margin:12px 0 8px;">村民小屋</h3>
-        <div style="display:flex; gap:12px; flex-wrap:wrap;">
-          ${GameState.huts.map((v, i) => `<label><input type="checkbox" ${v ? 'checked' : ''} onchange="Game.debugSetHut(${i}, this.checked)"> 小屋${i + 1}完好</label>`).join('')}
-        </div>
-
-        <h3 style="margin:12px 0 8px;">材料（上限 ${GAME_DATA.materialLimit}）</h3>
-        <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:6px 16px;">${materialInputs}</div>
-
-        <h3 style="margin:12px 0 8px;">区域、追踪与巨兽</h3>
-        <div style="display:grid; grid-template-columns:1fr; gap:8px;">${regionControls}</div>
-
-        <h3 style="margin:12px 0 8px;">防御塔</h3>
-        <div style="display:grid; grid-template-columns:1fr; gap:8px;">${towerControls}</div>
-
-        <h3 style="margin:12px 0 8px;">装备</h3>
-        <div style="display:grid; grid-template-columns:1fr; gap:6px;">${equipmentControls}</div>
-      </div>
-      <div class="confirm-actions">
-        <button class="btn" onclick="UI.closeModal(); UI.render();">关闭</button>
-      </div>
-    `;
-
-    UI.showModal(html);
+  debugRender() {
+    UI.render();
+    if (typeof DebugUI !== 'undefined') DebugUI.refresh();
   },
 
   debugNumber(value, fallback = 0) {
@@ -509,47 +419,47 @@ const Game = {
     const num = this.debugNumber(value);
     if (path === 'hp.current') GameState.hp.current = Math.max(0, Math.min(num, GameState.hp.max));
     if (path === 'hp.max') {
-      GameState.hp.max = Math.max(0, num);
+      GameState.hp.max = Math.max(0, Math.min(20, num));
       GameState.hp.current = Math.min(GameState.hp.current, GameState.hp.max);
     }
-    if (path === 'determination') GameState.determination = Math.max(0, num);
+    if (path === 'determination') GameState.determination = Math.max(0, Math.min(99, num));
     if (path === 'doubt.current') GameState.doubt.current = Math.max(0, Math.min(num, GameState.doubt.max));
     if (path === 'doubt.max') {
-      GameState.doubt.max = Math.max(1, num);
+      GameState.doubt.max = Math.max(1, Math.min(99, num));
       GameState.doubt.current = Math.min(GameState.doubt.current, GameState.doubt.max);
     }
     if (path === 'currentDay') GameState.currentDay = Math.max(1, Math.min(15, num));
-    UI.render();
+    this.debugRender();
   },
 
   debugSetMaterial(mat, value) {
     GameState.materials[mat] = Math.max(0, Math.min(GAME_DATA.materialLimit || 4, this.debugNumber(value)));
-    UI.render();
+    this.debugRender();
   },
 
   debugSetHut(index, intact) {
     GameState.huts[index] = Boolean(intact);
-    UI.render();
+    this.debugRender();
   },
 
   debugSetRegion(region, key, value) {
     GameState.regions[region][key] = Boolean(value);
-    UI.render();
+    this.debugRender();
   },
 
   debugSetTracking(region, index, value) {
     GameState.regions[region].tracking[index] = Boolean(value);
-    UI.render();
+    this.debugRender();
   },
 
   debugSetBeastDefeated(region, value) {
     GameState.beastsDefeated[region] = Boolean(value);
-    UI.render();
+    this.debugRender();
   },
 
   debugSetEquipment(key, value) {
     GameState.equipment[key] = value || null;
-    UI.render();
+    this.debugRender();
   },
 
   debugFillTower(towerKey, faultCount = 0) {
@@ -575,8 +485,7 @@ const Game = {
       tower.destroyed = false;
       tower.grid = GameState.createTowerGrid(towerKey);
     }
-    UI.render();
-    this.showDebug();
+    this.debugRender();
   },
 
   debugSetTowerHawk(towerKey, enabled) {
@@ -588,8 +497,7 @@ const Game = {
     }
     tower.hawkTotem = Boolean(enabled);
     if (enabled) tower.destroyed = false;
-    UI.render();
-    this.showDebug();
+    this.debugRender();
   },
 
   debugSetTowerDestroyed(towerKey, destroyed) {
@@ -601,8 +509,7 @@ const Game = {
       tower.hawkTotem = false;
       tower.grid = GameState.createTowerGrid(towerKey);
     }
-    UI.render();
-    this.showDebug();
+    this.debugRender();
   },
 
   debugSetTowerFaults(towerKey, value) {
@@ -613,17 +520,17 @@ const Game = {
     this.debugFillTower(towerKey, faultCount);
     tower.complete = true;
     tower.destroyed = false;
-    UI.render();
-    this.showDebug();
+    this.debugRender();
   },
 
   // === Help ===
   showHelp() {
     const html = `
       <div class="modal-title">游戏规则</div>
-      <div style="font-size:13px; line-height:1.6; max-height:60vh; overflow-y:auto;">
+      <div class="help-rules" style="font-size:13px; line-height:1.6;">
         <h3 style="margin:12px 0 8px;">目标</h3>
         <p>在14天内击败三只恐怖巨兽，赢得村民信任。</p>
+        <p>击败第三只恐怖巨兽后，先领取战斗奖励与长老审批，再结算当天事件、袭击和怀疑，最后判定胜利。第14天击败第三只也可获胜。</p>
         <p>材料库存每种最多保存4个，获得材料时若没有空格，超出的材料会被弃置。</p>
 
         <h3 style="margin:12px 0 8px;">每日行动（选一）</h3>
@@ -702,7 +609,7 @@ const Game = {
 
   // === Save/Load ===
   saveGame() {
-    GameState.save(0);
+    if (GameState.save(0) === false) return;
     GameLog.add('游戏已保存。');
     UI.showModal(`
       <div class="modal-title">保存成功</div>
@@ -726,7 +633,9 @@ const Game = {
 
   // === Check Game End ===
   checkGameEnd() {
-    if (GameState.phase === 'game_over') {
+    if (GameState.pendingDayAction) return false;
+    if (GameState.phase === 'game_over' || GameState.hp.current <= 0 || GameState.doubt.current >= GameState.doubt.max) {
+      GameState.phase = 'game_over';
       this.showGameOver();
       return true;
     }
@@ -745,6 +654,10 @@ const Game = {
 
   // === Called after any day advancement to handle events ===
   onDayAdvanced() {
+    if (!GameState.pendingDayAction) {
+      this.checkGameEnd();
+      return;
+    }
     // Get the day that was just crossed out
     const crossedDay = GameState.daysCrossed[GameState.daysCrossed.length - 1];
     if (!crossedDay) {
@@ -752,13 +665,23 @@ const Game = {
       return;
     }
 
+    // The same committed day may have more than one UI continuation. Keep its
+    // event dice and attacks single-use, and invalidate timers after reset/load.
+    const daysCrossed = GameState.daysCrossed;
+    if (this._daySettlement?.daysCrossed === daysCrossed && this._daySettlement.day === crossedDay) return;
+    const settlement = this._daySettlement = { daysCrossed, day: crossedDay };
+
     const dayData = GAME_DATA.timeTrack[crossedDay - 1];
     if (dayData && dayData.event) {
       // Process events (E or ! day)
       const generation = typeof Tutorial !== 'undefined' ? Tutorial.generation : 0;
       setTimeout(() => {
         if (typeof Tutorial !== 'undefined' && Tutorial.generation !== generation) return;
-        Events.processDayEnd(crossedDay);
+        if (this._daySettlement !== settlement || GameState.daysCrossed !== daysCrossed ||
+            !GameState.pendingDayAction || GameState.daysCrossed.at(-1) !== crossedDay) return;
+        // With all three beasts defeated, a ! day has no attacker and opens
+        // no result dialog. It must still finish the day and check victory.
+        if (!Events.processDayEnd(crossedDay)) this.finishDayAndCheck();
       }, 300);
     } else {
       this.finishDayAndCheck();
@@ -769,6 +692,7 @@ const Game = {
     if (GameState.pendingDayAction) {
       GameState.calculateEndOfDayDoubt(GameState.pendingDayAction);
       GameState.pendingDayAction = null;
+      this._daySettlement = null;
       UI.render();
     }
     this.checkGameEnd();
@@ -783,10 +707,10 @@ const Game = {
       endingText = '你的力量耗尽，倒在了地上。最后那一击的冲击反而不是你注意的焦点——而是解脱感。多年来第一次，你背上的紧张消退了，温暖的宁静在世界变黑时涌上心头。';
     } else if (GameState.doubt.current >= GameState.doubt.max) {
       endingText = '人群聚集在村广场。你认出了最激烈的批评者的面孔。在石雨中你被赶出了村庄，投入了无情的荒野。';
-    } else if (GameState.currentDay > 14) {
-      endingText = '士兵和马匹的声音充斥着空气，烈星军团在村墙外集结。长老们认为你违背了诺言。他们将你赶出了村庄，投入了烈星军团的怀抱。';
     } else if (won) {
       endingText = '微风带来了远处铜号的声音，烈星军团开始了最后的进军。你已经证明了自己的价值。村庄长老们互相点头，西波罗斯带你进入一间小屋，关上了厚重的门帘。';
+    } else if (GameState.currentDay > 14) {
+      endingText = '士兵和马匹的声音充斥着空气，烈星军团在村墙外集结。长老们认为你违背了诺言。他们将你赶出了村庄，投入了烈星军团的怀抱。';
     }
 
     const html = `

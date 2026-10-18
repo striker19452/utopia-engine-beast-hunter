@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>猎人手记 · 三种界面方向</title>
+  <link rel="stylesheet" href="studies.css">
+  <script src="../../js/data.js" defer></script>
+  <script src="studies.js" defer></script>
+</head>
+<body>
+  <header class="studio-bar">
+    <a class="studio-brand" href="overview.html" aria-label="返回三稿总览"><span class="studio-sigil">U</span><span>BEAST HUNTER<small>界面设计提案</small></span></a>
+    <nav class="concept-switch" aria-label="切换设计方案">
+      <button type="button" data-concept="journal" aria-pressed="true"><span>A</span>烛火手记</button>
+      <button type="button" data-concept="expedition" aria-pressed="false"><span>B</span>荒境远征</button>
+      <button type="button" data-concept="atlas" aria-pressed="false"><span>C</span>猎场战图</button>
+    </nav>
+    <div class="studio-state"><i></i>交互样稿 <span>同一局面 · 第六天</span></div>
+  </header>
+  <main id="stage" class="stage" aria-label="游戏界面提案"></main>
+  <footer class="design-caption"><div><span id="caption-index">A</span><strong id="caption-name">烛火手记</strong><p id="caption-text"></p></div><span class="caption-help">可切换猎场、查看行囊与防御、掷骰填格</span></footer>
+  <dialog id="game-dialog" aria-labelledby="dialog-title"><div id="dialog-content"></div></dialog>
+  <div class="sr-only" id="announcer" role="status" aria-live="polite"></div>
+</body>
+</html>

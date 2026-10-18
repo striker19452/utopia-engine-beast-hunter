@@ -1,0 +1,2532 @@
+{
+  "direction": "C · 猎场战图",
+  "decision_date": "2026-10-18",
+  "status": "production_implemented; automated_layout_passed; representative_visual_reviewed",
+  "scope": "Production presentation layer for all inventoried player UI groups. Fixed-state renderer checks and representative visual review are recorded separately from complete game-flow tests.",
+  "dimensions": {
+    "widths_px": [
+      1440,
+      768,
+      390,
+      320
+    ],
+    "languages": [
+      "zh",
+      "en"
+    ],
+    "input": [
+      "pointer",
+      "touch",
+      "keyboard"
+    ],
+    "motion": [
+      "normal",
+      "reduced"
+    ],
+    "feedback": [
+      "default",
+      "selected",
+      "disabled",
+      "warning",
+      "empty",
+      "long_content",
+      "missing_art"
+    ]
+  },
+  "current_prototype": "design/interface-studies/index.html?concept=atlas",
+  "groups": [
+    {
+      "id": "cover",
+      "title": "开场与进入",
+      "entrypoints": [
+        {
+          "file": "index.html",
+          "entrypoint": "cover-screen",
+          "line": 81
+        },
+        {
+          "file": "js/main.js",
+          "entrypoint": "init",
+          "line": 6
+        }
+      ],
+      "components": [
+        "地图骨架",
+        "纸质工作面板"
+      ],
+      "prototype_coverage": "none",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "cover-01",
+          "label": "标题页",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/cover-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/cover-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/cover-01-768-en.png",
+            "outputs/atlas-review/cover-01-320-en.png"
+          ]
+        },
+        {
+          "id": "cover-02",
+          "label": "开始游戏",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/cover-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/cover-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/cover-02-768-en.png",
+            "outputs/atlas-review/cover-02-320-en.png"
+          ]
+        },
+        {
+          "id": "cover-03",
+          "label": "已有存档的进入路径",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/cover-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/cover-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/cover-03-768-en.png",
+            "outputs/atlas-review/cover-03-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "cover-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/cover-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "map",
+      "title": "主地图与全局状态",
+      "entrypoints": [
+        {
+          "file": "js/ui.js",
+          "entrypoint": "render",
+          "line": 7
+        },
+        {
+          "file": "js/ui.js",
+          "entrypoint": "renderRegions",
+          "line": 92
+        },
+        {
+          "file": "js/ui.js",
+          "entrypoint": "renderTopBar",
+          "line": 20
+        },
+        {
+          "file": "js/ui.js",
+          "entrypoint": "renderTimeTrack",
+          "line": 53
+        },
+        {
+          "file": "js/ui.js",
+          "entrypoint": "renderHuts",
+          "line": 627
+        }
+      ],
+      "components": [
+        "地图骨架",
+        "数值与资源",
+        "图鉴与信息行"
+      ],
+      "prototype_coverage": "partial",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "map-01",
+          "label": "初始局面",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/map-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/map-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/map-01-768-en.png",
+            "outputs/atlas-review/map-01-320-en.png"
+          ]
+        },
+        {
+          "id": "map-02",
+          "label": "三地切换",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/map-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/map-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/map-02-768-en.png",
+            "outputs/atlas-review/map-02-320-en.png"
+          ]
+        },
+        {
+          "id": "map-03",
+          "label": "追踪0/1/2/3",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/map-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/map-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/map-03-768-en.png",
+            "outputs/atlas-review/map-03-320-en.png"
+          ]
+        },
+        {
+          "id": "map-04",
+          "label": "巢穴已发现",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/map-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/map-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/map-04-768-en.png",
+            "outputs/atlas-review/map-04-320-en.png"
+          ]
+        },
+        {
+          "id": "map-05",
+          "label": "巨兽已击败",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/map-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/map-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/map-05-768-en.png",
+            "outputs/atlas-review/map-05-320-en.png"
+          ]
+        },
+        {
+          "id": "map-06",
+          "label": "生命危急",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/map-06-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/map-06-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/map-06-768-en.png",
+            "outputs/atlas-review/map-06-320-en.png"
+          ]
+        },
+        {
+          "id": "map-07",
+          "label": "怀疑临界",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/map-07-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/map-07-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/map-07-768-en.png",
+            "outputs/atlas-review/map-07-320-en.png"
+          ]
+        },
+        {
+          "id": "map-08",
+          "label": "事件日/袭击日/第十四天",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/map-08-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/map-08-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/map-08-768-en.png",
+            "outputs/atlas-review/map-08-320-en.png"
+          ]
+        },
+        {
+          "id": "map-09",
+          "label": "村庄和防线受损",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/map-09-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/map-09-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/map-09-768-en.png",
+            "outputs/atlas-review/map-09-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "map-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/map-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "search-select",
+      "title": "搜索选择",
+      "entrypoints": [
+        {
+          "file": "js/main.js",
+          "entrypoint": "showSearchDialog",
+          "line": 34
+        },
+        {
+          "file": "js/search.js",
+          "entrypoint": "renderQuickSearchOptions",
+          "line": 466
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "提示与结果"
+      ],
+      "prototype_coverage": "partial",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "search-select-01",
+          "label": "三地搜索入口",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-select-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-select-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-select-01-768-en.png",
+            "outputs/atlas-review/search-select-01-320-en.png"
+          ]
+        },
+        {
+          "id": "search-select-02",
+          "label": "地区搜索格已满",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-select-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-select-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-select-02-768-en.png",
+            "outputs/atlas-review/search-select-02-320-en.png"
+          ]
+        },
+        {
+          "id": "search-select-03",
+          "label": "搜索次数不足",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-select-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-select-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-select-03-768-en.png",
+            "outputs/atlas-review/search-select-03-320-en.png"
+          ]
+        },
+        {
+          "id": "search-select-04",
+          "label": "快速搜索可用/不可用",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-select-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-select-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-select-04-768-en.png",
+            "outputs/atlas-review/search-select-04-320-en.png"
+          ]
+        },
+        {
+          "id": "search-select-05",
+          "label": "天气与厚外套限制",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-select-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-select-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-select-05-768-en.png",
+            "outputs/atlas-review/search-select-05-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "search-select-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/search-select-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "search-place",
+      "title": "搜索掷骰与放置",
+      "entrypoints": [
+        {
+          "file": "js/search.js",
+          "entrypoint": "start",
+          "line": 14
+        },
+        {
+          "file": "js/search.js",
+          "entrypoint": "renderPendingRollPlacement",
+          "line": 239
+        },
+        {
+          "file": "js/search.js",
+          "entrypoint": "placeDie",
+          "line": 288
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "骰子操作",
+        "格子与落点"
+      ],
+      "prototype_coverage": "partial",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "search-place-01",
+          "label": "未掷骰",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-place-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-place-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-place-01-768-en.png",
+            "outputs/atlas-review/search-place-01-320-en.png"
+          ]
+        },
+        {
+          "id": "search-place-02",
+          "label": "两骰待分配",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-place-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-place-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-place-02-768-en.png",
+            "outputs/atlas-review/search-place-02-320-en.png"
+          ]
+        },
+        {
+          "id": "search-place-03",
+          "label": "选择骰子和落点",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-place-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-place-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-place-03-768-en.png",
+            "outputs/atlas-review/search-place-03-320-en.png"
+          ]
+        },
+        {
+          "id": "search-place-04",
+          "label": "点数修正与决心不足",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-place-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-place-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-place-04-768-en.png",
+            "outputs/atlas-review/search-place-04-320-en.png"
+          ]
+        },
+        {
+          "id": "search-place-05",
+          "label": "幸运符重掷可用/耗尽",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-place-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-place-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-place-05-768-en.png",
+            "outputs/atlas-review/search-place-05-320-en.png"
+          ]
+        },
+        {
+          "id": "search-place-06",
+          "label": "三轮填满六格",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-place-06-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-place-06-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-place-06-768-en.png",
+            "outputs/atlas-review/search-place-06-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "search-place-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/search-place-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "search-result",
+      "title": "搜索结算与继续",
+      "entrypoints": [
+        {
+          "file": "js/search.js",
+          "entrypoint": "showIntermediateResult",
+          "line": 384
+        },
+        {
+          "file": "js/search.js",
+          "entrypoint": "renderSearchResultActions",
+          "line": 406
+        },
+        {
+          "file": "js/search.js",
+          "entrypoint": "chooseLairMaterial",
+          "line": 649
+        },
+        {
+          "file": "js/search.js",
+          "entrypoint": "showFinalResults",
+          "line": 529
+        },
+        {
+          "file": "js/search.js",
+          "entrypoint": "showPostCombatOptions",
+          "line": 792
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "图鉴与信息行",
+        "提示与结果"
+      ],
+      "prototype_coverage": "partial",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "search-result-01",
+          "label": "正负差值遇敌",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-result-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-result-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-result-01-768-en.png",
+            "outputs/atlas-review/search-result-01-320-en.png"
+          ]
+        },
+        {
+          "id": "search-result-02",
+          "label": "追踪与普通材料",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-result-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-result-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-result-02-768-en.png",
+            "outputs/atlas-review/search-result-02-320-en.png"
+          ]
+        },
+        {
+          "id": "search-result-03",
+          "label": "巢穴及材料二选一",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-result-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-result-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-result-03-768-en.png",
+            "outputs/atlas-review/search-result-03-320-en.png"
+          ]
+        },
+        {
+          "id": "search-result-04",
+          "label": "零差值伏击",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-result-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-result-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-result-04-768-en.png",
+            "outputs/atlas-review/search-result-04-320-en.png"
+          ]
+        },
+        {
+          "id": "search-result-05",
+          "label": "库存上限提示",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-result-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-result-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-result-05-768-en.png",
+            "outputs/atlas-review/search-result-05-320-en.png"
+          ]
+        },
+        {
+          "id": "search-result-06",
+          "label": "继续/快速搜索/结束当日搜索",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-result-06-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-result-06-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-result-06-768-en.png",
+            "outputs/atlas-review/search-result-06-320-en.png"
+          ]
+        },
+        {
+          "id": "search-result-07",
+          "label": "战斗后继续搜索",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/search-result-07-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/search-result-07-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/search-result-07-768-en.png",
+            "outputs/atlas-review/search-result-07-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "search-result-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/search-result-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "hunt-bait",
+      "title": "挑战巨兽与诱饵",
+      "entrypoints": [
+        {
+          "file": "js/main.js",
+          "entrypoint": "confirmTerribleBeastHunt",
+          "line": 68
+        },
+        {
+          "file": "js/main.js",
+          "entrypoint": "showPotentBaitDialog",
+          "line": 139
+        },
+        {
+          "file": "js/main.js",
+          "entrypoint": "showBloodLureDialog",
+          "line": 160
+        },
+        {
+          "file": "js/main.js",
+          "entrypoint": "showBloodLureBeasts",
+          "line": 179
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "图鉴与信息行",
+        "提示与结果"
+      ],
+      "prototype_coverage": "none",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "hunt-bait-01",
+          "label": "发现巢穴后挑战",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/hunt-bait-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/hunt-bait-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/hunt-bait-01-768-en.png",
+            "outputs/atlas-review/hunt-bait-01-320-en.png"
+          ]
+        },
+        {
+          "id": "hunt-bait-02",
+          "label": "强力诱饵选地区",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/hunt-bait-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/hunt-bait-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/hunt-bait-02-768-en.png",
+            "outputs/atlas-review/hunt-bait-02-320-en.png"
+          ]
+        },
+        {
+          "id": "hunt-bait-03",
+          "label": "血饵选普通怪物",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/hunt-bait-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/hunt-bait-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/hunt-bait-03-768-en.png",
+            "outputs/atlas-review/hunt-bait-03-320-en.png"
+          ]
+        },
+        {
+          "id": "hunt-bait-04",
+          "label": "伤势和消耗搜索机会说明",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/hunt-bait-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/hunt-bait-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/hunt-bait-04-768-en.png",
+            "outputs/atlas-review/hunt-bait-04-320-en.png"
+          ]
+        },
+        {
+          "id": "hunt-bait-05",
+          "label": "不可使用条件",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/hunt-bait-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/hunt-bait-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/hunt-bait-05-768-en.png",
+            "outputs/atlas-review/hunt-bait-05-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "hunt-bait-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/hunt-bait-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "combat",
+      "title": "战斗主流程",
+      "entrypoints": [
+        {
+          "file": "js/combat.js",
+          "entrypoint": "startCombat",
+          "line": 6
+        },
+        {
+          "file": "js/combat.js",
+          "entrypoint": "renderCombat",
+          "line": 51
+        },
+        {
+          "file": "js/combat.js",
+          "entrypoint": "renderPendingCombatRoll",
+          "line": 313
+        },
+        {
+          "file": "js/combat.js",
+          "entrypoint": "renderCombatModifiers",
+          "line": 235
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "图鉴与信息行",
+        "骰子操作",
+        "数值与资源"
+      ],
+      "prototype_coverage": "none",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "combat-01",
+          "label": "普通怪物与三只恐怖巨兽",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-01-768-en.png",
+            "outputs/atlas-review/combat-01-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-02",
+          "label": "性格与持续伤势",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-02-768-en.png",
+            "outputs/atlas-review/combat-02-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-03",
+          "label": "双方命中范围和来源修正",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-03-768-en.png",
+            "outputs/atlas-review/combat-03-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-04",
+          "label": "待确认骰子",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-04-768-en.png",
+            "outputs/atlas-review/combat-04-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-05",
+          "label": "修正/重掷",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-05-768-en.png",
+            "outputs/atlas-review/combat-05-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-06",
+          "label": "伤害与回合日志",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-06-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-06-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-06-768-en.png",
+            "outputs/atlas-review/combat-06-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-07",
+          "label": "低生命和决心不足",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-07-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-07-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-07-768-en.png",
+            "outputs/atlas-review/combat-07-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "combat-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/combat-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "combat-items-flee",
+      "title": "战斗物品与逃跑",
+      "entrypoints": [
+        {
+          "file": "js/combat.js",
+          "entrypoint": "useItem",
+          "line": 456
+        },
+        {
+          "file": "js/combat.js",
+          "entrypoint": "activateItem",
+          "line": 515
+        },
+        {
+          "file": "js/combat.js",
+          "entrypoint": "renderPendingFleeRoll",
+          "line": 583
+        },
+        {
+          "file": "js/combat.js",
+          "entrypoint": "resolveFleeRoll",
+          "line": 601
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "图鉴与信息行",
+        "骰子操作",
+        "提示与结果"
+      ],
+      "prototype_coverage": "none",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "combat-items-flee-01",
+          "label": "可用/已用物品",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-items-flee-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-items-flee-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-items-flee-01-768-en.png",
+            "outputs/atlas-review/combat-items-flee-01-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-items-flee-02",
+          "label": "蟹甲吸收与碎裂",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-items-flee-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-items-flee-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-items-flee-02-768-en.png",
+            "outputs/atlas-review/combat-items-flee-02-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-items-flee-03",
+          "label": "复活药触发",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-items-flee-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-items-flee-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-items-flee-03-768-en.png",
+            "outputs/atlas-review/combat-items-flee-03-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-items-flee-04",
+          "label": "逃跑待确认骰子",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-items-flee-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-items-flee-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-items-flee-04-768-en.png",
+            "outputs/atlas-review/combat-items-flee-04-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-items-flee-05",
+          "label": "逃跑成功/失败",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-items-flee-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-items-flee-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-items-flee-05-768-en.png",
+            "outputs/atlas-review/combat-items-flee-05-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-items-flee-06",
+          "label": "效果后返回战斗",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-items-flee-06-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-items-flee-06-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-items-flee-06-768-en.png",
+            "outputs/atlas-review/combat-items-flee-06-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "combat-items-flee-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/combat-items-flee-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "combat-outcome",
+      "title": "战斗结果",
+      "entrypoints": [
+        {
+          "file": "js/combat.js",
+          "entrypoint": "victory",
+          "line": 670
+        },
+        {
+          "file": "js/combat.js",
+          "entrypoint": "defeat",
+          "line": 752
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "提示与结果",
+        "数值与资源"
+      ],
+      "prototype_coverage": "none",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "combat-outcome-01",
+          "label": "普通怪物战利品",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-outcome-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-outcome-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-outcome-01-768-en.png",
+            "outputs/atlas-review/combat-outcome-01-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-outcome-02",
+          "label": "恐怖巨兽击败与后续奖励",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-outcome-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-outcome-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-outcome-02-768-en.png",
+            "outputs/atlas-review/combat-outcome-02-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-outcome-03",
+          "label": "生命归零失败",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-outcome-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-outcome-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-outcome-03-768-en.png",
+            "outputs/atlas-review/combat-outcome-03-320-en.png"
+          ]
+        },
+        {
+          "id": "combat-outcome-04",
+          "label": "返回搜索或日终",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/combat-outcome-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/combat-outcome-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/combat-outcome-04-768-en.png",
+            "outputs/atlas-review/combat-outcome-04-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "combat-outcome-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/combat-outcome-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "build-repair",
+      "title": "建造与维修",
+      "entrypoints": [
+        {
+          "file": "js/main.js",
+          "entrypoint": "showBuildDialog",
+          "line": 233
+        },
+        {
+          "file": "js/build.js",
+          "entrypoint": "selectMaterial",
+          "line": 66
+        },
+        {
+          "file": "js/build.js",
+          "entrypoint": "renderBuild",
+          "line": 97
+        },
+        {
+          "file": "js/build.js",
+          "entrypoint": "renderPendingRollOptions",
+          "line": 217
+        },
+        {
+          "file": "js/build.js",
+          "entrypoint": "handleFault",
+          "line": 398
+        },
+        {
+          "file": "js/build.js",
+          "entrypoint": "showRepairMaterialSelection",
+          "line": 431
+        },
+        {
+          "file": "js/build.js",
+          "entrypoint": "renderRepairPlacement",
+          "line": 475
+        },
+        {
+          "file": "js/build.js",
+          "entrypoint": "abort",
+          "line": 679
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "骰子操作",
+        "格子与落点",
+        "提示与结果"
+      ],
+      "prototype_coverage": "partial",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "build-repair-01",
+          "label": "三种原始塔形",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/build-repair-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/build-repair-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/build-repair-01-768-en.png",
+            "outputs/atlas-review/build-repair-01-320-en.png"
+          ]
+        },
+        {
+          "id": "build-repair-02",
+          "label": "材料充足/不足",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/build-repair-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/build-repair-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/build-repair-02-768-en.png",
+            "outputs/atlas-review/build-repair-02-320-en.png"
+          ]
+        },
+        {
+          "id": "build-repair-03",
+          "label": "选骰与合法邻格",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/build-repair-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/build-repair-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/build-repair-03-768-en.png",
+            "outputs/atlas-review/build-repair-03-320-en.png"
+          ]
+        },
+        {
+          "id": "build-repair-04",
+          "label": "点数修正与重掷",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/build-repair-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/build-repair-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/build-repair-04-768-en.png",
+            "outputs/atlas-review/build-repair-04-320-en.png"
+          ]
+        },
+        {
+          "id": "build-repair-05",
+          "label": "故障和维修落点",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/build-repair-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/build-repair-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/build-repair-05-768-en.png",
+            "outputs/atlas-review/build-repair-05-320-en.png"
+          ]
+        },
+        {
+          "id": "build-repair-06",
+          "label": "塔完成",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/build-repair-06-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/build-repair-06-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/build-repair-06-768-en.png",
+            "outputs/atlas-review/build-repair-06-320-en.png"
+          ]
+        },
+        {
+          "id": "build-repair-07",
+          "label": "中止或倒塌代价",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/build-repair-07-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/build-repair-07-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/build-repair-07-768-en.png",
+            "outputs/atlas-review/build-repair-07-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "build-repair-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/build-repair-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "elder-recharge",
+      "title": "长老奖励与物品恢复",
+      "entrypoints": [
+        {
+          "file": "js/build.js",
+          "entrypoint": "showElderSelection",
+          "line": 568
+        },
+        {
+          "file": "js/build.js",
+          "entrypoint": "selectElder",
+          "line": 600
+        },
+        {
+          "file": "js/build.js",
+          "entrypoint": "showRechargeUI",
+          "line": 622
+        },
+        {
+          "file": "js/ui.js",
+          "entrypoint": "attachHawkTotem",
+          "line": 658
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "图鉴与信息行",
+        "提示与结果"
+      ],
+      "prototype_coverage": "none",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "elder-recharge-01",
+          "label": "长老未审批/已审批",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/elder-recharge-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/elder-recharge-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/elder-recharge-01-768-en.png",
+            "outputs/atlas-review/elder-recharge-01-320-en.png"
+          ]
+        },
+        {
+          "id": "elder-recharge-02",
+          "label": "恢复生命/决心/物品的选择",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/elder-recharge-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/elder-recharge-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/elder-recharge-02-768-en.png",
+            "outputs/atlas-review/elder-recharge-02-320-en.png"
+          ]
+        },
+        {
+          "id": "elder-recharge-03",
+          "label": "没有可恢复物品",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/elder-recharge-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/elder-recharge-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/elder-recharge-03-768-en.png",
+            "outputs/atlas-review/elder-recharge-03-320-en.png"
+          ]
+        },
+        {
+          "id": "elder-recharge-04",
+          "label": "鹰图腾选择可安装塔",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/elder-recharge-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/elder-recharge-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/elder-recharge-04-768-en.png",
+            "outputs/atlas-review/elder-recharge-04-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "elder-recharge-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/elder-recharge-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "forge",
+      "title": "锻造全过程",
+      "entrypoints": [
+        {
+          "file": "js/main.js",
+          "entrypoint": "showForgeDialog",
+          "line": 264
+        },
+        {
+          "file": "js/forge.js",
+          "entrypoint": "renderForge",
+          "line": 44
+        },
+        {
+          "file": "js/forge.js",
+          "entrypoint": "renderPlacementOptions",
+          "line": 189
+        },
+        {
+          "file": "js/forge.js",
+          "entrypoint": "showRefinementResult",
+          "line": 333
+        },
+        {
+          "file": "js/forge.js",
+          "entrypoint": "complete",
+          "line": 378
+        },
+        {
+          "file": "js/forge.js",
+          "entrypoint": "abort",
+          "line": 427
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "骰子操作",
+        "格子与落点",
+        "数值与资源",
+        "提示与结果"
+      ],
+      "prototype_coverage": "none",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "forge-01",
+          "label": "装备选择与材料不足",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/forge-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/forge-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/forge-01-768-en.png",
+            "outputs/atlas-review/forge-01-320-en.png"
+          ]
+        },
+        {
+          "id": "forge-02",
+          "label": "精炼六格与列结果",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/forge-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/forge-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/forge-02-768-en.png",
+            "outputs/atlas-review/forge-02-320-en.png"
+          ]
+        },
+        {
+          "id": "forge-03",
+          "label": "选骰/修正/重掷",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/forge-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/forge-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/forge-03-768-en.png",
+            "outputs/atlas-review/forge-03-320-en.png"
+          ]
+        },
+        {
+          "id": "forge-04",
+          "label": "额外稀有材料投入",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/forge-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/forge-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/forge-04-768-en.png",
+            "outputs/atlas-review/forge-04-320-en.png"
+          ]
+        },
+        {
+          "id": "forge-05",
+          "label": "标准/精工/失败",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/forge-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/forge-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/forge-05-768-en.png",
+            "outputs/atlas-review/forge-05-320-en.png"
+          ]
+        },
+        {
+          "id": "forge-06",
+          "label": "放弃和日终代价",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/forge-06-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/forge-06-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/forge-06-768-en.png",
+            "outputs/atlas-review/forge-06-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "forge-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/forge-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "craft",
+      "title": "合成与配方",
+      "entrypoints": [
+        {
+          "file": "js/main.js",
+          "entrypoint": "showCraftDialog",
+          "line": 298
+        },
+        {
+          "file": "js/craft.js",
+          "entrypoint": "craft",
+          "line": 6
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "图鉴与信息行",
+        "数值与资源",
+        "提示与结果"
+      ],
+      "prototype_coverage": "none",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "craft-01",
+          "label": "材料足够/不足",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/craft-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/craft-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/craft-01-768-en.png",
+            "outputs/atlas-review/craft-01-320-en.png"
+          ]
+        },
+        {
+          "id": "craft-02",
+          "label": "物品已持有不可重复",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/craft-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/craft-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/craft-02-768-en.png",
+            "outputs/atlas-review/craft-02-320-en.png"
+          ]
+        },
+        {
+          "id": "craft-03",
+          "label": "已消耗物品可再造",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/craft-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/craft-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/craft-03-768-en.png",
+            "outputs/atlas-review/craft-03-320-en.png"
+          ]
+        },
+        {
+          "id": "craft-04",
+          "label": "成功与自动装备/次数提示",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/craft-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/craft-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/craft-04-768-en.png",
+            "outputs/atlas-review/craft-04-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "craft-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/craft-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "inventory",
+      "title": "行囊与装备",
+      "entrypoints": [
+        {
+          "file": "js/main.js",
+          "entrypoint": "showInventory",
+          "line": 339
+        },
+        {
+          "file": "js/ui.js",
+          "entrypoint": "renderMaterials",
+          "line": 485
+        },
+        {
+          "file": "js/ui.js",
+          "entrypoint": "renderCraftedItems",
+          "line": 557
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "图鉴与信息行",
+        "数值与资源"
+      ],
+      "prototype_coverage": "partial",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "inventory-01",
+          "label": "空行囊",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/inventory-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/inventory-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/inventory-01-768-en.png",
+            "outputs/atlas-review/inventory-01-320-en.png"
+          ]
+        },
+        {
+          "id": "inventory-02",
+          "label": "三地材料与共享污血",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/inventory-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/inventory-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/inventory-02-768-en.png",
+            "outputs/atlas-review/inventory-02-320-en.png"
+          ]
+        },
+        {
+          "id": "inventory-03",
+          "label": "库存0至上限",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/inventory-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/inventory-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/inventory-03-768-en.png",
+            "outputs/atlas-review/inventory-03-320-en.png"
+          ]
+        },
+        {
+          "id": "inventory-04",
+          "label": "工具可用/已使用",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/inventory-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/inventory-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/inventory-04-768-en.png",
+            "outputs/atlas-review/inventory-04-320-en.png"
+          ]
+        },
+        {
+          "id": "inventory-05",
+          "label": "合成物品剩余次数/已用",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/inventory-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/inventory-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/inventory-05-768-en.png",
+            "outputs/atlas-review/inventory-05-320-en.png"
+          ]
+        },
+        {
+          "id": "inventory-06",
+          "label": "标准/精工/未锻造",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/inventory-06-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/inventory-06-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/inventory-06-768-en.png",
+            "outputs/atlas-review/inventory-06-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "inventory-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/inventory-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "rest-day-end",
+      "title": "休息与日终",
+      "entrypoints": [
+        {
+          "file": "js/ui.js",
+          "entrypoint": "showRestDialog",
+          "line": 756
+        },
+        {
+          "file": "js/main.js",
+          "entrypoint": "onDayAdvanced",
+          "line": 747
+        },
+        {
+          "file": "js/main.js",
+          "entrypoint": "finishDayAndCheck",
+          "line": 768
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "提示与结果",
+        "数值与资源"
+      ],
+      "prototype_coverage": "partial",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "rest-day-end-01",
+          "label": "休息前成本确认",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/rest-day-end-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/rest-day-end-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/rest-day-end-01-768-en.png",
+            "outputs/atlas-review/rest-day-end-01-320-en.png"
+          ]
+        },
+        {
+          "id": "rest-day-end-02",
+          "label": "恢复后生命上限",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/rest-day-end-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/rest-day-end-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/rest-day-end-02-768-en.png",
+            "outputs/atlas-review/rest-day-end-02-320-en.png"
+          ]
+        },
+        {
+          "id": "rest-day-end-03",
+          "label": "天数推进",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/rest-day-end-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/rest-day-end-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/rest-day-end-03-768-en.png",
+            "outputs/atlas-review/rest-day-end-03-320-en.png"
+          ]
+        },
+        {
+          "id": "rest-day-end-04",
+          "label": "事件/袭击/怀疑的原结算顺序",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/rest-day-end-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/rest-day-end-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/rest-day-end-04-768-en.png",
+            "outputs/atlas-review/rest-day-end-04-320-en.png"
+          ]
+        },
+        {
+          "id": "rest-day-end-05",
+          "label": "流程结束返回地图",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/rest-day-end-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/rest-day-end-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/rest-day-end-05-768-en.png",
+            "outputs/atlas-review/rest-day-end-05-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "rest-day-end-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/rest-day-end-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "events",
+      "title": "地区事件",
+      "entrypoints": [
+        {
+          "file": "js/events.js",
+          "entrypoint": "showEventResults",
+          "line": 214
+        },
+        {
+          "file": "js/ui.js",
+          "entrypoint": "getRegionEventDisplay",
+          "line": 295
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "图鉴与信息行",
+        "提示与结果",
+        "地图骨架"
+      ],
+      "prototype_coverage": "none",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "events-01",
+          "label": "丰饶",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/events-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/events-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/events-01-768-en.png",
+            "outputs/atlas-review/events-01-320-en.png"
+          ]
+        },
+        {
+          "id": "events-02",
+          "label": "突然清醒",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/events-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/events-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/events-02-768-en.png",
+            "outputs/atlas-review/events-02-320-en.png"
+          ]
+        },
+        {
+          "id": "events-03",
+          "label": "恶劣天气",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/events-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/events-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/events-03-768-en.png",
+            "outputs/atlas-review/events-03-320-en.png"
+          ]
+        },
+        {
+          "id": "events-04",
+          "label": "疯狂",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/events-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/events-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/events-04-768-en.png",
+            "outputs/atlas-review/events-04-320-en.png"
+          ]
+        },
+        {
+          "id": "events-05",
+          "label": "特殊袭击事件",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/events-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/events-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/events-05-768-en.png",
+            "outputs/atlas-review/events-05-320-en.png"
+          ]
+        },
+        {
+          "id": "events-06",
+          "label": "地区效果出现在地图和相关操作",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/events-06-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/events-06-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/events-06-768-en.png",
+            "outputs/atlas-review/events-06-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "events-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/events-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "attacks",
+      "title": "巨兽袭击村庄",
+      "entrypoints": [
+        {
+          "file": "js/events.js",
+          "entrypoint": "processNextBeastAttack",
+          "line": 274
+        },
+        {
+          "file": "js/events.js",
+          "entrypoint": "buildBeastAttackHtml",
+          "line": 303
+        },
+        {
+          "file": "js/events.js",
+          "entrypoint": "showBeastAttackResult",
+          "line": 390
+        }
+      ],
+      "components": [
+        "地图骨架",
+        "纸质工作面板",
+        "提示与结果",
+        "数值与资源"
+      ],
+      "prototype_coverage": "none",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "attacks-01",
+          "label": "来袭地区和方向",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/attacks-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/attacks-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/attacks-01-768-en.png",
+            "outputs/atlas-review/attacks-01-320-en.png"
+          ]
+        },
+        {
+          "id": "attacks-02",
+          "label": "对应塔阻挡/受损/摧毁",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/attacks-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/attacks-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/attacks-02-768-en.png",
+            "outputs/atlas-review/attacks-02-320-en.png"
+          ]
+        },
+        {
+          "id": "attacks-03",
+          "label": "鹰图腾免疫",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/attacks-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/attacks-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/attacks-03-768-en.png",
+            "outputs/atlas-review/attacks-03-320-en.png"
+          ]
+        },
+        {
+          "id": "attacks-04",
+          "label": "小屋损失和无小屋",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/attacks-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/attacks-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/attacks-04-768-en.png",
+            "outputs/atlas-review/attacks-04-320-en.png"
+          ]
+        },
+        {
+          "id": "attacks-05",
+          "label": "追踪/巢穴/决心变化",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/attacks-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/attacks-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/attacks-05-768-en.png",
+            "outputs/atlas-review/attacks-05-320-en.png"
+          ]
+        },
+        {
+          "id": "attacks-06",
+          "label": "连续袭击与日终继续",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/attacks-06-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/attacks-06-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/attacks-06-768-en.png",
+            "outputs/atlas-review/attacks-06-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "attacks-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/attacks-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "tutorial",
+      "title": "教学与机制提示",
+      "entrypoints": [
+        {
+          "file": "js/tutorial.js",
+          "entrypoint": "renderInvitation",
+          "line": 40
+        },
+        {
+          "file": "js/tutorial.js",
+          "entrypoint": "showWelcome",
+          "line": 69
+        },
+        {
+          "file": "js/tutorial.js",
+          "entrypoint": "guidance",
+          "line": 147
+        },
+        {
+          "file": "js/tutorial.js",
+          "entrypoint": "positionPointer",
+          "line": 252
+        },
+        {
+          "file": "js/tutorial.js",
+          "entrypoint": "complete",
+          "line": 293
+        },
+        {
+          "file": "js/tutorial.js",
+          "entrypoint": "help",
+          "line": 319
+        }
+      ],
+      "components": [
+        "引导与操作反馈",
+        "纸质工作面板",
+        "骰子操作"
+      ],
+      "prototype_coverage": "none",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "tutorial-01",
+          "label": "教学邀请",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/tutorial-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/tutorial-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/tutorial-01-768-en.png",
+            "outputs/atlas-review/tutorial-01-320-en.png"
+          ]
+        },
+        {
+          "id": "tutorial-02",
+          "label": "当前步骤与操作高亮",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/tutorial-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/tutorial-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/tutorial-02-768-en.png",
+            "outputs/atlas-review/tutorial-02-320-en.png"
+          ]
+        },
+        {
+          "id": "tutorial-03",
+          "label": "固定练习骰子",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/tutorial-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/tutorial-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/tutorial-03-768-en.png",
+            "outputs/atlas-review/tutorial-03-320-en.png"
+          ]
+        },
+        {
+          "id": "tutorial-04",
+          "label": "机制提示",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/tutorial-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/tutorial-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/tutorial-04-768-en.png",
+            "outputs/atlas-review/tutorial-04-320-en.png"
+          ]
+        },
+        {
+          "id": "tutorial-05",
+          "label": "完成/重试/重玩/退出",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/tutorial-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/tutorial-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/tutorial-05-768-en.png",
+            "outputs/atlas-review/tutorial-05-320-en.png"
+          ]
+        },
+        {
+          "id": "tutorial-06",
+          "label": "返回原局与存档隔离",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/tutorial-06-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/tutorial-06-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/tutorial-06-768-en.png",
+            "outputs/atlas-review/tutorial-06-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "tutorial-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/tutorial-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "help-journal",
+      "title": "帮助与行动记录",
+      "entrypoints": [
+        {
+          "file": "js/main.js",
+          "entrypoint": "showHelp",
+          "line": 621
+        },
+        {
+          "file": "js/main.js",
+          "entrypoint": "add",
+          "line": 832
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "图鉴与信息行",
+        "引导与操作反馈"
+      ],
+      "prototype_coverage": "partial",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "help-journal-01",
+          "label": "规则长文与表格",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/help-journal-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/help-journal-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/help-journal-01-768-en.png",
+            "outputs/atlas-review/help-journal-01-320-en.png"
+          ]
+        },
+        {
+          "id": "help-journal-02",
+          "label": "日志较短/较长",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/help-journal-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/help-journal-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/help-journal-02-768-en.png",
+            "outputs/atlas-review/help-journal-02-320-en.png"
+          ]
+        },
+        {
+          "id": "help-journal-03",
+          "label": "长标题与长效果说明",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/help-journal-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/help-journal-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/help-journal-03-768-en.png",
+            "outputs/atlas-review/help-journal-03-320-en.png"
+          ]
+        },
+        {
+          "id": "help-journal-04",
+          "label": "上下文机制提示入口",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/help-journal-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/help-journal-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/help-journal-04-768-en.png",
+            "outputs/atlas-review/help-journal-04-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "help-journal-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/help-journal-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "save-load-reset",
+      "title": "保存/加载/新局",
+      "entrypoints": [
+        {
+          "file": "js/main.js",
+          "entrypoint": "saveGame",
+          "line": 704
+        },
+        {
+          "file": "js/main.js",
+          "entrypoint": "loadGame",
+          "line": 714
+        },
+        {
+          "file": "js/ui.js",
+          "entrypoint": "showNewGameDialog",
+          "line": 743
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "提示与结果"
+      ],
+      "prototype_coverage": "none",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "save-load-reset-01",
+          "label": "保存成功",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/save-load-reset-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/save-load-reset-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/save-load-reset-01-768-en.png",
+            "outputs/atlas-review/save-load-reset-01-320-en.png"
+          ]
+        },
+        {
+          "id": "save-load-reset-02",
+          "label": "载入成功后地图刷新",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/save-load-reset-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/save-load-reset-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/save-load-reset-02-768-en.png",
+            "outputs/atlas-review/save-load-reset-02-320-en.png"
+          ]
+        },
+        {
+          "id": "save-load-reset-03",
+          "label": "没有存档的加载失败",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/save-load-reset-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/save-load-reset-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/save-load-reset-03-768-en.png",
+            "outputs/atlas-review/save-load-reset-03-320-en.png"
+          ]
+        },
+        {
+          "id": "save-load-reset-04",
+          "label": "新局确认/取消",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/save-load-reset-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/save-load-reset-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/save-load-reset-04-768-en.png",
+            "outputs/atlas-review/save-load-reset-04-320-en.png"
+          ]
+        },
+        {
+          "id": "save-load-reset-05",
+          "label": "进度损失说明",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/save-load-reset-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/save-load-reset-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/save-load-reset-05-768-en.png",
+            "outputs/atlas-review/save-load-reset-05-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "save-load-reset-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/save-load-reset-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    },
+    {
+      "id": "endings",
+      "title": "结局与计分",
+      "entrypoints": [
+        {
+          "file": "js/main.js",
+          "entrypoint": "showGameOver",
+          "line": 777
+        },
+        {
+          "file": "js/main.js",
+          "entrypoint": "renderScoreBreakdown",
+          "line": 810
+        }
+      ],
+      "components": [
+        "纸质工作面板",
+        "提示与结果",
+        "图鉴与信息行"
+      ],
+      "prototype_coverage": "none",
+      "production_migration": "implemented",
+      "required_states": [
+        {
+          "id": "endings-01",
+          "label": "三巨兽击败胜利",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/endings-01-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/endings-01-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/endings-01-768-en.png",
+            "outputs/atlas-review/endings-01-320-en.png"
+          ]
+        },
+        {
+          "id": "endings-02",
+          "label": "生命耗尽失败",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/endings-02-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/endings-02-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/endings-02-768-en.png",
+            "outputs/atlas-review/endings-02-320-en.png"
+          ]
+        },
+        {
+          "id": "endings-03",
+          "label": "怀疑达到上限失败",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/endings-03-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/endings-03-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/endings-03-768-en.png",
+            "outputs/atlas-review/endings-03-320-en.png"
+          ]
+        },
+        {
+          "id": "endings-04",
+          "label": "时间耗尽失败",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/endings-04-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/endings-04-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/endings-04-768-en.png",
+            "outputs/atlas-review/endings-04-320-en.png"
+          ]
+        },
+        {
+          "id": "endings-05",
+          "label": "完整计分和总分",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/endings-05-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/endings-05-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/endings-05-768-en.png",
+            "outputs/atlas-review/endings-05-320-en.png"
+          ]
+        },
+        {
+          "id": "endings-06",
+          "label": "开始新局",
+          "visual_review": "automated_layout_passed",
+          "desktop_screenshot": "outputs/atlas-review/endings-06-1440-zh.png",
+          "mobile_screenshot": "outputs/atlas-review/endings-06-390-zh.png",
+          "interaction_check": "Real renderer fixture passed. Continuous interaction evidence is recorded in validation; this state is not independently claimed as an end-to-end playthrough.",
+          "notes": "No document/modal horizontal overflow, page exception, broken active image, or visible English Han residue in the recorded combinations.",
+          "english_screenshots": [
+            "outputs/atlas-review/endings-06-768-en.png",
+            "outputs/atlas-review/endings-06-320-en.png"
+          ]
+        }
+      ],
+      "representative_visual_review": {
+        "state_id": "endings-02",
+        "status": "reviewed",
+        "screenshot": "outputs/atlas-review/endings-02-1440-zh.png",
+        "notes": "Reviewed the desktop group contact sheet for shared paper, ink, title/action hierarchy and composition. Mobile layout checks are automatic; selected search, combat, build, inventory and map screens were also inspected at full size."
+      }
+    }
+  ],
+  "developer_utility": {
+    "entrypoint": "Game.showDebug → js/debug.js DebugUI.open",
+    "scope": "Separate developer utility; inherit readable tokens, do not insert debugging controls into player immersion.",
+    "production_migration": "sectioned_workshop_with_live_editing",
+    "validation_report": "outputs/debug-workshop/checks.json",
+    "validated_panels": 30,
+    "validated_editing_workflows": 6
+  },
+  "village_scene": {
+    "entrypoint": "AtlasUI.mount → js/village.js VillageUI.mount",
+    "assets": "assets/atlas/village-art.json",
+    "regression_script": "scripts/test_village_scene.js",
+    "validation_report": "outputs/village-scene/checks.json",
+    "rendered_combinations": 24,
+    "interaction_workflows": 6,
+    "hotspots": 15
+  },
+  "production_entrypoint": "index.html",
+  "production_branch": "codex/atlas-interface",
+  "validation": {
+    "report": "outputs/atlas-review/scene-checks.json",
+    "gallery": "outputs/atlas-review/index.html",
+    "createdAt": "2026-10-18T06:30:20.657Z",
+    "required_state_points": 117,
+    "rendered_combinations": 480,
+    "additional_branches": [
+      "standard forging",
+      "failed forging",
+      "no huts remaining"
+    ],
+    "combinations": [
+      {
+        "width": 1440,
+        "language": "zh"
+      },
+      {
+        "width": 390,
+        "language": "zh"
+      },
+      {
+        "width": 768,
+        "language": "en"
+      },
+      {
+        "width": 320,
+        "language": "en"
+      }
+    ],
+    "layout_failures": 0,
+    "page_errors": 0,
+    "interaction_checks": [
+      "region and four world pages",
+      "modal focus, inert and keyboard return",
+      "save/load round trip",
+      "search action and safe Escape",
+      "reduced motion",
+      "two consecutive attacks and day-end continuation",
+      "missing map fallback"
+    ],
+    "full_flow": "scripts/test_tutorial.js: passed; complete lesson, mobile, keyboard, English, reduced motion, restores, save isolation and day-end/events",
+    "rule_regressions": [
+      "test_combat_order.js: 15/15",
+      "test_combat_rewards.js: passed",
+      "test_crab_plate.js: passed"
+    ],
+    "art_variant_report": "outputs/atlas-review/art-variant-checks.json",
+    "limits": "All states use actual renderers with fixed fixtures. This does not mean every compound label or every random rule branch was individually completed end to end. Layout checks are Chromium-based; representative images were visually reviewed, rather than all images receiving exhaustive manual approval.",
+    "art_variant_cases": 48,
+    "art_variant_result": "passed",
+    "viewport_workflows": {
+      "script": "scripts/test_viewport_workflows.js",
+      "report": "outputs/viewport-workflows/checks.json",
+      "checks": 154,
+      "failures": 0,
+      "scope": "All dice workflow targets fit the tested viewports, including full combat portrait, health track and live modifiers. Includes gear/event/ambush/Crab Plate combinations."
+    },
+    "latest_changes": [
+      "Continuous inventory grid and item separator rules",
+      "Full combat portrait and health track restored",
+      "Live combat modifiers remain expanded",
+      "Same-die overlap and lethal-hit priority covered by rule tests"
+    ],
+    "day_end_regressions": {
+      "script": "scripts/test_day_end_victory.js",
+      "passed": 52,
+      "failed": 0,
+      "scope": "day-end order, all 14 victory dates, sequential assaults, tower damage, loss stops queue, callback invalidation and save guard"
+    },
+    "full_gameplay": {
+      "script": "scripts/test_full_gameplay.js",
+      "complete_runs": [
+        {
+          "viewport": "1440x900",
+          "language": "zh",
+          "days": 14,
+          "result": "win",
+          "score": 216
+        },
+        {
+          "viewport": "390x844",
+          "language": "en",
+          "days": 14,
+          "result": "win",
+          "score": 216
+        }
+      ],
+      "browser_boundaries": 4,
+      "report": "outputs/full-gameplay/report.json",
+      "documentation": "docs/gameplay-regression-2026-10-18.md"
+    },
+    "supply_links": {
+      "script": "scripts/test_supply_links.js",
+      "viewports": [
+        "1440x1000 zh",
+        "1024x900 zh",
+        "662x706 zh",
+        "390x844 zh",
+        "320x740 en"
+      ],
+      "recipes": 7,
+      "equipment": 3,
+      "edges": 17,
+      "checks": [
+        "live endpoint geometry",
+        "pinned and keyboard selection",
+        "stock-ledger round trip",
+        "crafting consumption and dashed-line update",
+        "desktop/mobile reflow",
+        "real forging handler",
+        "English text"
+      ],
+      "report": "outputs/supply-links/checks.json",
+      "errors": 0
+    },
+    "supply_compact": {
+      "script": "scripts/test_supply_links.js",
+      "all_10_product_fields": "present and unclipped",
+      "all_owned_products": "present and unclipped",
+      "recipe_edges": 17,
+      "viewports": [
+        "1440x1000 zh",
+        "1024x900 zh",
+        "662x706 zh",
+        "390x844 zh",
+        "320x740 en"
+      ],
+      "density_comparison": "outputs/supply-compact/density-comparison.json",
+      "wide_screen_height_reduction_percent": 68,
+      "information_removed": false
+    }
+  }
+}

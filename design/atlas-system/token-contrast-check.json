@@ -1,0 +1,12 @@
+{
+  "scope": "Production token text/surface pairs from css/atlas-tokens.css only. Ratios do not certify every composited image or inline color.",
+  "ratios": {
+    "ink": 8.12,
+    "ink-secondary": 5.27,
+    "ink-muted": 4.59,
+    "on-action": 6.07,
+    "on-selected": 7.74,
+    "danger": 5.69,
+    "success": 4.79
+  }
+}

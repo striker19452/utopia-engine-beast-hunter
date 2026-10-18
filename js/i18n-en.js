@@ -80,6 +80,11 @@ Object.assign(I18n.exact, {
   '锻造等待结算': 'Forging awaits resolution',
   '精炼格': 'Refinement Grid',
   '先选择要放置的骰子：': 'First choose a die to place:',
+  '点击精炼格空位，填入': 'Click an empty refining field cell to place',
+  '上方': 'Top',
+  '下方': 'Bottom',
+  '差值': 'Result',
+  '空位': 'Empty',
   '本次掷骰': 'this roll',
   '精工': 'Mastercraft',
   '标准': 'Standard',
@@ -177,6 +182,7 @@ Object.assign(I18n.exact, {
   '游戏规则': 'Game Rules',
   '目标': 'Objective',
   '在14天内击败三只恐怖巨兽，赢得村民信任。': 'Defeat all three Terrible Beasts within 14 days and earn the villagers’ trust.',
+  '击败第三只恐怖巨兽后，先领取战斗奖励与长老审批，再结算当天事件、袭击和怀疑，最后判定胜利。第14天击败第三只也可获胜。': "After defeating the third Terrible Beast, collect combat rewards and the elder's approval, then resolve that day's events, attacks and Doubt before checking victory. Defeating the third beast on day 14 also wins.",
   '材料库存每种最多保存4个，获得材料时若没有空格，超出的材料会被弃置。': 'You may hold at most 4 of each material. Any material gained beyond that limit is discarded.',
   '每日行动（选一）': 'Daily Action (choose one)',
   '搜索 - 每区有6个搜索格；每天最多3次搜索，恶劣天气下2次': 'Search: each region has 6 search boxes; make up to 3 searches per day, or 2 during Foul Weather.',
@@ -524,3 +530,160 @@ I18n.officialTerms = Object.freeze({
   craftedItems: 'Crafted Items',
   terribleBeastAttack: 'Terrible Beast Attack',
 });
+
+// C · The Cartographer's Table production shell.
+Object.assign(I18n.exact, {
+  '猎场战图':'The Hunting Atlas','主要界面':'Main views','猎场地图':'Hunting grounds map',
+  '生命':'Life','猎场':'Hunting Grounds','村庄':'Village','行囊':'Stores','手记':'Journal',
+  '十四天之约':'The fourteen-day pact','南境谷地':'Southern Valley',
+  '循迹而行，守住你的藏身之地。':'Follow the tracks. Protect your refuge.',
+  '地图暂不可用，仍可选择猎场':'Map unavailable. Hunting grounds remain selectable.',
+  '雪峰、海岸与裂痕之地围绕山谷村庄的手绘地图':'A hand-drawn map of the village, surrounded by snow peaks, coast and the Scar',
+  '藏身的村庄':'Your refuge','虚线 · 追踪路线':'Dotted line · tracking route',
+  '三处猎场，一纸生死之约。':'Three hunting grounds. One promise to keep.',
+  '当前猎场':'Current hunting ground','掷骰搜索':'Roll to search',
+  '村庄的三道防线':'The village defences','完成防线，守住庇护你的村庄。':'Complete the defences. Protect the village that shelters you.',
+  '行囊与工坊':'Stores and workshop','猎人手记':'Hunter’s Journal','每种材料最多携带四份。':'Carry up to four of each material.',
+  '一路行来':'The journey so far','每一天，都有代价。':'Every day has its price.',
+  '游戏操作':'Game actions','旅程已经结束':'The journey has ended',
+  '只剩一天。':'Only one day remains.','今夜巨兽来袭':'The beasts attack tonight',
+  '今日有地区事件':'Regional events today','军团仍在南下':'The regiment marches south',
+});
+
+// Match complete rule clauses before the generic single-word substitutions.
+I18n.phrases.unshift(
+  [/重掷全部骰子/g, 'reroll all dice'],
+  [/最多3次（本次\s*(\d+)\/3）/g, 'up to 3 times ($1/3 used this roll)'],
+  [/狡猾 - 前2轮你无法造成伤害；伏击加成可取消/g, 'Cunning: you cannot deal damage for the first 2 rounds; an ambush cancels this'],
+  [/所有怪物攻击范围 -1（最低为1）/g, 'All beast attack ranges -1 (minimum 1)']
+);
+
+Object.assign(I18n.exact, {
+  '伏击': 'Ambush',
+  '库存已满，超出部分弃置': 'inventory full; excess discarded',
+  '没有可挑战的恐怖巨兽。': 'No Terrible Beast is available to challenge.',
+  '本次掷骰已使用过决心。': 'Determination has already been used for this roll.',
+  '你击败了一只恐怖巨兽！村庄长老们改变了对你的看法。': 'You defeated a Terrible Beast! The village elders now see you differently.',
+  '已使用': 'Used',
+});
+I18n.phrases.unshift(
+  [/搜索时获得稀有材料替代普通材料/g, 'Gain rare materials instead of common materials when searching'],
+  [/同标准 \+ 找到普通或稀有材料时额外获得1个稀有材料/g, 'Standard effect, plus gain 1 extra rare material whenever common or rare material is found'],
+  [/你的攻击范围 \+1/g, 'Your attack range +1']
+);
+I18n.phrases.unshift(
+  [/温顺 - 每轮只要你造成伤害，巨兽攻击范围上限-1/g, 'Cowed: whenever you deal damage in a round, reduce the beast’s maximum attack range by 1'],
+  [/残忍 - 掷出1时造成重伤/g, 'Cruel: rolling a 1 causes a grievous wound']
+);
+Object.assign(I18n.exact, {
+  '规则与记录': 'Rules & Journal',
+  '修正说明': 'Dice Help',
+  '为什么这样做？': 'Why this step?',
+});
+I18n.phrases.unshift([/搜索 (\d+)\/(\d+) · 掷骰 (\d+)\/3/g, 'Search $1/$2 · Roll $3/3']);
+Object.assign(I18n.exact, {
+  '交叠范围内的骰子同时命中双方；我方先结算，击杀后不受反击。': 'A die in both attack ranges hits both sides. You attack first; a slain beast cannot retaliate.',
+});
+
+Object.assign(I18n.exact, {
+  '行囊显示方式': 'Stores view',
+  '配方连线': 'Recipe links',
+  '库存清单': 'Stock ledger',
+  '实线 · 材料足够': 'Solid · Enough material',
+  '虚线 · 材料不足': 'Dashed · Missing material',
+  '显示全部连线': 'Show all links',
+  '材料流向，尽在一页': 'From materials to equipment',
+  '点选材料或道具，沿连线查看配方。': 'Select a material or item to trace its recipe.',
+  '库存 / 所需': 'Stock / Required',
+  '材料数字：库存 / 所需': 'Material counts: stock / required',
+  '库存': 'Stock',
+  '锻造装备': 'Forged equipment',
+  '未锻造': 'Not forged',
+  '消耗一天': 'Uses one day',
+});
+
+Object.assign(I18n.exact, {
+  '调试工坊': 'Debug Workshop',
+  '调试分区': 'Debug sections',
+  '核心与村庄': 'Vitals & Village',
+  '猎场与巨兽': 'Regions & Beasts',
+  '防御工事': 'Defences',
+  '装备等级': 'Equipment',
+  '调整生命、行程与村庄状态。': 'Edit health, time and village conditions.',
+  '按材料种类调整库存，单项最多4个。': 'Adjust stock by material group. Each material holds up to 4.',
+  '设置巢穴、追踪和各地巨兽的击败状态。': 'Set lairs, tracking and defeated Terrible Beasts.',
+  '调整塔的完成状态、损伤和鹰图腾。': 'Edit tower completion, damage and Hawk Totems.',
+  '为测试配置标准或精工装备。': 'Configure Standard or Mastercraft equipment for testing.',
+  '恢复满血': 'Restore HP',
+  '清零怀疑': 'Clear Doubt',
+  '决心 +5': 'Determination +5',
+  '生命与伤势': 'Health',
+  '行程与决心': 'Time & Determination',
+  '村民怀疑': "Villager's Doubt",
+  '修复全部小屋': 'Restore All Huts',
+  '全部补满': 'Fill All',
+  '全部清空': 'Clear All',
+  '补满本组': 'Fill Group',
+  '追踪进度': 'Tracking',
+  '启用鹰图腾会自动完成该塔；摧毁会清空塔格。': 'Enabling a Hawk Totem completes the tower. Destroying a tower clears its grid.',
+  '全部标准': 'All Standard',
+  '全部精工': 'All Mastercraft',
+  '卸下全部': 'Unequip All',
+  '即时生效': 'Live Editing',
+  '修改即时生效': 'Changes apply immediately',
+  '完成调试': 'Done',
+  '恐怖巨兽仍在游荡': 'Terrible Beast still roaming',
+  '图腾防护': 'Totem Protected',
+  '已完成': 'Complete',
+  '未完成': 'Incomplete',
+  '已摧毁': 'Destroyed',
+  '已更新：': 'Updated: ',
+});
+I18n.phrases.unshift(
+  [/小屋\s*(\d+)\s*完好/g, 'Hut $1 intact'],
+  [/追踪\s*(\d+)/g, 'Track $1'],
+);
+
+Object.assign(I18n.exact, {
+  '村庄场景': 'Village scene',
+  '藏身之地': 'Your Refuge',
+  '这里的每一盏灯，都值得你守住。': 'Every light here is worth protecting.',
+  '向左查看村庄': 'Pan village left',
+  '向右查看村庄': 'Pan village right',
+  '村庄场景，可左右滑动': 'Village scene; scroll horizontally to explore',
+  '松林与木栅环绕的山谷村庄，曲径连接议事厅、营地和工坊': 'A pine-ringed valley village with paths to the longhouse, camp and workshop',
+  '场景暂不可用，建筑操作仍可使用。': 'Scene art is unavailable. Building controls remain available.',
+  '长老议事厅': 'Elders’ Longhouse',
+  '工匠作坊': 'Artisan Workshop',
+  '猎人营地': 'Hunter’s Camp',
+  '锻造 / 合成': 'Forge / Craft',
+  '休息 / 恢复': 'Rest / Recover',
+  '长老审批': 'Elder Approval',
+  '村庄建筑详情': 'Village building details',
+  '村庄档案': 'Village Record',
+  '防线规则': 'Defence Rules',
+  '把带回的材料，变成下一次归来的底气。': 'Turn gathered materials into a safer journey home.',
+  '查看材料与配方 →': 'View materials and recipes →',
+  '当前生命': 'Current HP',
+  '在营地休息': 'Rest at Camp',
+  '村庄地点': 'Village locations',
+  '前往': 'Go to',
+  '议事厅': 'Longhouse',
+  '工坊': 'Workshop',
+  '营地': 'Camp',
+  '已建成': 'Complete',
+  '待建造': 'Unbuilt',
+  '完好': 'Intact',
+  '信任需要行动来换取。': 'Trust is earned through action.',
+  '让下一次出发，多一分胜算。': 'Give your next journey a better chance.',
+  '收起武器，喘息片刻。': 'Set down your weapon. Catch your breath.',
+  '这些屋檐之下，是你要守住的人。': 'Under these roofs live the people you protect.',
+  '守住这条来路，巨兽就无法踏入村庄。': 'Defend this approach to keep beasts outside the village.',
+  '防线已建成': 'Defence Complete',
+  '重建这座塔': 'Rebuild Tower',
+  '建造这座塔': 'Build Tower',
+  '只有对应方向的完工防御塔能够阻挡袭击。': 'A completed tower blocks attacks from its matching direction.',
+  '消耗1普通材料与一天。': 'Costs 1 common material and one day.',
+  '需要1个普通材料：石头、绳索或焦油。': 'Requires 1 common material: Stone, Cord or Tar.',
+});
+I18n.phrases.unshift([/已获审批\s*(\d+)\/3/g, 'Approvals $1/3']);

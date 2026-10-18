@@ -107,6 +107,41 @@ test('a surviving enemy still attacks after player damage', () => {
   assert.ok(playerLog >= 0 && enemyLog > playerLog);
 });
 
+test('the same overlapping die hits both sides while the beast survives', () => {
+  for (const rolls of [[4, 2], [2, 4], [4, 4]]) {
+    const hits = rolls.filter(die => die === 4).length;
+    const { state, combat, outcome } = resolveRoll({
+      beastHp: 5, rolls, playerRange: [4, 6], attackRange: [3, 4],
+    });
+    assert.equal(outcome, 'continue');
+    assert.equal(combat.beastHp, 5 - hits);
+    assert.equal(state.hp.current, 10 - hits);
+    assert.ok(combat.log.findIndex(entry => entry.includes('你造成了')) < combat.log.findIndex(entry => entry.includes('对你造成了')));
+  }
+});
+
+test('a lethal overlapping hit prevents retaliation in either dice order', () => {
+  for (const rolls of [[4, 2], [2, 4]]) {
+    const { state, combat, outcome } = resolveRoll({
+      beastHp: 1, playerHp: 1, rolls, playerRange: [4, 6], attackRange: [3, 4],
+    });
+    assert.equal(outcome, 'victory');
+    assert.equal(combat.beastHp, 0);
+    assert.equal(state.hp.current, 1);
+    assert.match(combat.log.at(-1), /怪物造成 0 伤害$/);
+  }
+});
+
+test('equipment-created overlap still resolves both attacks independently', () => {
+  const { state, combat, outcome } = resolveRoll({
+    beastHp: 5, rolls: [4, 2], attackRange: [1, 4], playerRange: [5, 6],
+    equipment: { disintegrator_lance: 'standard' },
+  });
+  assert.equal(outcome, 'continue');
+  assert.equal(combat.beastHp, 4);
+  assert.equal(state.hp.current, 8);
+});
+
 test('a surviving Cruel beast still inflicts a grievous wound', () => {
   const { state, combat, outcome } = resolveRoll({
     beastType: 'terrible', beastHp: 2, nature: 'Cruel',
