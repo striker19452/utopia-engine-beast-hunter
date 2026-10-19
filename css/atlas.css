@@ -3967,27 +3967,28 @@ body.atlas-ui {
   #atlas-stores-page .supply-view-switch button, #atlas-stores-page .supply-reset { min-height: 44px; }
   .atlas-ui #atlas-stores-page[data-stores-view="relations"] .crafted-item-actions .btn { min-height: 44px; min-width: 58px; font-size: 12px; }
 }
+/* Shared compact top bars keep navigation between the four pages stable. */
 @media (max-width: 760px) {
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) .atlas-header { min-height: 0; padding: 8px 70px 8px 14px; gap: 6px; }
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) .atlas-brand { min-height: 44px; gap: 9px; }
-  .atlas-ui:lang(en):has(.atlas-workspace[data-page="stores"]) .atlas-brand h1 { font-size: 18px; letter-spacing: 1px; }
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) .atlas-brand h1 { margin-top: 2px; font-size: 21px; line-height: 1.25; }
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) .atlas-brand > .atlas-icon { width: 26px; height: 26px; }
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) .time-day { min-height: 25px; }
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) .top-bar { padding: 7px 14px; gap: 8px; }
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) .top-bar .stat-group { gap: 2px; }
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) .stat-label { font-size: 11px; }
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) #hp-text,
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) #doubt-text,
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) #dp-value,
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) #day-display { font-size: 18px !important; }
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) .atlas-nav > button { min-height: 44px; }
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) .language-toggle { top: 10px; right: 14px; }
+  .atlas-ui .atlas-header { min-height: 0; padding: 8px 70px 8px 14px; gap: 6px; }
+  .atlas-ui .atlas-brand { min-height: 44px; gap: 9px; }
+  .atlas-ui:lang(en) .atlas-brand h1 { font-size: 18px; letter-spacing: 1px; }
+  .atlas-ui .atlas-brand h1 { margin-top: 2px; font-size: 21px; line-height: 1.25; }
+  .atlas-ui .atlas-brand > .atlas-icon { width: 26px; height: 26px; }
+  .atlas-ui .time-day { min-height: 25px; }
+  .atlas-ui .top-bar { padding: 7px 14px; gap: 8px; }
+  .atlas-ui .top-bar .stat-group { gap: 2px; }
+  .atlas-ui .stat-label { font-size: 11px; }
+  .atlas-ui #hp-text,
+  .atlas-ui #doubt-text,
+  .atlas-ui #dp-value,
+  .atlas-ui #day-display { font-size: 18px !important; }
+  .atlas-ui .atlas-nav > button { min-height: 44px; }
+  .atlas-ui .language-toggle { top: 10px; right: 14px; }
 }
 @media (min-width: 761px) {
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) .atlas-header { padding-block: 12px; min-height: 88px; }
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) .atlas-brand h1 { font-size: 24px; }
-  .atlas-ui:has(.atlas-workspace[data-page="stores"]) .atlas-brand > .atlas-icon { width: 36px; height: 36px; }
+  .atlas-ui .atlas-header { padding-block: 12px; min-height: 88px; }
+  .atlas-ui .atlas-brand h1 { font-size: 24px; }
+  .atlas-ui .atlas-brand > .atlas-icon { width: 36px; height: 36px; }
 }
 
 /* Developer workshop: fixed navigation and feedback around a stable editor. */

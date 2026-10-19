@@ -114,7 +114,7 @@ const AtlasUI = {
       <button type="button" class="atlas-village-pin" data-atlas-page="village">${this.icon('village')}<strong>藏身的村庄</strong><span id="atlas-village-summary"></span></button><div class="atlas-map-legend"><span>虚线 · 追踪路线</span><span>三处猎场，一纸生死之约。</span></div></section>
       <aside class="atlas-dossier" id="atlas-dossier"><div class="atlas-dossier-label"><span>当前猎场</span><small id="atlas-file-number"></small></div><figure class="atlas-dossier-beast"><img id="atlas-beast-art" alt=""><figcaption><span>恐怖巨兽</span><strong id="atlas-beast-name"></strong><small id="atlas-beast-life"></small></figcaption></figure><div id="atlas-regions-host"></div><button type="button" class="btn primary atlas-search-action" id="atlas-start-search">${this.icon('dice')}<span>掷骰搜索</span>${this.icon('arrow')}</button></aside>
       <section class="atlas-page" id="atlas-village-page" hidden><header class="atlas-page-title"><small>THE VILLAGE</small><h2>村庄的三道防线</h2><p>完成防线，守住庇护你的村庄。</p></header><div class="atlas-village-grid"></div></section>
-      <section class="atlas-page" id="atlas-stores-page" hidden><header class="atlas-page-title"><small>STORES & EQUIPMENT</small><h2>行囊与工坊</h2><p>每种材料最多携带四份。</p></header></section>
+      <section class="atlas-page" id="atlas-stores-page" hidden><header class="atlas-page-title"><p>每种材料最多携带四份。</p></header></section>
       <section class="atlas-page" id="atlas-journal-page" hidden><header class="atlas-page-title"><small>THE HUNTER'S JOURNAL</small><h2>一路行来</h2><p>每一天，都有代价。</p></header></section>`;
     workspace.querySelector('#atlas-regions-host').append(regions);
     VillageUI.mount(workspace.querySelector('#atlas-village-page'), { towers, huts, elders, towerNote });
