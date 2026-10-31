@@ -29,21 +29,46 @@ const SearchUI = {
     let html = `
       <div class="modal-title">搜索 - ${regionData.nameZh}</div>
       <div class="search-panel">
-        <div class="search-instructions">
-          ${this.renderSearchInstructions()}
-        </div>
-        ${this.renderSearchReference()}
-        <div class="dice-area" id="search-dice">
-          <button class="btn primary" onclick="SearchUI.rollDice()">🎲 掷骰子</button>
-        </div>
-        <div id="search-dice-result"></div>
-        <div id="search-placement" style="margin-top:16px;"></div>
+        <details class="atlas-roll-info">
+          <summary>规则与记录</summary>
+          <div class="atlas-roll-info-body">
+            <div class="search-instructions">${this.renderSearchInstructions()}</div>
+            ${this.renderSearchReference()}
+            <div id="search-dice-result"></div>
+          </div>
+        </details>
+        ${this.renderTerrain(region, `
+          <div class="dice-area" id="search-dice">
+            <button class="btn primary" onclick="SearchUI.rollDice()">🎲 掷骰子</button>
+          </div>
+          <div id="search-placement">${this.renderRestingPlacement()}</div>
+        `)}
       </div>
       <div class="confirm-actions">
         <button class="btn" onclick="SearchUI.endSearchDay()">结束搜索</button>
       </div>
     `;
     UI.showModal(html);
+  },
+
+  // The terrain is decorative; dice and the search field remain live controls.
+  renderTerrain(region, content) {
+    return `<div class="search-terrain atlas-roll-main" data-search-region="${region}">
+      <picture class="search-terrain-art" aria-hidden="true">
+        <source media="(max-width: 560px)" srcset="assets/atlas/search-${region}-mobile.webp">
+        <img src="assets/atlas/search-${region}.webp" width="1536" height="1024" alt="" decoding="async">
+      </picture>
+      <div class="search-workspace">${content}</div>
+    </div>`;
+  },
+
+  renderRestingPlacement() {
+    const search = GameState.search;
+    const box = GameState.regions[search.region].searchBoxes[search.boxIndex];
+    return `<div class="search-placement-grid search-resting-grid">${['top', 'bottom'].map(row => `
+      <div class="search-placement-row"><div class="search-placement-label">${row === 'top' ? '上方（百十个）' : '下方（百十个）'}</div>
+        <div style="display:flex; gap:4px;">${box[row].map(value => `<button class="btn" disabled>${value === null ? '—' : value}</button>`).join('')}</div>
+      </div>`).join('')}</div>`;
   },
 
   renderSearchInstructions(statusText = '') {
@@ -254,9 +279,9 @@ const SearchUI = {
     }
 
     let placeHtml = `<div style="margin-top:12px; font-size:13px;">将 <b>${results[0]}</b> 和 <b>${results[1]}</b> 分别放入空格：</div>`;
-    placeHtml += `<div style="display:flex; gap:16px; justify-content:center; margin-top:8px;">`;
+    placeHtml += `<div class="search-placement-grid">`;
 
-    placeHtml += `<div><div style="font-size:11px; color:var(--ink-medium); margin-bottom:4px;">上方（百十个）</div><div style="display:flex; gap:4px;">`;
+    placeHtml += `<div class="search-placement-row"><div class="search-placement-label">上方（百十个）</div><div style="display:flex; gap:4px;">`;
     for (let i = 0; i < 3; i++) {
       if (box.top[i] === null) {
         placeHtml += `<button class="btn" onclick="SearchUI.placeDie('top', ${i}, 0)">${results[0]}</button>`;
@@ -266,7 +291,7 @@ const SearchUI = {
     }
     placeHtml += `</div></div>`;
 
-    placeHtml += `<div><div style="font-size:11px; color:var(--ink-medium); margin-bottom:4px;">下方（百十个）</div><div style="display:flex; gap:4px;">`;
+    placeHtml += `<div class="search-placement-row"><div class="search-placement-label">下方（百十个）</div><div style="display:flex; gap:4px;">`;
     for (let i = 0; i < 3; i++) {
       if (box.bottom[i] === null) {
         placeHtml += `<button class="btn" onclick="SearchUI.placeDie('bottom', ${i}, 0)">${results[0]}</button>`;
@@ -303,10 +328,10 @@ const SearchUI = {
       const remainingValue = search.pendingRoll[1];
 
       let placeHtml = `<div style="margin-top:12px; font-size:13px;">将 <b>${remainingValue}</b> 放入空格：</div>`;
-      placeHtml += `<div style="display:flex; gap:16px; justify-content:center; margin-top:8px;">`;
+      placeHtml += `<div class="search-placement-grid">`;
 
       // Top row
-      placeHtml += `<div><div style="font-size:11px; color:var(--ink-medium); margin-bottom:4px;">上方</div><div style="display:flex; gap:4px;">`;
+      placeHtml += `<div class="search-placement-row"><div class="search-placement-label">上方</div><div style="display:flex; gap:4px;">`;
       for (let i = 0; i < 3; i++) {
         if (box.top[i] === null) {
           placeHtml += `<button class="btn" onclick="SearchUI.placeDie('top', ${i}, 1)">${remainingValue}</button>`;
@@ -317,7 +342,7 @@ const SearchUI = {
       placeHtml += `</div></div>`;
 
       // Bottom row
-      placeHtml += `<div><div style="font-size:11px; color:var(--ink-medium); margin-bottom:4px;">下方</div><div style="display:flex; gap:4px;">`;
+      placeHtml += `<div class="search-placement-row"><div class="search-placement-label">下方</div><div style="display:flex; gap:4px;">`;
       for (let i = 0; i < 3; i++) {
         if (box.bottom[i] === null) {
           placeHtml += `<button class="btn" onclick="SearchUI.placeDie('bottom', ${i}, 1)">${remainingValue}</button>`;
@@ -368,7 +393,7 @@ const SearchUI = {
         // Show roll button for next roll
         const diceArea = document.getElementById('search-dice');
         diceArea.innerHTML = `<button class="btn primary" onclick="SearchUI.rollDice()">🎲 掷骰子 (第 ${search.rollCount + 1} 次)</button>`;
-        document.getElementById('search-placement').innerHTML = '';
+        document.getElementById('search-placement').innerHTML = this.renderRestingPlacement();
 
         const rollDisplay = document.querySelector('.search-instructions');
         if (rollDisplay) {

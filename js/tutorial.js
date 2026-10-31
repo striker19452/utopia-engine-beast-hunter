@@ -208,7 +208,7 @@ const Tutorial = {
     note.innerHTML = `<div class="mentor-caption">练习 · ${steps[this.stage]}/5 · 固定骰子</div><strong>${title}</strong><p role="status">${explanation}</p>`;
     const concepts = this.milestone();
     if (concepts.length) note.innerHTML += `<div class="mentor-context">${concepts.map(([heading, text]) => `<h3>${heading}</h3><p>${text}</p>`).join('')}</div>`;
-    if (['end', 'events', 'complete'].includes(this.stage)) note.innerHTML += `<dl class="mentor-stats"><div><dt>时间</dt><dd>${GameState.currentDay}/14</dd></div><div><dt>怀疑</dt><dd>${GameState.doubt.current}/${GameState.doubt.max}</dd></div><div><dt>决心</dt><dd>${GameState.determination}</dd></div></dl>`;
+    if (['end', 'events', 'complete'].includes(this.stage)) note.innerHTML += `<dl class="mentor-stats"><div><dt>时间</dt><dd>${GameState.getDisplayDay()}/14</dd></div><div><dt>怀疑</dt><dd>${GameState.doubt.current}/${GameState.doubt.max}</dd></div><div><dt>决心</dt><dd>${GameState.determination}</dd></div></dl>`;
     if (this.stage === 'search' && GameState.search.pendingRoll) {
       const index = GameState.search.pendingDieIndex;
       note.innerHTML += `<button class="btn ${this.selectedDie ? '' : 'primary'}" onclick="Tutorial.selectDie(${index})" ${this.selectedDie ? 'disabled' : ''}>点选骰子 ${GameState.search.pendingRoll[index]}</button>`;
@@ -318,9 +318,9 @@ const Tutorial = {
   },
   help() {
     const content = document.getElementById('modal-content');
-    const el = document.createElement('section');
-    el.className = 'mentor-note';
-    el.innerHTML = `<strong>新手引导</strong><p>练习只在空闲时开始，不会覆盖正式存档。</p><div class="mentor-actions"><button class="btn primary" onclick="Tutorial.start()" ${GameState.phase !== 'idle' || GameState.pendingDayAction ? 'disabled' : ''}>重玩教学</button><button class="btn" onclick="Tutorial.toggleHints(!Tutorial.preferences.hints); Game.showHelp()">${this.preferences.hints ? '关闭首次提示' : '开启首次提示'}</button></div><details><summary>重看机制提示</summary><div class="mentor-actions">${Object.entries(this.lessons).map(([key, [title]]) => `<button class="btn" onclick="Tutorial.hint('${key}', true)">${title}</button>`).join('')}</div></details>`;
+    const el = document.createElement('details');
+    el.className = 'mentor-note mentor-help';
+    el.innerHTML = `<summary>新手引导</summary><div class="mentor-help-body"><p>练习只在空闲时开始，不会覆盖正式存档。</p><div class="mentor-actions"><button class="btn primary" onclick="Tutorial.start()" ${GameState.phase !== 'idle' || GameState.pendingDayAction ? 'disabled' : ''}>重玩教学</button><button class="btn" onclick="Tutorial.toggleHints(!Tutorial.preferences.hints); Game.showHelp()">${this.preferences.hints ? '关闭首次提示' : '开启首次提示'}</button></div><details><summary>重看机制提示</summary><div class="mentor-actions">${Object.entries(this.lessons).map(([key, [title]]) => `<button class="btn" onclick="Tutorial.hint('${key}', true)">${title}</button>`).join('')}</div></details></div>`;
     content.querySelector('.modal-title')?.after(el);
     I18n.apply(el);
   },

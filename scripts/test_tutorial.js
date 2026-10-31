@@ -67,8 +67,10 @@ const server = http.createServer((req, res) => {
     await clickAction(page, 'CombatUI.rollCombatDice()');
     await page.locator('#combat-dice button').filter({ hasText: '结算战斗骰' }).waitFor({ state: 'visible' });
     await clickAction(page, 'CombatUI.resolveCombatRoll()');
+    await page.locator('#tutorial-note .atlas-tutorial-context > summary').click();
     assert.equal(await page.locator('#tutorial-note').innerText().then(text => text.includes('决心的作用') && text.includes('±1')), true);
     assert.deepEqual(await page.evaluate(() => [GameState.hp.current, GameState.combat.beastHp, GameState.determination]), [9, 1, 1]);
+    await page.locator('#tutorial-note .atlas-tutorial-context > summary').click();
     await clickAction(page, 'CombatUI.rollCombatDice()');
     await page.locator('#combat-dice button').filter({ hasText: '结算战斗骰' }).waitFor({ state: 'visible' });
     assert.equal(await page.locator('button[onclick="CombatUI.resolveCombatRoll()"]:enabled').count(), 0);
@@ -153,6 +155,7 @@ const server = http.createServer((req, res) => {
     await page.evaluate(() => { UI.closeModal(); Tutorial.toggleHints(false); Game.showForgeDialog(); });
     assert.equal(await page.locator('#mentor-hint').count(), 0);
     await page.evaluate(() => Game.showHelp());
+    await page.locator('.mentor-help > summary').click();
     await page.getByText('重看机制提示', { exact: true }).click();
     await page.locator('.mentor-actions button').filter({ hasText: '锻造装备' }).click();
     await page.locator('#mentor-hint').waitFor({ state: 'visible' });
@@ -184,6 +187,7 @@ const server = http.createServer((req, res) => {
     assert.deepEqual(await mobile.page.evaluate(() => [GameState.hp.current, GameState.currentDay, GameState.materials.stone, GameState.materials.foul_blood]), [10, 1, 0, 0]);
     // Exit while a roll animation is pending, then ensure no stale callback changes state.
     await mobile.page.locator('#btn-help').click();
+    await mobile.page.locator('.mentor-help > summary').click();
     await mobile.page.getByRole('button', { name: '重玩教学', exact: true }).click();
     await clickAction(mobile.page, 'Game.showSearchDialog()');
     await clickAction(mobile.page, "UI.closeModal(); Game.startSearch('halebeard');");
@@ -200,9 +204,10 @@ const server = http.createServer((req, res) => {
     await blocked.page.locator('#language-toggle').click();
     assert.equal(await blocked.page.locator('html').getAttribute('lang'), 'en');
     await blocked.page.locator('#btn-help').click();
+    await blocked.page.locator('.mentor-help > summary').click();
     assert.equal(await blocked.page.getByRole('button', { name: 'Replay tutorial', exact: true }).count(), 1);
     await blocked.page.getByRole('button', { name: 'Replay tutorial', exact: true }).click();
-    assert.equal(await blocked.page.locator('#tutorial-note').innerText().then(text => /[\u3400-\u9fff]/.test(text)), false);
+    assert.equal(await blocked.page.locator('#tutorial-note').textContent().then(text => /[\u3400-\u9fff]/.test(text)), false);
     await blocked.page.keyboard.press('Escape');
     assert.equal(await blocked.page.evaluate(() => Tutorial.active), false);
     await blocked.context.close();

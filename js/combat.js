@@ -3,6 +3,20 @@
 // ============================================
 
 const CombatUI = {
+  lootCells: {
+    foul_blood: [0,0], beast_pelt: [1,0], oily_meat: [2,0],
+    dragon_smoke: [0,1], sacred_feathers: [1,1], nightmare_chitin: [2,1], troll_ash: [0,2],
+  },
+  renderLoot(combat, gained = null) {
+    const material = combat.beastType === 'terrible' ? null : combat.beast.material;
+    if (!material) return '<div class="combat-loot no-material"><span>无材料掉落</span></div>';
+    const cell = this.lootCells[material];
+    const art = cell ? `<span class="combat-loot-art" style="--loot-col:${cell[0]};--loot-row:${cell[1]};" aria-hidden="true"><img src="assets/atlas/combat-loot.webp" width="1024" height="1024" alt="" decoding="async"></span>` : '';
+    const label = gained === null ? '击败后掉落' : gained > 0 ? '获得了' : '库存已满，掉落被弃置';
+    return `<div class="combat-loot${gained === null ? '' : ' combat-loot-result'}" data-combat-loot="${material}">
+      ${art}<div class="combat-loot-label"><small>${label}</small><strong>${GAME_DATA.materialNames[material]} <span>×1</span></strong></div>
+    </div>`;
+  },
   startCombat(region, beastType, specificBeast, options = {}) {
     const regionData = GAME_DATA.regions[region];
     let beast;
@@ -92,11 +106,12 @@ const CombatUI = {
           ${portraitHtml}
           <div class="beast-info">
             <div class="beast-name">${beast.nameZh} <span>${beast.name}</span></div>
-            <div class="beast-hp-bar" aria-label="${beast.nameZh} 生命值 ${combat.beastHp}/${combat.maxHp}">${hpCells}</div>
+            <div class="beast-life"><div class="beast-hp-bar" aria-label="${beast.nameZh} 生命值 ${combat.beastHp}/${combat.maxHp}">${hpCells}</div><span>HP ${combat.beastHp}/${combat.maxHp}</span></div>
             <div class="beast-statline">
               怪物攻击: ${beast.attackRange[0]}-${beast.attackRange[1]}
               <span aria-hidden="true">|</span> 你的攻击: ${this.formatRange(beast.playerAttackRange || beast.playerRange || [5, 6])}
             </div>
+            ${this.renderLoot(combat)}
             ${natureText}
             ${ambushText}
           </div>
@@ -239,7 +254,7 @@ const CombatUI = {
     const notes = [...info.rangeNotes, ...info.ruleNotes];
 
     return `
-      <div class="combat-reference" style="margin-bottom:8px;">
+      <div class="combat-reference combat-modifiers" style="margin-bottom:8px;">
         <div style="font-weight:bold; color:var(--ink-dark); margin-bottom:4px;">当前战斗修正</div>
         <div style="font-size:12px; line-height:1.5;">
           你的攻击：${this.formatRange(info.playerRange)}
@@ -248,7 +263,8 @@ const CombatUI = {
           <span style="color:var(--ink-light);">（基础 ${this.formatRange(info.baseBeastRange)}）</span>
           ${!rangeChanged && notes.length === 0 ? '<br><span style="color:var(--ink-faint);">暂无额外修正。</span>' : ''}
         </div>
-        ${notes.length ? `<ul style="margin:6px 0 0; padding-left:18px; font-size:12px; line-height:1.45;">${notes.map(note => `<li>${note}</li>`).join('')}</ul>` : ''}
+        ${notes.length ? `<ul class="combat-modifier-sources" tabindex="0" style="margin:6px 0 0; padding-left:18px; font-size:12px; line-height:1.45;">${notes.map(note => `<li>${note}</li>`).join('')}</ul>` : ''}
+        <p class="combat-order-note">交叠范围内的骰子同时命中双方；我方先结算，击杀后不受反击。</p>
       </div>
     `;
   },
@@ -719,7 +735,7 @@ const CombatUI = {
       <div class="modal-title">⚔ 胜利！</div>
       <div style="text-align:center; margin:16px 0;">
         <div style="font-size:18px; font-weight:bold; color:var(--gold);">你击败了 ${beast.nameZh}！</div>
-        ${materialName ? `<div style="margin-top:8px;">${materialGained > 0 ? `获得了 ${materialName}` : `${materialName} 库存已满，掉落被弃置`}</div>` : ''}
+        ${materialName ? this.renderLoot(combat, materialGained) : ''}
         ${combat.beastType === 'terrible' ? '<div style="margin-top:8px; color:var(--green);">+1 决心点 | 获得长老审批！</div>' : ''}
       </div>
       <div class="confirm-actions">

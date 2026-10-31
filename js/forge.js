@@ -5,7 +5,7 @@
 const ForgeUI = {
   start(equipmentKey) {
     const eq = this.getEquipment(equipmentKey);
-    if (!eq || GameState.phase !== 'idle') return;
+    if (!eq || !GameState.canStartDayAction()) return;
     if (!GameState.removeMaterial(eq.requires, 1)) return;
 
     GameState.forge = {
@@ -41,6 +41,23 @@ const ForgeUI = {
     return GAME_DATA.equipment.find(e => e.name.toLowerCase().replace(/ /g, '_') === equipmentKey);
   },
 
+  // Artwork is only the table; every die, number and action remains live HTML.
+  renderWorkbench(content, stage = 'forging') {
+    return `<div class="forge-workbench${stage === 'forging' ? ' atlas-roll-main' : ''}" data-forge-stage="${stage}">
+      <picture class="forge-workbench-art" aria-hidden="true">
+        <source media="(max-width: 560px)" srcset="assets/atlas/forge-workbench-mobile.webp">
+        <img src="assets/atlas/forge-workbench.webp" width="1536" height="1024" alt="" decoding="async">
+      </picture>
+      <div class="forge-workspace">${content}</div>
+    </div>`;
+  },
+
+  renderQualityGuide() {
+    return `<div class="forge-quality-guide" aria-label="锻造结果">
+      <span><b>0</b> 精工</span><span><b>1–3</b> 标准</span><span><b>4+</b> 失败</span>
+    </div>`;
+  },
+
   renderForge() {
     const forge = GameState.forge;
     if (!forge) return;
@@ -49,10 +66,11 @@ const ForgeUI = {
     const instruction = forge.pendingRoll
       ? (forge.selectedDieIndex === null
         ? '选择要放置的骰子。'
-        : `放置选中的骰子：${forge.pendingRoll[forge.selectedDieIndex]}`)
+        : `点击精炼格空位，填入 ${forge.pendingRoll[forge.selectedDieIndex]}。`)
       : forge.refinedValue !== null
         ? '精炼格已完成，等待结算。'
-        : '掷2骰，将每个骰子放入任意可选空位；可故意造出负数来清空某一列。';
+        : '掷2骰，将每个骰子放入任意可选空位。';
+    const completed = forge.box.results.filter(value => value !== null).length;
     const logHtml = forge.log.length
       ? `<div class="combat-log" style="max-height:110px; margin-top:12px;">
           ${forge.log.map(entry => `<div class="log-entry">${entry}</div>`).join('')}
@@ -62,19 +80,33 @@ const ForgeUI = {
     UI.showModal(`
       <div class="modal-title">锻造 - ${eq.nameZh}</div>
       <div class="forge-panel">
-        <div style="font-size:13px; margin-bottom:8px; line-height:1.55;">
-          ${instruction}<br>
+        <details class="atlas-roll-info">
+          <summary>规则与记录</summary>
+          <div class="atlas-roll-info-body">
+          <p>
           每个骰子都可自由选择任意未结算列的空位，不强制从左到右。每列结果 = 上方个位数 - 下方个位数。若某列结果为负数，受到1点伤害并清空该列重做。<br>
           三列非负结果相加为精炼值；之后可追加同类稀有材料，每个让精炼值-1。
-        </div>
-        <div class="dice-area" id="forge-dice">${this.renderDiceArea()}</div>
-        <div id="forge-placement">${forge.pendingRoll ? this.renderPlacementOptions() : ''}</div>
-        ${this.renderRefiningBox()}
-        ${logHtml}
-        <div style="margin-top:8px; font-size:12px; color:var(--ink-medium);">
+          </p>
+          ${logHtml}
+          <p>
           标准: ${eq.standard}<br>
           精工: ${eq.mastercraft}
-        </div>
+          </p>
+          </div>
+        </details>
+        ${this.renderWorkbench(`
+          <div class="forge-workbench-status">
+            <span>${GAME_DATA.materialNames[eq.requires]} <b>× ${GameState.materials[eq.requires] || 0}</b></span>
+            <span>已精炼 <b>${completed} / 3</b></span>
+          </div>
+          <p class="forge-turn-instruction" role="status" aria-live="polite">${instruction}</p>
+          <div class="forge-tools">
+            <div class="dice-area" id="forge-dice">${this.renderDiceArea()}</div>
+            <div id="forge-placement">${forge.pendingRoll ? this.renderPlacementOptions() : ''}</div>
+          </div>
+          ${this.renderRefiningBox()}
+          ${this.renderQualityGuide()}
+        `)}
       </div>
       <div class="confirm-actions">
         ${forge.refinedValue === null ? '<button class="btn danger" onclick="ForgeUI.abort()">放弃锻造并消耗一天</button>' : ''}
@@ -105,33 +137,37 @@ const ForgeUI = {
     const box = GameState.forge.box;
     const border = box.complete ? 'var(--green)' : 'var(--border)';
     return `
-      <div style="display:flex; justify-content:center; margin-top:12px;">
-        <div style="border:2px solid ${border}; border-radius:4px; padding:10px; background:${box.complete ? '#edf7ed' : 'transparent'};">
-          <div style="font-size:12px; text-align:center; margin-bottom:6px;">精炼格</div>
-          ${this.renderBoxRow(box.top)}
-          ${this.renderBoxRow(box.bottom)}
+      <div class="forge-refining-field">
+        <div class="forge-box" style="border-color:${border};">
+          <div class="forge-box-title">精炼格 <small>上方 − 下方</small></div>
+          ${this.renderBoxRow('top', box.top, '上方')}
+          ${this.renderBoxRow('bottom', box.bottom, '下方')}
           ${this.renderResultRow(box)}
         </div>
       </div>
     `;
   },
 
-  renderBoxRow(values) {
-    let html = '<div style="display:flex; gap:3px; margin-bottom:4px;">';
-    for (const val of values) {
-      html += `<div class="forge-cell ${val !== null ? 'filled' : ''}" style="width:32px; height:32px; font-size:14px; cursor:default;">${val !== null ? val : ''}</div>`;
-    }
-    html += '</div>';
-    return html;
+  renderBoxRow(row, values, label) {
+    const forge = GameState.forge;
+    const placing = forge.pendingRoll && forge.selectedDieIndex !== null && forge.refinedValue === null;
+    return `<div class="forge-box-row"><span class="forge-row-label">${label}</span>${values.map((value, col) => {
+      const available = placing && value === null && forge.box.results[col] === null;
+      const accessibleLabel = `${label} · ${col + 1} · ${value === null ? '空位' : value}`;
+      return `<button type="button" class="forge-cell ${value !== null ? 'filled' : ''} ${available ? 'forge-drop-target' : ''}"
+        data-row="${row}" data-col="${col}" aria-label="${accessibleLabel}"
+        ${available ? `onclick="ForgeUI.placeDie('${row}', ${col})"` : 'disabled'}>
+        ${value === null ? (available ? '<span class="forge-drop-hint" aria-hidden="true">+</span>' : '') : value}
+      </button>`;
+    }).join('')}</div>`;
   },
 
   renderResultRow(box) {
-    let html = '<div style="display:flex; gap:3px; margin-top:4px;">';
+    let html = '<div class="forge-box-row forge-result-row"><span class="forge-row-label">差值</span>';
     for (let i = 0; i < 3; i++) {
       const result = box.results[i];
       html += `
-        <div class="forge-cell ${result !== null ? 'filled' : ''}"
-             style="width:32px; height:24px; font-size:12px; cursor:default; color:${result === null ? 'var(--ink-faint)' : 'var(--ink-dark)'};">
+        <div class="forge-cell ${result !== null ? 'filled' : ''}">
           ${result === null ? '○' : result}
         </div>
       `;
@@ -197,17 +233,9 @@ const ForgeUI = {
       `;
     }
 
-    const die = forge.pendingRoll[forge.selectedDieIndex];
     return `
-      <div style="margin:12px 0; font-size:13px;">
-        将 <b>${die}</b> 放入任意可选空位：
-        <button class="btn" style="padding:3px 8px; margin-left:8px;" onclick="ForgeUI.clearSelectedDie()">重选骰子</button>
-      </div>
-      <div style="display:flex; justify-content:center; margin-bottom:12px;">
-        <div style="padding:8px; border:1px solid var(--border); border-radius:4px; background:var(--bg-card);">
-          ${this.renderPlacementRow('top', forge.box.top, die, '上方')}
-          ${this.renderPlacementRow('bottom', forge.box.bottom, die, '下方')}
-        </div>
+      <div class="forge-placement-hint">
+        <button class="btn" onclick="ForgeUI.clearSelectedDie()">重选骰子</button>
       </div>
     `;
   },
@@ -239,20 +267,6 @@ const ForgeUI = {
     if (!forge || !forge.pendingRoll) return;
     forge.selectedDieIndex = null;
     this.renderForge();
-  },
-
-  renderPlacementRow(row, values, die, label) {
-    let html = `<div style="display:flex; align-items:center; gap:4px; margin-bottom:4px;"><span style="width:30px; font-size:11px; color:var(--ink-medium);">${label}</span>`;
-    for (let col = 0; col < values.length; col++) {
-      const columnClosed = GameState.forge.box.results[col] !== null;
-      if (values[col] === null && !columnClosed) {
-        html += `<button class="btn" style="padding:4px 8px;" onclick="ForgeUI.placeDie('${row}', ${col})">${die}</button>`;
-      } else {
-        html += `<button class="btn" style="padding:4px 8px;" disabled>${values[col] !== null ? values[col] : columnClosed ? '✓' : ''}</button>`;
-      }
-    }
-    html += '</div>';
-    return html;
   },
 
   placeDie(row, col) {
@@ -354,17 +368,15 @@ const ForgeUI = {
     UI.showModal(`
       <div class="modal-title">锻造结算 - ${forge.eqNameZh}</div>
       <div class="forge-panel">
-        ${this.renderRefiningBox()}
-        <div style="text-align:center; margin:16px 0 12px;">
-          <div style="font-size:18px; font-weight:bold;">精炼值: ${forge.refinedValue}</div>
-          <div style="font-size:12px; color:var(--ink-medium); margin-top:4px;">
-            可额外花费同类型稀有材料，每花费 1 个让精炼值 -1。
-          </div>
-          <div style="font-size:12px; color:var(--ink-medium); margin-top:4px;">
-            当前可用 ${GAME_DATA.materialNames[eq.requires]}: ${availableMaterial}
-          </div>
+        ${this.renderWorkbench(`
+          <div class="forge-settlement-heading">精炼值: <b>${forge.refinedValue}</b></div>
+          ${this.renderRefiningBox()}
+        `, 'settlement')}
+        <div class="forge-settlement-material">
+          <div>当前可用 ${GAME_DATA.materialNames[eq.requires]}: ${availableMaterial}</div>
+          <p class="forge-settlement-note">每追加1个同类材料，精炼值−1。</p>
         </div>
-        <div style="display:flex; flex-direction:column; gap:8px;">${spendButtons}</div>
+        <div class="forge-spend-options">${spendButtons}</div>
       </div>
     `);
   },
@@ -413,11 +425,12 @@ const ForgeUI = {
 
     UI.showModal(`
       <div class="modal-title">锻造完成</div>
-      <div style="text-align:center; margin:16px 0;">
-        <div style="font-size:18px; font-weight:bold; color:${resultColor};">${resultText}</div>
+      <div class="forge-panel">${this.renderWorkbench(`
+        <div class="forge-finished-name">${eqName}</div>
+        <div class="forge-finished-result" style="color:${resultColor};">${resultText}</div>
         <div style="margin-top:8px;">最终精炼值: ${finalValue}</div>
         ${spend > 0 ? `<div style="margin-top:4px;">额外消耗 ${spend} ${GAME_DATA.materialNames[eq.requires]}</div>` : ''}
-      </div>
+      `, 'complete')}</div>
       <div class="confirm-actions">
         <button class="btn primary" onclick="UI.closeModal(); UI.render(); Game.onDayAdvanced();">确定</button>
       </div>

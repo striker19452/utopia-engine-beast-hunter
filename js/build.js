@@ -319,7 +319,7 @@ const BuildUI = {
       if (!this.isActiveCell(build.tower, i)) continue;
       if (tower.grid[i] === null && this.isValidPlacement(build.tower, i, value, tower.grid)) {
         cells[i].style.borderColor = 'var(--blue)';
-        cells[i].style.background = '#e8f0ff';
+        cells[i].style.background = 'var(--atlas-drop-target, #e8f0ff)';
         cells[i].onclick = () => BuildUI.placeCell(i);
       } else if (tower.grid[i] === null) {
         cells[i].style.borderColor = 'var(--red-light)';
@@ -372,7 +372,10 @@ const BuildUI = {
       // Check if all 3 towers are standing → elder approval
       const allTowersComplete = Object.values(GameState.towers).every(t => t.complete);
       if (allTowersComplete) {
-        setTimeout(() => BuildUI.showElderSelection(), 300);
+        const daysCrossed = GameState.daysCrossed;
+        setTimeout(() => {
+          if (GameState.daysCrossed === daysCrossed && GameState.pendingDayAction === 'build') BuildUI.showElderSelection();
+        }, 300);
         return;
       }
 
@@ -485,7 +488,7 @@ const BuildUI = {
         if (!this.isActiveCell(build.tower, i)) continue;
         if (tower.grid[i] === null) {
           cells[i].style.borderColor = 'var(--red)';
-          cells[i].style.background = '#fbe8e5';
+          cells[i].style.background = 'var(--atlas-repair-target, #fbe8e5)';
           cells[i].onclick = () => BuildUI.placeRepairFault(i);
         } else {
           cells[i].onclick = null;
@@ -543,7 +546,10 @@ const BuildUI = {
 
       const allTowersComplete = Object.values(GameState.towers).every(t => t.complete);
       if (allTowersComplete) {
-        setTimeout(() => BuildUI.showElderSelection(), 300);
+        const daysCrossed = GameState.daysCrossed;
+        setTimeout(() => {
+          if (GameState.daysCrossed === daysCrossed && GameState.pendingDayAction === 'build') BuildUI.showElderSelection();
+        }, 300);
         return;
       }
 
@@ -566,6 +572,10 @@ const BuildUI = {
   },
 
   showElderSelection(source = 'towers') {
+    if (Object.values(GameState.elders).every(Boolean)) {
+      Game.onDayAdvanced();
+      return;
+    }
     const isBeastReward = source === 'beast';
     const title = isBeastReward ? '⚔ 巨兽已败！' : '🏘 三塔全立！';
     const description = isBeastReward

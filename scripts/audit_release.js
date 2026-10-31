@@ -10,10 +10,15 @@ const search = read('js/search.js');
 const html = read('index.html');
 const main = read('js/main.js');
 const data = read('js/data.js');
+eval(version + '; globalThis.__releaseVersion = GAME_VERSION;');
 eval(data + '; globalThis.__releaseData = GAME_DATA;');
 
 const checks = [
   ['central version number', /number:\s*'\d+\.\d+\.\d+'/.test(version)],
+  ['README version matches metadata', read('README.md').includes(`当前版本：**v${__releaseVersion.number}**（${__releaseVersion.released}）`)],
+  ['README archive matches metadata', read('README.md').includes(`UEBH-v${__releaseVersion.number}.zip`)],
+  ['changelog matches metadata', read('CHANGELOG.md').includes(`## v${__releaseVersion.number} — ${__releaseVersion.released}`)],
+  ['HTML runtime files exist', [...html.matchAll(/(?:src|href)="((?:js|css)\/[^"?]+)"/g)].every(([, file]) => fs.existsSync(path.join(root, file)))],
   ['save schema metadata', /saveSchema:\s*GAME_VERSION\.saveSchema/.test(state)],
   ['version rendered in both surfaces', (html.match(/data-game-version/g) || []).length === 2],
   ['common-only material reward', /combat\.beastType !== 'terrible' && Boolean\(beast\.material\)/.test(combat)],

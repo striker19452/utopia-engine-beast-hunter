@@ -1,0 +1,63 @@
+/* C · 猎场战图. Approved production palette.
+   Scope on the game root with class="atlas-ui". Feature modules consume
+   semantic roles; region variation may change only --atlas-region-accent.
+*/
+.atlas-ui {
+  --atlas-paper: #e4ddc7;
+  --atlas-paper-raised: #f2ecd9;
+  --atlas-paper-inset: #d7ceb4;
+  --atlas-table: #272e25;
+  --atlas-ink: #383e33;
+  --atlas-ink-secondary: #515b46;
+  --atlas-ink-muted: #5e634e;
+  --atlas-rule: #b2a584;
+  --atlas-selected: #424c3c;
+  --atlas-on-selected: #f6edda;
+  --atlas-action: #8b4b3b;
+  --atlas-action-hover: #744031;
+  --atlas-on-action: #fff4dc;
+  --atlas-danger: #873c30;
+  --atlas-success: #526344;
+  --atlas-health-remaining: #159e52;
+  --atlas-health-lost: #dc302b;
+  --atlas-refined: #76603a;
+  --atlas-disabled: #c8bea4;
+  --atlas-focus: #8b4b3b;
+  --atlas-region-accent: #566757;
+  --atlas-font-title: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+  --atlas-font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --atlas-font-number: Georgia, "Times New Roman", serif;
+  --atlas-text-title: 28px;
+  --atlas-text-section: 20px;
+  --atlas-text-body: 14px;
+  --atlas-text-caption: 12px;
+  --atlas-space-1: 4px;
+  --atlas-space-2: 8px;
+  --atlas-space-3: 12px;
+  --atlas-space-4: 16px;
+  --atlas-space-6: 24px;
+  --atlas-space-8: 32px;
+  --atlas-radius: 2px;
+  --atlas-hit-target: 44px;
+  --atlas-sheet-reading: 640px;
+  --atlas-sheet-working: 880px;
+  --atlas-sheet-encounter: 1040px;
+  --atlas-z-hud: 10;
+  --atlas-z-overlay: 50;
+  --atlas-z-tutorial: 60;
+  --atlas-duration-feedback: 120ms;
+  --atlas-duration-panel: 180ms;
+  --atlas-duration-route: 240ms;
+  --atlas-ease: cubic-bezier(.2, .7, .2, 1);
+}
+.atlas-ui[data-region="halebeard"] { --atlas-region-accent: #596a69; }
+.atlas-ui[data-region="coastal"] { --atlas-region-accent: #536d65; }
+.atlas-ui[data-region="scar"] { --atlas-region-accent: #805b46; }
+@media (prefers-reduced-motion: reduce) {
+  .atlas-ui {
+    --atlas-duration-feedback: 0ms;
+    --atlas-duration-panel: 0ms;
+    --atlas-duration-route: 0ms;
+  }
+}
+.atlas-ui{--atlas-drop-target:#e5e8c8;--atlas-repair-target:#ead7bd}

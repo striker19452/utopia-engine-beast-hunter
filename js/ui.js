@@ -46,7 +46,7 @@ const UI = {
     document.getElementById('doubt-text').textContent = `${GameState.doubt.current}/${GameState.doubt.max}`;
 
     // Day
-    document.getElementById('day-display').textContent = `${GameState.currentDay}/14`;
+    document.getElementById('day-display').textContent = `${GameState.getDisplayDay()}/14`;
   },
 
   // === Time Track ===
@@ -69,7 +69,7 @@ const UI = {
       el.className = 'time-day';
       el.setAttribute('role', 'listitem');
       if (GameState.daysCrossed.includes(day.day)) el.classList.add('crossed');
-      if (day.day === GameState.currentDay) el.classList.add('current');
+      if (day.day === GameState.getDisplayDay()) el.classList.add('current');
       if (day.skull) el.classList.add('skull');
 
       let html = `<span>${day.day}</span>`;
@@ -215,7 +215,7 @@ const UI = {
   renderBeastHunt(regionKey, regionData, stateData) {
     const defeated = GameState.beastsDefeated[regionKey];
     const hasBait = GameState.craftedItems.potent_bait !== null && GameState.craftedItems.potent_bait > 0;
-    const canAct = GameState.phase === 'idle';
+    const canAct = GameState.canStartDayAction();
     const beast = regionData.terribleBeast;
     const rangeText = typeof CombatUI !== 'undefined' ? CombatUI.formatRange(beast.playerAttackRange || [6, 6]) : `${beast.playerAttackRange[0]}-${beast.playerAttackRange[1]}`;
     const wounds = GameState.beastWounds[regionKey] || 0;
@@ -499,14 +499,15 @@ const UI = {
     container.appendChild(regionHeaders);
 
     const groups = [
-      { title: '普通材料', subtitle: 'Common', items: regions.map(region => region.commonMaterial) },
-      { title: '稀有材料', subtitle: 'Rare', items: regions.map(region => region.rareMaterial) },
-      { title: '怪物材料', subtitle: 'Beast', items: GAME_DATA.materials.beast },
+      { key: 'common', title: '普通材料', subtitle: 'Common', items: regions.map(region => region.commonMaterial) },
+      { key: 'rare', title: '稀有材料', subtitle: 'Rare', items: regions.map(region => region.rareMaterial) },
+      { key: 'beast', title: '怪物材料', subtitle: 'Beast', items: GAME_DATA.materials.beast },
     ];
 
     groups.forEach(group => {
       const groupEl = document.createElement('div');
       groupEl.className = 'material-group';
+      groupEl.dataset.materialGroup = group.key;
 
       const titleEl = document.createElement('div');
       titleEl.className = 'material-group-title';
@@ -520,6 +521,10 @@ const UI = {
         const item = document.createElement('div');
         item.className = `material-item ${GameState.materials[mat] > 0 ? 'has-stock' : ''}`;
         item.dataset.material = mat;
+        item.dataset.supplySource = mat;
+        item.setAttribute('role', 'button');
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('aria-pressed', 'false');
         item.title = `${GAME_DATA.materialNames[mat]}: ${GameState.materials[mat]}/${GAME_DATA.materialLimit || 4}`;
 
         const name = document.createElement('span');
@@ -533,6 +538,13 @@ const UI = {
           name.appendChild(sourceNote);
         }
         item.appendChild(name);
+        if (mat !== 'foul_blood') {
+          const origin = regions.find(region => region.commonMaterial === mat || region.rareMaterial === mat || region.commonBeasts.some(beast => beast.material === mat));
+          const source = document.createElement('small');
+          source.className = 'supply-source-region';
+          source.textContent = origin?.nameZh || '';
+          name.appendChild(source);
+        }
 
         const dots = document.createElement('div');
         dots.className = 'material-dots';
@@ -546,6 +558,11 @@ const UI = {
         quantity.className = 'material-quantity';
         quantity.appendChild(dots);
         item.appendChild(quantity);
+        const count = document.createElement('small');
+        count.className = 'supply-stock-count';
+        count.textContent = `${GameState.materials[mat]} / ${GAME_DATA.materialLimit || 4}`;
+        item.appendChild(count);
+        item.insertAdjacentHTML('beforeend', '<span class="supply-port" aria-hidden="true"></span>');
         itemsEl.appendChild(item);
       });
 
@@ -565,6 +582,7 @@ const UI = {
       const wasCrafted = Boolean(GameState.craftedItemHistory[key]);
       const owned = status !== null;
       const canCraft = GameState.phase !== 'combat'
+        && GameState.phase !== 'game_over' && !GameState.pendingDayAction
         && !owned
         && Object.entries(recipe.requires).every(([mat, amt]) => GameState.hasMaterial(mat, amt));
       const reqText = Object.entries(recipe.requires)
@@ -573,6 +591,7 @@ const UI = {
 
       const card = document.createElement('div');
       card.className = `crafted-item ${owned ? 'owned' : wasCrafted ? 'spent' : ''}`;
+      card.dataset.supplyRecipe = key;
       card.title = `${recipe.effect} | 需要: ${reqText}`;
 
       const stateText = owned
@@ -582,8 +601,11 @@ const UI = {
           : '未造';
 
       card.innerHTML = `
+        ${typeof AtlasUI !== 'undefined' ? AtlasUI.supplyIngredients(recipe.requires) : ''}
+        <div class="supply-output">
+        <span class="supply-port" aria-hidden="true"></span>
         <div class="crafted-item-name">
-          <span>${recipe.nameZh}</span>
+          <button type="button" class="supply-target-button" data-supply-target="${key}" aria-pressed="false">${recipe.nameZh}</button>
           <span class="item-status ${owned ? 'available' : 'used'}">${stateText}</span>
         </div>
         <div class="crafted-item-effect">${recipe.effect}</div>
@@ -593,6 +615,7 @@ const UI = {
                   onclick="CraftUI.craft('${key}')">${wasCrafted ? '再造' : '合成'}</button>
           ${this.renderCraftedItemUseButton(key, owned)}
         </div>
+        </div>
       `;
       container.appendChild(card);
     }
@@ -601,10 +624,10 @@ const UI = {
   renderCraftedItemUseButton(key, owned) {
     if (!owned) return '';
     if (key === 'blood_lure') {
-      return `<button class="btn" ${GameState.phase === 'idle' ? '' : 'disabled'} onclick="Game.showBloodLureDialog()">使用</button>`;
+      return `<button class="btn" ${GameState.canStartDayAction() ? '' : 'disabled'} onclick="Game.showBloodLureDialog()">使用</button>`;
     }
     if (key === 'potent_bait') {
-      return `<button class="btn" ${GameState.phase === 'idle' ? '' : 'disabled'} onclick="Game.showPotentBaitDialog()">使用</button>`;
+      return `<button class="btn" ${GameState.canStartDayAction() ? '' : 'disabled'} onclick="Game.showPotentBaitDialog()">使用</button>`;
     }
     if (key === 'hawk_totem') {
       return '<button class="btn" disabled>在塔上安装</button>';
@@ -646,6 +669,10 @@ const UI = {
 
   // === Status Bar ===
   renderStatusBar() {
+    document.getElementById('btn-save').disabled = Boolean(GameState.pendingDayAction);
+    for (const id of ['btn-search', 'btn-build', 'btn-forge', 'btn-rest', 'btn-craft']) {
+      document.getElementById(id).disabled = !GameState.canStartDayAction();
+    }
     const el = document.getElementById('status-text');
     if (GameState.phase === 'idle') {
       const actions = [];
@@ -754,6 +781,7 @@ const UI = {
 
   // === Rest Dialog ===
   showRestDialog() {
+    if (!GameState.canStartDayAction()) return;
     const html = `
       <div class="modal-title">休息</div>
       <p style="text-align:center; margin-bottom:16px;">

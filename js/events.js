@@ -272,6 +272,11 @@ const Events = {
   _pendingAttackIndex: 0,
 
   processNextBeastAttack(attackCount, index) {
+    if (GameState.phase === 'game_over') {
+      this._pendingAttacks = null;
+      Game.finishDayAndCheck();
+      return;
+    }
     if (index >= attackCount) {
       this._pendingAttacks = null;
       Game.finishDayAndCheck();

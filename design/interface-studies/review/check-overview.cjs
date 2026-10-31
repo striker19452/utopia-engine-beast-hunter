@@ -1,0 +1,9 @@
+const {chromium}=require('playwright');const fs=require('fs');const path=require('path');
+(async()=>{const browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});const page=await browser.newPage({viewport:{width:1600,height:1040}});const errors=[];page.on('pageerror',e=>errors.push(e.message));try{
+ await page.goto('http://127.0.0.1:8890/design/interface-studies/overview.html');await page.waitForFunction(()=>[...document.images].every(i=>i.complete&&i.naturalWidth));await page.screenshot({path:path.join(__dirname,'three-directions-overview.png'),fullPage:true});
+ const links=await page.locator('section>a').count();if(links!==3)throw Error('three concepts missing');
+ await page.goto('http://127.0.0.1:8890/design/interface-studies/?concept=expedition');
+ for(const region of ['coastal','scar']){await page.locator(`#stage [data-region="${region}"]`).click();await page.waitForFunction(()=>[...document.images].every(i=>i.complete&&i.naturalWidth));await page.locator('.game-shell').screenshot({path:path.join(__dirname,`expedition-${region}.png`)});}
+ await page.setViewportSize({width:390,height:844});await page.goto('http://127.0.0.1:8890/design/interface-studies/overview.html');await page.waitForFunction(()=>[...document.images].every(i=>i.complete&&i.naturalWidth));const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);await page.screenshot({path:path.join(__dirname,'overview-mobile.png'),fullPage:true});
+ const report={overviewLinks:links,mobileOverflow:overflow,errors,otherRegions:['coastal','scar']};fs.writeFileSync(path.join(__dirname,'overview-checks.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));if(overflow||errors.length)throw Error('overview validation failed');
+}finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});

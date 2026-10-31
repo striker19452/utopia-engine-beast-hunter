@@ -313,8 +313,20 @@ const GameState = {
   },
 
   // === Time ===
+  getDisplayDay() {
+    const day = this.pendingDayAction || this.checkWinCondition()
+      ? (this.daysCrossed.at(-1) || this.currentDay) : this.currentDay;
+    return Math.min(14, day);
+  },
+
+  canStartDayAction() {
+    return this.phase === 'idle' && !this.pendingDayAction &&
+      this.currentDay <= 14 && this.hp.current > 0 && this.doubt.current < this.doubt.max;
+  },
+
   // action: 'search' | 'rest' | 'build' | 'forge' | 'kill_beast' | 'default'
   advanceDay(action = 'default') {
+    if (this.pendingDayAction || this.currentDay > 14 || this.phase === 'game_over') return null;
     this.daysCrossed.push(this.currentDay);
     const dayData = GAME_DATA.timeTrack[this.currentDay - 1];
 
@@ -323,10 +335,8 @@ const GameState = {
     // Move to next day
     this.currentDay++;
 
-    if (this.currentDay > 14) {
-      this.phase = 'game_over';
-    }
-
+    // Resolve the crossed day's rewards, events and Doubt before checking
+    // victory or the deadline in Game.finishDayAndCheck().
     this.syncStatusDisplay();
     return dayData;
   },
@@ -406,7 +416,7 @@ const GameState = {
   },
 
   startSearch(region) {
-    if (this.phase !== 'idle') return false;
+    if (!this.canStartDayAction()) return false;
 
     // Find first incomplete search box
     const regionData = this.regions[region];
@@ -454,6 +464,7 @@ const GameState = {
 
   // === Build ===
   startBuild(tower, material) {
+    if (!this.canStartDayAction()) return false;
     if (!this.removeMaterial(material)) return false;
     if (this.towers[tower]) {
       this.towers[tower].destroyed = false;
@@ -482,7 +493,12 @@ const GameState = {
 
   // === Check Win Condition ===
   checkWinCondition() {
-    return this.beastsDefeated.halebeard &&
+    // Day 15 here means day 14 has just been crossed out, not played.
+    return !this.pendingDayAction &&
+           this.hp.current > 0 &&
+           this.doubt.current < this.doubt.max &&
+           this.currentDay <= 15 &&
+           this.beastsDefeated.halebeard &&
            this.beastsDefeated.coastal &&
            this.beastsDefeated.scar;
   },
@@ -498,6 +514,9 @@ const GameState = {
 
   // === Save / Load ===
   save(slot = 0) {
+    // This save format restores an idle board, so it cannot resume dialogs in
+    // the middle of rewards, events or attacks. Keep the last complete save.
+    if (this.pendingDayAction) return false;
     const data = {
       meta: {
         appVersion: GAME_VERSION.number,
@@ -529,6 +548,7 @@ const GameState = {
       log: [...this.log],
     };
     localStorage.setItem(`uebh_save_${slot}`, JSON.stringify(data));
+    return true;
   },
 
   load(slot = 0) {

@@ -1,0 +1,68 @@
+{
+  "tool": "built-in image_gen.imagegen",
+  "mode": "generate; one 4×4 transparent inventory sprite atlas",
+  "art_direction": "复古奇幻制图风：版画式线描＋低饱和水彩淡彩；透明背景",
+  "source": "/Users/str/.codex/generated_images/01a18d3e-7206-7052-846e-c3bf5ba3937b/exec-692c0a22-2e05-483d-b3e7-ecd8cccd24c5.png",
+  "output": "assets/atlas/loadout-items.webp",
+  "prompt": "Use case: stylized-concept.\nAsset type: ONE production inventory icon sprite atlas for an antique fantasy cartography browser game, square 1024x1024 PNG, real transparent background.\nPrimary request: draw exactly thirteen small distinctive equipment and item illustrations arranged in a strict FOUR BY FOUR equal-cell sprite sheet. Each cell is 256x256. No visible grid or frames. Three specified cells stay completely empty/transparent. Center each complete object inside its own cell with at least 36px transparent padding, absolutely no overlap between cells.\nStyle: delicate sepia/charcoal engraving contour lines and selective crosshatching, with pale low-saturation watercolor tints that feel hand printed in a vintage fantasy atlas. Light paper-colored highlights may appear INSIDE objects, but outside every object is true alpha transparency. Drawn and flat, clear silhouette, readable at 36–40px on parchment UI. Restrained sage, ivory, grey-blue, umber and tiny rust-red washes. No photograph textures, no shiny metal, no 3D render, no neon, no dramatic lighting, no heavy drop shadows. Objects are hand-illustrated medieval hunter gear.\nExact cell order, from left to right:\nROW ONE: (1) Silver Plate — pale silver medieval breastplate with shoulder guards. (2) Dowsing Rod — short forked Y-shaped divining rod with a little dark lodestone at its junction. (3) Disintegrator Lance — long slender fantasy spear, clearly a POLEARM, dark wooden shaft and elongated pale engraved spearhead, diagonal silhouette within cell. (4) EMPTY transparent.\nROW TWO: (1) Blood Lure — small tall crimson glass vial tied to a grey pebble with twine. (2) Potent Bait — chunky tied leather bait pouch with a small red cloth strip, clearly different silhouette from the vial. (3) Heavy Coat — warm hooded fur-lined travel coat, ochre cloth and grey fur. (4) Firebox — small open iron tinder box with a few muted orange embers inside.\nROW THREE: (1) Crab Plate — brown-red scalloped crab-shell cuirass with chitin ridges, visibly different from smooth silver plate. (2) Reviving Dose — round bulbous sage-green potion flask with narrow neck and cork, clearly different from tall blood vial. (3) Hawk Totem — small carved wooden hawk effigy perched on a short wooden stake. (4) EMPTY transparent.\nROW FOUR: (1) Luck Charm — an old round bronze lucky medallion on a loop of dark cord. (2) Balance Blade — a short balanced steel dagger with crossguard, clearly different from the long lance. (3) Optic Disruptor — a compact antique brass-and-crystal optical instrument with one large pale blue lens, no modern electronics. (4) EMPTY transparent.\nConstraints: exactly this atlas layout; each icon stays inside its assigned equal cell. No letters, no words, no numbers, no labels, no watermark, no dice, no UI, no background paper sheet, no frames, no checkerboard drawn into the picture. Genuine transparent background.",
+  "transparent_background": true,
+  "grid": [
+    4,
+    4
+  ],
+  "cells": {
+    "silver_plate": [
+      0,
+      0
+    ],
+    "dowsing_rod": [
+      1,
+      0
+    ],
+    "disintegrator_lance": [
+      2,
+      0
+    ],
+    "blood_lure": [
+      0,
+      1
+    ],
+    "potent_bait": [
+      1,
+      1
+    ],
+    "heavy_coat": [
+      2,
+      1
+    ],
+    "firebox": [
+      3,
+      1
+    ],
+    "crab_plate": [
+      0,
+      2
+    ],
+    "reviving_dose": [
+      1,
+      2
+    ],
+    "hawk_totem": [
+      2,
+      2
+    ],
+    "luck_charm": [
+      0,
+      3
+    ],
+    "balance_blade": [
+      1,
+      3
+    ],
+    "optic_disruptor": [
+      2,
+      3
+    ]
+  },
+  "integration": "js/loadout.js and css/loadout.css; WebP conversion preserves alpha and composition; exact prompt is embedded in EXIF ImageDescription"
+}
