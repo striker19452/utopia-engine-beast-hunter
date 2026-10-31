@@ -25,7 +25,7 @@ const server = http.createServer((req, res) => {
   const errors = [], results = [];
   try {
     for (const [width, height, language] of [[1440, 1000, 'zh'], [1024, 900, 'zh'], [662, 706, 'zh'], [390, 844, 'zh'], [320, 740, 'en']]) {
-      const context = await browser.newContext({ viewport: { width, height }, reducedMotion: 'reduce' });
+      const context = await browser.newContext({ viewport: { width, height }, reducedMotion: 'reduce', hasTouch: width <= 1024 });
       const page = await context.newPage();
       page.on('pageerror', error => errors.push(error.message));
       const label = `${width}-${language}`;

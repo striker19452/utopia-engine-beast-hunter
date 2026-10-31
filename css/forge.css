@@ -1,0 +1,172 @@
+/* The smith's table extends the atlas paper, dice and cell components. */
+.atlas-ui .modal-content:has(.forge-workbench) {
+  width: min(100%, var(--atlas-sheet-encounter));
+  max-width: var(--atlas-sheet-encounter);
+  padding: 0 20px 14px;
+}
+.modal-content:has(.forge-workbench) > .atlas-sheet-meta { margin: 0 -20px; padding: 8px 20px; }
+.atlas-ui .modal-content:has(.forge-workbench) .modal-title {
+  padding: 10px 0;
+  margin-bottom: 8px;
+  font-size: 23px;
+  line-height: 1.3;
+}
+.modal-content:has(.forge-workbench) .modal-title::before { display: none; }
+.atlas-ui .forge-panel { display: flex; flex-direction: column; gap: 8px; }
+.forge-panel > .atlas-roll-info { text-align: left; }
+.forge-panel > .atlas-roll-info > summary { text-align: center; min-height: 28px; }
+.forge-panel .atlas-roll-info-body { line-height: 1.8; }
+.forge-workbench {
+  position: relative;
+  isolation: isolate;
+  height: clamp(400px, calc(100dvh - 272px), 560px);
+  width: 100%;
+  background: var(--atlas-paper-inset);
+  text-align: center;
+}
+.forge-workbench-art { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.forge-workbench-art img { display: block; width: 100%; height: 100%; object-fit: fill; }
+.forge-workspace {
+  position: absolute;
+  inset: 24% 17% 15% 20%;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto;
+  grid-template-rows: auto auto 1fr auto;
+  align-items: center;
+  gap: 4px 18px;
+  min-width: 0;
+  color: var(--atlas-ink);
+}
+.forge-workbench-status {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 8% 6px 16%;
+  border-bottom: 1px solid var(--atlas-rule);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.forge-workbench-status b { font-variant-numeric: tabular-nums; }
+.atlas-ui .forge-turn-instruction {
+  grid-column: 1 / -1;
+  margin: 0;
+  min-height: 26px;
+  font-size: 14px;
+  line-height: 1.6;
+  align-content: center;
+}
+.forge-tools { min-width: 0; }
+.atlas-ui .forge-workbench #forge-dice { margin: 0; }
+.atlas-ui .forge-workbench .dp-roll-panel {
+  grid-template-columns: auto auto;
+  gap: 8px 12px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+.atlas-ui .forge-workbench .dp-roll-panel > .btn { grid-column: 1 / -1; grid-row: 2; min-height: 44px; padding: 7px 10px; }
+.forge-workbench .forge-refining-field { margin: 0; }
+.atlas-ui .forge-workbench .forge-box { padding: 8px; border: 0; }
+.forge-workbench .forge-box-title { display: flex; justify-content: center; align-items: baseline; gap: 8px; margin-bottom: 4px; font-size: 14px; line-height: 1.3; font-family: var(--atlas-font-title); white-space: nowrap; }
+.forge-box-title small { font: 12px var(--atlas-font-body); color: var(--atlas-ink-secondary); }
+.forge-workbench .forge-box-row { grid-template-columns: 32px repeat(3, 44px); gap: 5px; margin-top: 5px; }
+.atlas-ui .forge-workbench .forge-cell { font-size: 20px; background: var(--atlas-paper-raised); border-color: var(--atlas-ink-muted); }
+.atlas-ui .forge-workbench .forge-cell.filled { background: var(--atlas-paper-inset); }
+.atlas-ui .forge-workbench .forge-result-row .forge-cell { border-radius: 50%; background: transparent; font-size: 16px; }
+.atlas-ui .forge-workbench .forge-result-row .forge-cell.filled { color: var(--atlas-success); border-color: var(--atlas-success); background: var(--atlas-paper-raised); }
+.atlas-ui .forge-workbench .forge-drop-target { background: var(--atlas-paper-raised); border-color: var(--atlas-action); border-style: dashed; }
+.atlas-ui .forge-workbench .forge-cell:disabled:hover { background: var(--atlas-paper-raised); border-color: var(--atlas-ink-muted); }
+.atlas-ui .forge-workbench .forge-cell.filled:disabled:hover { background: var(--atlas-paper-inset); }
+.forge-workbench .forge-placement-hint { display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 8px; font-size: 12px; line-height: 1.5; }
+.atlas-ui .forge-workbench .forge-placement-hint .btn { min-height: 44px; padding: 6px 12px; font-size: 12px; }
+.forge-quality-guide {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  padding-top: 6px;
+  border-top: 1px solid var(--atlas-rule);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.forge-quality-guide b { font-family: var(--atlas-font-number); font-size: 16px; margin-right: 3px; }
+.forge-quality-guide span:first-child { color: var(--atlas-refined); }
+.forge-quality-guide span:last-child { color: var(--atlas-danger); }
+.atlas-ui .modal-content:has(.forge-workbench) > .confirm-actions {
+  position: static;
+  margin: 10px -20px -14px;
+  padding: 8px 20px;
+}
+.forge-workbench[data-forge-stage="selection"] .forge-workspace,
+.forge-workbench[data-forge-stage="settlement"] .forge-workspace,
+.forge-workbench[data-forge-stage="complete"] .forge-workspace {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+.atlas-ui .forge-selection-intro, .atlas-ui .forge-day-cost { margin: 0; font-size: 13px; }
+.forge-equipment-choices { display: flex; flex-direction: column; gap: 8px; width: min(100%, 440px); }
+.atlas-ui .forge-equipment-choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  width: 100%;
+  min-height: 58px;
+  padding: 10px 14px;
+  text-align: left;
+  background: var(--atlas-paper-raised);
+}
+.forge-equipment-choice strong { font-family: var(--atlas-font-title); font-size: 17px; font-weight: 600; }
+.forge-equipment-choice span { font-size: 12px; }
+.forge-equipment-choice:disabled { opacity: 1; color: var(--atlas-ink-muted); background: var(--atlas-paper-inset); }
+.forge-settlement-heading { font: 20px var(--atlas-font-title); }
+.forge-settlement-heading b { font: 32px var(--atlas-font-number); }
+.atlas-ui .forge-settlement-note { margin: 0; font-size: 12px; }
+.forge-workbench[data-forge-stage="settlement"] { height: clamp(300px, calc(100dvh - 340px), 400px); }
+.forge-settlement-material { text-align: center; font-size: 13px; }
+.forge-spend-options { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.atlas-ui .forge-spend-options .btn { flex: 1 1 260px; min-height: 44px; font-size: 13px; }
+.forge-finished-name { font: 30px var(--atlas-font-title); }
+.forge-finished-result { font: 22px var(--atlas-font-title); }
+.forge-workbench:has(.atlas-art-missing) .forge-workspace { background: var(--atlas-paper-raised); padding: 8px; }
+.forge-workbench button:focus-visible { outline: 2px solid var(--atlas-focus); outline-offset: 3px; }
+@media (min-width: 561px) and (max-width: 900px) {
+  .forge-workspace { inset: 23% 13% 15% 15%; column-gap: 8px; }
+  .atlas-ui .forge-turn-instruction { font-size: 12px; }
+}
+@media (max-width: 760px) {
+  .atlas-ui .modal-content:has(.forge-workbench) { padding: 0 12px 10px; }
+  .modal-content:has(.forge-workbench) > .atlas-sheet-meta { margin: 0 -12px; padding: 7px 12px; }
+  .atlas-ui .modal-content:has(.forge-workbench) .modal-title { font-size: 20px; padding: 8px 0; margin-bottom: 4px; }
+  .atlas-ui .modal-content:has(.forge-workbench) > .confirm-actions { margin: 8px -12px -10px; padding: 8px 12px; }
+}
+@media (max-width: 560px) {
+  .forge-workbench { height: clamp(480px, calc(100dvh - 210px), 530px); }
+  .forge-workspace { inset: 20% 8% 9%; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto 100px auto auto; gap: 4px; }
+  .forge-workbench-status { padding: 0 2px 4px; gap: 6px; }
+  /* Keep small labels readable where the illustrated paper edge is irregular. */
+  .forge-workbench-status, .forge-quality-guide { background: var(--atlas-paper-raised); }
+  .atlas-ui .forge-turn-instruction { font-size: 12px; min-height: 36px; line-height: 1.5; }
+  .forge-tools { align-content: center; height: 100px; }
+  .atlas-ui .forge-workbench .dp-roll-panel { grid-template-columns: minmax(0, 1fr) 68px; gap: 8px; }
+  .forge-workbench .dp-die-control { grid-column: 1; display: flex; flex-direction: row; justify-content: center; gap: 6px; }
+  .forge-workbench .dp-mod-controls { margin: 0; }
+  .atlas-ui .forge-workbench .dp-roll-panel > .btn { grid-column: 2; grid-row: 1 / 3; align-self: stretch; min-width: 0; padding: 4px; }
+  .forge-workbench .forge-refining-field { justify-self: center; }
+  .atlas-ui .forge-workbench .forge-box { padding: 0; }
+  .forge-workbench .forge-box-row { margin-top: 4px; gap: 4px; }
+  .forge-quality-guide { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding-top: 4px; line-height: 1.3; }
+  .forge-quality-guide b { display: block; margin: 0; line-height: 1.2; }
+  .atlas-ui .forge-equipment-choice { min-height: 70px; padding: 8px 10px; }
+  .forge-equipment-choice strong { font-size: 16px; }
+  .forge-workbench[data-forge-stage="settlement"] { height: 284px; }
+  .forge-workbench[data-forge-stage="settlement"] .forge-workspace { inset: 22% 8% 10%; }
+  .forge-workbench[data-forge-stage="selection"], .forge-workbench[data-forge-stage="complete"] { height: 460px; }
+  .forge-workbench[data-forge-stage="settlement"] .forge-workspace { gap: 6px; }
+  .forge-finished-name { font-size: 26px; }
+}

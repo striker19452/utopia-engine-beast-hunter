@@ -1,0 +1,59 @@
+{
+  "tool": "built-in image_gen.imagegen",
+  "mode": "style-transfer; desktop and mobile workbench backdrops",
+  "art_direction": "复古奇幻制图风：羊皮纸底色＋版画式线描＋低饱和水彩淡彩",
+  "style_references": [
+    "assets/atlas/hunting-map.webp",
+    "assets/atlas/village-base.webp"
+  ],
+  "integration": "Existing ForgeUI controls and layout; WebP derivatives without compositional edits; exact prompts embedded in EXIF ImageDescription and recorded here",
+  "assets": [
+    {
+      "output": "assets/atlas/forge-workbench.webp",
+      "source": "/Users/str/.codex/generated_images/01a18d3e-7206-7052-846e-c3bf5ba3937b/exec-25e18cdb-b101-45c3-b194-2ae94b1eef6c.png",
+      "input_roles": [
+        {
+          "path": "assets/atlas/hunting-map.webp",
+          "role": "primary style reference"
+        },
+        {
+          "path": "assets/atlas/village-base.webp",
+          "role": "primary style reference"
+        },
+        {
+          "path": "assets/atlas/forge-workbench.webp",
+          "role": "previous revision; layout-only edit target",
+          "source_revision": "/Users/str/.codex/generated_images/01a18d3e-7206-7052-846e-c3bf5ba3937b/exec-e99cd0ca-91a6-4299-82c7-c4109b9d89e9.png"
+        }
+      ],
+      "transparent_background": false,
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "prompt": "Use case: style-transfer.\nAsset type: production landscape blacksmith workbench backdrop for an antique fantasy tabletop game, 3:2 landscape.\nInput images: Image 1 hunting map = PRIMARY DRAWING STYLE reference. Image 2 village map = PRIMARY DRAWING STYLE reference. Image 3 old workbench = LAYOUT-ONLY edit target; its realistic material rendering must be completely replaced.\nPrimary request: REDRAW Image 3 from scratch in precisely the antique fantasy cartography illustration language of Images 1 and 2: warm parchment ground + engraved contour line drawing + very low-saturation, translucent watercolor tints. The user found Image 3 much too realistic.\nStyle: clearly a hand-printed illustrated plate from a vintage fantasy atlas. All tools, timber and ore described with visible fine sepia/charcoal outlines, selective parallel and crosshatched engraving strokes, simple flat shapes and pale watercolor washes. Let the same parchment show through objects. Use the village reference's delicate ink-and-wash treatment of buildings and rocks at map scale. Airy, restrained, illustrative, drawn and printed on paper. Mid-grey hatched iron, pale ochre timber, faint sage and slate washes, tiny muted rust watercolor in the charcoal brazier. Keep broad surfaces pale. The linework carries form. No photographic texture, no realistic metal highlights, no shiny speculars, no tactile microtexture, no lens lighting, no realistic cast shadows, no dark cinematic workshop, no 3D rendering. This is a DRAWING, not a photograph with a paper filter.\nComposition invariants: preserve Image 3's usable overhead workbench layout. Anvil top left; modest round stone charcoal brazier top right; small ore pieces along the top; hammer/tongs and a few filing tools only at far left and right edges. Outline the tabletop in a simple antique engraving; do not render a dark photo wood surface. A LARGE calm, completely blank parchment working area occupies x18%-84%, y24%-86%, with no objects or marks inside. Its paper color is almost the same as the atlas background: ivory #e4ddc7 to #f2ecd9, very subtle wash, no heavy cracks or grunge. The game overlays real dice and refining controls here. Keep bottom rim thin and lightly drawn. Simplify props, reduce visual density, keep ample breathing room.\nConstraints: preserve the empty center and the overall positions, but replace the entire visual rendering. Style references supply technique and palette only: no mountains, villages, trees, rivers or compass roses. No text, no letters, no numbers, no UI, no dice, no grid, no labels, no logo, no watermark. Fully opaque background."
+    },
+    {
+      "output": "assets/atlas/forge-workbench-mobile.webp",
+      "source": "/Users/str/.codex/generated_images/01a18d3e-7206-7052-846e-c3bf5ba3937b/exec-20b754d3-e0fc-4e5d-8009-9c0a61f1ae53.png",
+      "input_roles": [
+        {
+          "path": "assets/atlas/forge-workbench.webp",
+          "source_revision": "/Users/str/.codex/generated_images/01a18d3e-7206-7052-846e-c3bf5ba3937b/exec-25e18cdb-b101-45c3-b194-2ae94b1eef6c.png",
+          "role": "new landscape; authoritative style reference"
+        },
+        {
+          "path": "assets/atlas/forge-workbench-mobile.webp",
+          "source_revision": "/Users/str/.codex/generated_images/01a18d3e-7206-7052-846e-c3bf5ba3937b/exec-c4dde16e-d8e4-4ee1-b31d-e7cf3a0b2fd1.png",
+          "role": "previous portrait; geometry-only edit target"
+        }
+      ],
+      "transparent_background": false,
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "prompt": "Use case: style-transfer / portrait recomposition.\nAsset type: MOBILE PORTRAIT production forging-table background for the same fantasy dice game, portrait 2:3.\nInput images: Image 1 NEW landscape workbench = authoritative STYLE reference: match its exact linework, color palette, pale printed-paper look and object design. Image 2 old portrait workbench = GEOMETRY / EMPTY-SPACE reference only, not its realistic rendering.\nRequest: repaint the old portrait entirely in the antique engraved ink-and-watercolor style of Image 1, so landscape and portrait look like plates from the same vintage fantasy atlas. Fine sepia and charcoal contour lines and etched parallel/crosshatched strokes carry all form; low saturation translucent watercolor tints on warm parchment. Pale ochre timber with drawn grain strokes, hatched matte slate iron without shine, gently tinted stones and tiny subdued rust embers. Lighter, flatter, clearly hand drawn. Preserve Image 1's convincing ink drawing rather than returning to photographic texture or 3D. No realistic reflections, no sharp metal highlights, no photographic wood or grunge, no realistic cast shadows, no cinematic lighting.\nLayout: preserve the portrait's very large completely EMPTY light parchment center at x7%-93%, y20%-92%. Small anvil top left and stone charcoal brazier top right only in the upper fifth. A few small ore pieces across the top, slender hammer/tongs/filing tools only on far outside edges and bottom corners, slender lightly drawn timber rim. Leave the entire central work mat absolutely blank and low contrast for live HTML dice and refining controls.\nConstraints: fully opaque rectangular image. No text, letters, numbers, logos, watermark, UI, dice, grid, figures or landscape scenery. Exact same illustration treatment as Image 1."
+    }
+  ]
+}

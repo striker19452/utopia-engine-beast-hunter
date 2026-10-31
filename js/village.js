@@ -17,7 +17,7 @@ const VillageUI = {
             <img class="village-scene-art" src="assets/atlas/village-base.webp" alt="松林与木栅环绕的山谷村庄，曲径连接议事厅、营地和工坊">
             <div class="village-art-fallback">场景暂不可用，建筑操作仍可使用。</div>
             ${Object.entries(this.towerSites).map(([key, [x,y]]) => `<button type="button" class="village-building village-tower" data-village-select="tower:${key}" style="--site-x:${x}%;--site-y:${y}%;">
-              <span class="village-sprite village-tower-sprite" aria-hidden="true"></span><span class="village-building-label"><strong>${this.towerNames[key]}</strong><small></small></span><span class="village-totem-mark" aria-hidden="true">${AtlasUI.icon('spark')}</span>
+              <span class="village-sprite village-tower-sprite" aria-hidden="true"></span><span class="village-tower-health" aria-hidden="true">${Array.from({length: 6}, () => '<span class="village-tower-health-cell"></span>').join('')}</span><span class="village-building-label"><strong>${this.towerNames[key]}</strong><small></small></span><span class="village-totem-mark" aria-hidden="true">${AtlasUI.icon('spark')}</span>
             </button>`).join('')}
             ${this.hutSites.map(([x,y], index) => `<button type="button" class="village-building village-hut" data-village-select="hut:${index}" style="--site-x:${x}%;--site-y:${y}%;">
               <span class="village-sprite village-hut-sprite" aria-hidden="true"></span><span class="village-hut-number">${index + 1}</span>
@@ -134,7 +134,14 @@ const VillageUI = {
       button.classList.toggle('has-totem', Boolean(tower.hawkTotem));
       button.classList.toggle('has-faults', faults > 0);
       AtlasUI.text(button.querySelector('small'), faults && tower.complete ? `${status} · ${faults} X` : status);
-      const label = `${this.towerNames[towerKey]} · ${status}`;
+      // Six display cells summarize the original X damage; no separate HP state.
+      const health = tower.destroyed ? 0 : tower.complete ? Math.max(0, 6 - faults) : null;
+      const lost = health === null ? 0 : 6 - health;
+      button.querySelectorAll('.village-tower-health-cell').forEach((cell, index) => {
+        cell.classList.toggle('remaining', health !== null && index >= lost);
+        cell.classList.toggle('lost', health !== null && index < lost);
+      });
+      const label = `${this.towerNames[towerKey]} · ${status}${health === null ? '' : ` · HP ${health}/6`}`;
       button.setAttribute('aria-label', label); button.setAttribute('data-i18n-aria-label', label);
       const panel = document.getElementById(`tower-${towerKey}-grid`).closest('.tower-panel');
       panel.hidden = kind !== 'tower' || key !== towerKey;

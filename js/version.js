@@ -3,9 +3,9 @@
 // ============================================
 
 const GAME_VERSION = Object.freeze({
-  number: '2.0.0',
+  number: '2.1.0',
   saveSchema: 1,
-  released: '2026-10-18',
+  released: '2026-10-31',
 });
 
 const Version = {

@@ -265,13 +265,7 @@ const Game = {
   showForgeDialog() {
     if (!GameState.canStartDayAction()) return;
 
-    let html = `
-      <div class="modal-title">锻造装备</div>
-      <p style="text-align:center; margin-bottom:16px; font-size:13px; color:var(--ink-medium);">
-        消耗稀有材料，掷骰锻造强大装备。
-      </p>
-      <div style="display:flex; flex-direction:column; gap:8px;">
-    `;
+    let choices = '';
 
     for (const eq of GAME_DATA.equipment) {
       const key = eq.name.toLowerCase().replace(/ /g, '_');
@@ -279,61 +273,32 @@ const Game = {
       const hasMaterial = GameState.hasMaterial(eq.requires, 1);
 
       if (currentLevel === 'mastercraft') {
-        html += `<button class="btn" disabled>${eq.nameZh} - ✓ 精工</button>`;
+        choices += `<button class="btn forge-equipment-choice" disabled><strong>${eq.nameZh}</strong><span>✓ 精工</span></button>`;
       } else {
-        html += `
-          <button class="btn ${hasMaterial ? 'primary' : ''}" ${hasMaterial ? '' : 'disabled'}
+        choices += `
+          <button class="btn forge-equipment-choice" ${hasMaterial ? '' : 'disabled'}
                   onclick="UI.closeModal(); ForgeUI.start('${key}');">
-            ${eq.nameZh} ${currentLevel === 'standard' ? '(已标准，可精工)' : ''}
-            <span style="font-size:11px; opacity:07;"> - 需要 ${GAME_DATA.materialNames[eq.requires]}</span>
+            <strong>${eq.nameZh} ${currentLevel === 'standard' ? '(已标准，可精工)' : ''}</strong>
+            <span><span>需要</span> ${GAME_DATA.materialNames[eq.requires]} × 1 · <span>库存</span> ${GameState.materials[eq.requires] || 0}</span>
           </button>
         `;
       }
     }
 
-    html += `</div><div class="confirm-actions"><button class="btn" onclick="UI.closeModal()">取消</button></div>`;
-    UI.showModal(html);
+    UI.showModal(`
+      <div class="modal-title">锻造装备</div>
+      <div class="forge-panel">${ForgeUI.renderWorkbench(`
+        <p class="forge-selection-intro">消耗稀有材料，掷骰锻造强大装备。</p>
+        <div class="forge-equipment-choices">${choices}</div>
+        <p class="forge-day-cost">消耗一天</p>
+      `, 'selection')}</div>
+      <div class="confirm-actions"><button class="btn" onclick="UI.closeModal()">取消</button></div>
+    `);
   },
 
   // === Craft ===
   showCraftDialog() {
-    if (!GameState.canStartDayAction()) return;
-
-    let html = `
-      <div class="modal-title">合成物品</div>
-      <p style="text-align:center; margin-bottom:16px; font-size:13px; color:var(--ink-medium);">
-        消耗材料合成有用的物品。
-      </p>
-      <div style="display:flex; flex-direction:column; gap:8px;">
-    `;
-
-    for (const recipe of GAME_DATA.craftingRecipes) {
-      const key = recipe.name.toLowerCase().replace(/ /g, '_');
-      const alreadyCrafted = GameState.craftedItems[key] !== null;
-      const wasCrafted = Boolean(GameState.craftedItemHistory[key]);
-      const canCraft = Object.entries(recipe.requires).every(([mat, amt]) => GameState.hasMaterial(mat, amt));
-
-      const reqText = Object.entries(recipe.requires)
-        .map(([mat, amt]) => `${GAME_DATA.materialNames[mat]} x${amt}`)
-        .join(' + ');
-
-      html += `
-        <div class="item-card">
-          <div style="flex:1;">
-            <div class="item-name">${recipe.nameZh} ${alreadyCrafted ? '✓' : wasCrafted ? '(已用，可再造)' : ''}</div>
-            <div class="item-effect">${recipe.effect}</div>
-            <div style="font-size:11px; color:var(--ink-faint); margin-top:2px;">需要: ${reqText}</div>
-          </div>
-          <button class="btn ${canCraft && !alreadyCrafted ? 'primary' : ''}" ${canCraft && !alreadyCrafted ? '' : 'disabled'}
-                  onclick="UI.closeModal(); CraftUI.craft('${key}');">
-            ${wasCrafted ? '再造' : '合成'}
-          </button>
-        </div>
-      `;
-    }
-
-    html += `</div><div class="confirm-actions"><button class="btn" onclick="UI.closeModal()">取消</button></div>`;
-    UI.showModal(html);
+    CraftUI.open();
   },
 
   // === Inventory ===

@@ -117,6 +117,19 @@ const AtlasUI = {
       <section class="atlas-page" id="atlas-stores-page" hidden><header class="atlas-page-title"><p>每种材料最多携带四份。</p></header></section>
       <section class="atlas-page" id="atlas-journal-page" hidden><header class="atlas-page-title"><small>THE HUNTER'S JOURNAL</small><h2>一路行来</h2><p>每一天，都有代价。</p></header></section>`;
     workspace.querySelector('#atlas-regions-host').append(regions);
+    // Keep the original event nodes so the game renderer and translations stay
+    // in sync, while giving events the full dossier width on small screens.
+    const currentEvents = document.createElement('section');
+    currentEvents.id = 'atlas-current-events'; currentEvents.className = 'atlas-current-events';
+    currentEvents.tabIndex = -1;
+    currentEvents.setAttribute('aria-labelledby', 'atlas-event-title atlas-event-region');
+    currentEvents.innerHTML = '<div class="atlas-event-heading"><h2 id="atlas-event-title">地区事件</h2><span id="atlas-event-region"></span></div>';
+    for (const key of this.keys) {
+      const events = regions.querySelector(`#${key}-events`);
+      events.dataset.atlasRegionEvents = key;
+      currentEvents.append(events);
+    }
+    workspace.querySelector('.atlas-dossier-beast').before(currentEvents);
     VillageUI.mount(workspace.querySelector('#atlas-village-page'), { towers, huts, elders, towerNote });
     const stores = workspace.querySelector('#atlas-stores-page');
     const tools = document.createElement('div'); tools.className = 'atlas-supply-tools';
@@ -161,6 +174,7 @@ const AtlasUI = {
     document.fonts?.ready.then(() => this.scheduleSupplyWires());
     workspace.querySelector('#atlas-journal-page').append(log);
     game.prepend(header); main.replaceWith(workspace); game.append(top, actionBar);
+    LoadoutUI.mount(game);
     actionBar.setAttribute('aria-label', '游戏操作');
     top.querySelector('.stat-label').textContent = '生命';
     for (const k of this.keys) game.querySelector(`.region-panel.${k}`).dataset.atlasRegionPanel = k;
@@ -183,7 +197,13 @@ const AtlasUI = {
   selectRegion(region, focus = false) {
     if (!this.keys.includes(region)) return;
     this.region = region; this.setPage('map'); this.renderRegion();
-    if (focus) document.querySelector(`.atlas-pin[data-atlas-region="${region}"]`)?.focus({preventScroll:true});
+    if (focus) {
+      if (window.matchMedia('(max-width: 1000px)').matches) {
+        const events = document.getElementById('atlas-current-events');
+        events.focus({preventScroll:true});
+        events.scrollIntoView({block:'start', behavior:'auto'});
+      } else document.querySelector(`.atlas-pin[data-atlas-region="${region}"]`)?.focus({preventScroll:true});
+    }
     this.text(document.getElementById('atlas-announcer'), GAME_DATA.regions[region].nameZh);
   },
   render() {
@@ -203,6 +223,7 @@ const AtlasUI = {
     const meta = document.querySelector('.atlas-sheet-meta');
     if (meta) this.fillSheetMeta(meta);
     this.polish(document.querySelector('.top-bar'));
+    LoadoutUI.render();
   },
   supplyRecipes() {
     return [
@@ -324,6 +345,8 @@ const AtlasUI = {
     const key = this.region, region = GAME_DATA.regions[key], rs = GameState.regions[key];
     document.body.dataset.region = key;
     document.querySelectorAll('[data-atlas-region-panel]').forEach(el => el.hidden = el.dataset.atlasRegionPanel !== key);
+    document.querySelectorAll('[data-atlas-region-events]').forEach(el => el.hidden = el.dataset.atlasRegionEvents !== key);
+    this.text(document.getElementById('atlas-event-region'), region.nameZh);
     for (const k of this.keys) {
       const status = GameState.beastsDefeated[k] ? '恐怖巨兽已击败' : GameState.regions[k].lairFound ? '巢穴已发现' : `${GameState.regions[k].tracking.filter(Boolean).length} / 3`;
       this.text(document.getElementById(`atlas-pin-${k}`), status);
@@ -352,7 +375,7 @@ const AtlasUI = {
       [CombatUI, {'renderCombat':'combat','useItem':'combat-items-flee','victory':'combat-outcome','defeat':'combat-outcome'}],
       [BuildUI, {'selectMaterial':'build-repair','renderBuild':'build-repair','handleFault':'build-repair','showRepairMaterialSelection':'build-repair','showElderSelection':'elder-recharge','selectElder':'elder-recharge','showRechargeUI':'elder-recharge'}],
       [ForgeUI, {'renderForge':'forge','showRefinementResult':'forge','complete':'forge','abort':'forge'}],
-      [CraftUI, {'craft':'craft'}],
+      [CraftUI, {'open':'craft','selectRecipe':'craft','craft':'craft'}],
       [Events, {'showEventResults':'events','processNextBeastAttack':'attacks','showBeastAttackResult':'attacks'}],
       [Tutorial, {'showWelcome':'tutorial','complete':'tutorial'}],
     ];
@@ -362,7 +385,7 @@ const AtlasUI = {
     }
   },
   fillSheetMeta(el) {
-    const compactEnglish = (el.closest('.atlas-roll-sheet') || el.parentElement?.querySelector('#debug-console')) && I18n.language === 'en';
+    const compactEnglish = (el.closest('.atlas-roll-sheet') || el.parentElement?.querySelector('#debug-console, .forge-workbench, .craft-panel')) && I18n.language === 'en';
     const labels = compactEnglish ? ['Day', 'HP', 'Doubt', 'DP'] : ['天数', '生命', '怀疑', '决心'];
     const pairs = [[labels[0],`${GameState.getDisplayDay()}/14`],[labels[1],`${GameState.hp.current}/${GameState.hp.max}`],[labels[2],`${GameState.doubt.current}/${GameState.doubt.max}`],[labels[3],GameState.determination]];
     if (!el.children.length) el.innerHTML = pairs.map(() => '<span><i></i><b></b></span>').join('');
@@ -388,11 +411,13 @@ const AtlasUI = {
   },
   prepareRollSheet(content) {
     const panel = content.querySelector('.search-panel, .build-panel, .forge-panel, .combat-panel');
-    if (!panel || panel.querySelector('.atlas-roll-main')) return;
+    if (!panel) return;
     const kind = ['search', 'build', 'forge', 'combat'].find(key => panel.classList.contains(`${key}-panel`));
     if (!panel.querySelector(`#${kind}-dice`)) return;
     content.classList.add('atlas-roll-sheet');
     content.dataset.rollKind = kind;
+    // Illustrated search and forge scenes already contain their live work area.
+    if (panel.querySelector('.atlas-roll-main')) return;
     if (kind === 'build') content.dataset.tower = GameState.build.tower;
     const info = document.createElement('details'); info.className = 'atlas-roll-info';
     info.innerHTML = '<summary>规则与记录</summary><div class="atlas-roll-info-body"></div>';
@@ -439,7 +464,7 @@ const AtlasUI = {
     main.classList.toggle('atlas-has-roll', Boolean(pending));
     if (kind === 'search' && GameState.search) {
       let progress = main.querySelector('.atlas-roll-progress');
-      if (!progress) { progress = document.createElement('div'); progress.className = 'atlas-roll-progress'; main.prepend(progress); }
+      if (!progress) { progress = document.createElement('div'); progress.className = 'atlas-roll-progress'; (main.querySelector('.search-workspace') || main).prepend(progress); }
       const search = GameState.search;
       const value = `搜索 ${search.boxesCompleted + 1}/${search.maxSearches} · 掷骰 ${search.rollCount + 1}/3`;
       if (progress.dataset.value !== value) { progress.dataset.value = value; this.text(progress, value); }
@@ -481,7 +506,7 @@ const AtlasUI = {
       const clean = node.nodeValue.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '');
       if (clean !== node.nodeValue) node.nodeValue = clean;
     }
-    if (root.id === 'modal-content') this.compactRoll(root);
+    if (root.id === 'modal-content') { this.compactRoll(root); LoadoutUI.decorateModal(root); }
   },
   onKey(event) {
     if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('.material-item[role="button"]')) { event.preventDefault(); event.target.click(); return; }

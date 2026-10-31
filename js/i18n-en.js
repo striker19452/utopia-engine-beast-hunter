@@ -417,7 +417,7 @@ I18n.phrases.unshift(
   [/- 需要\s*/g, '- Requires '],
   [/材料（上限\s*(\d+)）/g, 'Materials (limit $1)'],
   [/第\s*(\d+)\/3\s*次\s*- 当前骰\s*(.+)/g, 'Roll $1/3 - current dice $2'],
-  [/🎲 掷骰子 \(第\s*(\d+)\s*次\)/g, '🎲 Roll Dice (roll $1)'],
+  [/(?:🎲\s*)?掷骰子\s*\(第\s*(\d+)\s*次\)/g, 'Roll Dice (roll $1)'],
   [/第\s*(\d+)\/3\s*次已完成/g, 'Roll $1/3 complete'],
   [/搜索格\s*(\d+)\/(\d+)\s*完成/g, 'Search box $1/$2 complete'],
   [/立即挑战\s*(.+)/g, 'Challenge $1 now'],
@@ -542,6 +542,7 @@ Object.assign(I18n.exact, {
   '藏身的村庄':'Your refuge','虚线 · 追踪路线':'Dotted line · tracking route',
   '三处猎场，一纸生死之约。':'Three hunting grounds. One promise to keep.',
   '当前猎场':'Current hunting ground','掷骰搜索':'Roll to search',
+  '地区事件':'Regional events',
   '村庄的三道防线':'The village defences','完成防线，守住庇护你的村庄。':'Complete the defences. Protect the village that shelters you.',
   '行囊与工坊':'Stores and workshop','猎人手记':'Hunter’s Journal','每种材料最多携带四份。':'Carry up to four of each material.',
   '一路行来':'The journey so far','每一天，都有代价。':'Every day has its price.',
@@ -577,6 +578,12 @@ I18n.phrases.unshift(
 );
 Object.assign(I18n.exact, {
   '规则与记录': 'Rules & Journal',
+  '掷2骰，将每个骰子放入任意可选空位。': 'Roll 2 dice and place each in any empty cell.',
+  '已精炼': 'Refined',
+  '需要': 'Requires',
+  '上方 − 下方': 'Top − Bottom',
+  '每追加1个同类材料，精炼值−1。': 'Each extra matching material reduces the value by 1.',
+  '使用幸运符重掷全部骰子': 'Reroll with Luck Charm',
   '修正说明': 'Dice Help',
   '为什么这样做？': 'Why this step?',
 });
@@ -646,6 +653,15 @@ I18n.phrases.unshift(
 
 Object.assign(I18n.exact, {
   '村庄场景': 'Village scene',
+  '随身装备带': 'Carried equipment and items',
+  '重掷': 'Reroll',
+  '安装到': 'Install on',
+  '装备': 'Equipment',
+  '合成物品': 'Crafted Items',
+  '已安装': 'Installed',
+  '安装到西南塔': 'Install on South Western Tower',
+  '安装到南方塔': 'Install on Southern Tower',
+  '安装到东方塔': 'Install on Eastern Tower',
   '藏身之地': 'Your Refuge',
   '这里的每一盏灯，都值得你守住。': 'Every light here is worth protecting.',
   '向左查看村庄': 'Pan village left',
@@ -687,3 +703,18 @@ Object.assign(I18n.exact, {
   '需要1个普通材料：石头、绳索或焦油。': 'Requires 1 common material: Stone, Cord or Tar.',
 });
 I18n.phrases.unshift([/已获审批\s*(\d+)\/3/g, 'Approvals $1/3']);
+I18n.phrases.unshift([/剩余防护 (\d+)\/2/g, 'Protection remaining $1/2']);
+// The artisan's worktable uses the shared material and item names below.
+Object.assign(I18n.exact, {
+  '工匠合成台': "Artisan's Worktable",
+  '合成配方': 'Recipes',
+  '合成材料与成品': 'Ingredients and result',
+  '可合成': 'Ready to craft',
+  '可再造': 'Ready to remake',
+  '已持有': 'Owned',
+  '材料不足': 'Missing materials',
+  '成品': 'Result',
+  '合成不消耗一天': 'Crafting costs no day',
+  '无材料掉落': 'No material drop',
+  '击败后掉落': 'Drops on defeat',
+});

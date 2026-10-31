@@ -1304,6 +1304,21 @@
     {
       "id": "forge",
       "title": "锻造全过程",
+      "workbench_revision": {
+        "date": "2026-10-30",
+        "status": "implemented; 56 forge state checks passed; 154 viewport workflow checks passed",
+        "art_direction": "复古奇幻制图风：羊皮纸底色＋版画式线描＋低饱和水彩淡彩",
+        "art_review_report": "outputs/forge-cartographic/checks.json",
+        "art_review_status": "14 checks passed after artwork replacement; mouse and keyboard placement passed",
+        "implementation": ["js/forge.js", "css/forge.css"],
+        "art_provenance": "assets/atlas/forge-art.json",
+        "report": "outputs/forge-workbench/checks.json",
+        "desktop_screenshot": "outputs/forge-cartographic/1440-900-zh-rolled.png",
+        "mobile_screenshot": "outputs/forge-cartographic/390-844-zh-rolled.png",
+        "english_mobile_screenshot": "outputs/forge-cartographic/320-740-en-rolled.png",
+        "interaction_checks": "Real controls cover determination, luck reroll, keyboard placement, negative-column damage/reset, mastercraft reward, standard/failure, extra material and day advancement. Missing-art placement also passed.",
+        "notes": "The previous atlas-review forge captures below remain historical. The workbench report and captures supersede their artwork/layout evidence; shared atlas paper, typography, semantic colors, dice and original rules remain in use."
+      },
       "entrypoints": [
         {
           "file": "js/main.js",

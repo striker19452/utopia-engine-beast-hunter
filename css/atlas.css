@@ -827,6 +827,32 @@ body.atlas-ui {
   gap:5px
 }
 
+.atlas-current-events {
+  min-width:0;
+  margin-bottom:15px;
+  border-bottom:1px solid var(--atlas-rule);
+  scroll-margin-top:16px
+}
+
+.atlas-event-heading {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  gap:4px 12px;
+  margin:14px 0 10px
+}
+
+.atlas-event-heading h2 {
+  margin:0;
+  font:16px/1.5 var(--atlas-font-title);
+  color:var(--atlas-ink)
+}
+
+.atlas-event-heading>span {
+  font-size:12px;
+  color:var(--atlas-ink-secondary)
+}
+
 .atlas-ui .region-events-empty {
   font-size:12px;
   color:var(--atlas-ink-muted);
@@ -2668,7 +2694,7 @@ body.atlas-ui {
     max-height:none;
     overflow:visible;
     display:grid;
-    grid-template-columns:1fr 1.2fr;
+    grid-template-columns:minmax(0,1fr);
     gap:0 22px;
     position:relative
   }
@@ -2679,11 +2705,11 @@ body.atlas-ui {
   }
 
   .atlas-dossier-beast {
-    grid-column:1;
-    grid-row:2;
-    flex-direction:column;
-    text-align:center;
-    gap:5px;
+    grid-column:1/-1;
+    grid-row:3;
+    flex-direction:row;
+    text-align:left;
+    gap:16px;
     align-self:start;
     border-bottom:0;
     margin:0;
@@ -2691,8 +2717,9 @@ body.atlas-ui {
   }
 
   .atlas-dossier-beast>img {
-    width:100%;
-    height:180px
+    width:110px;
+    height:130px;
+    flex-shrink:0
   }
 
   .atlas-dossier-beast strong {
@@ -2709,9 +2736,35 @@ body.atlas-ui {
   }
 
   .atlas-ui #atlas-regions-host {
-    grid-column:2;
-    grid-row:2;
+    grid-column:1/-1;
+    grid-row:4;
     min-width:0
+  }
+
+  .atlas-current-events {
+    grid-column:1/-1;
+    grid-row:2
+  }
+
+  .atlas-event-heading {
+    margin-top:0
+  }
+
+  .atlas-ui .region-events {
+    flex-direction:column
+  }
+
+  .atlas-ui .region-event-tag {
+    display:grid;
+    grid-template-columns:max-content minmax(0,1fr);
+    gap:6px 12px;
+    font-size:14px;
+    line-height:1.5
+  }
+
+  .atlas-ui .region-event-tag small {
+    font-size:13px;
+    overflow-wrap:anywhere
   }
 
   .atlas-ui .region-title {
@@ -2732,11 +2785,11 @@ body.atlas-ui {
   }
 
   .atlas-ui .region-approach {
-    display:none
+    display:block
   }
 
   .atlas-ui .search-boxes {
-    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-columns:repeat(3,minmax(0,1fr));
     gap:8px
   }
 
@@ -2922,6 +2975,7 @@ body.atlas-ui {
     padding:10px 5px;
     min-height:44px;
     word-break:normal;
+    overflow-wrap:anywhere;
     line-height:1.4
   }
 
@@ -3286,11 +3340,11 @@ body.atlas-ui {
   .atlas-dossier {
     padding:21px 18px;
     gap:0 16px;
-    grid-template-columns:.9fr 1.2fr
+    grid-template-columns:minmax(0,1fr)
   }
 
   .atlas-dossier-beast>img {
-    height:155px
+    height:130px
   }
 
   .atlas-dossier-beast strong {
@@ -3801,7 +3855,7 @@ body.atlas-ui {
 .supply-port { display: none; position: absolute; top: 50%; width: 8px; height: 8px; border: 1px solid var(--atlas-ink-secondary); border-radius: 50%; background: var(--atlas-paper); transform: translateY(-50%); pointer-events: none; }
 .supply-stock-count, .supply-source-region, .supply-recipe-inputs { display: none; }
 .supply-mobile-guide { display: none; }
-.supply-target-button { border: 0; padding: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.supply-target-button { border: 0; padding: 0; min-width: 0; max-width: 100%; background: none; color: inherit; font: inherit; text-align: left; overflow-wrap: anywhere; cursor: pointer; }
 .supply-target-button:hover { text-decoration: underline; text-underline-offset: 5px; }
 .material-item[role="button"] { cursor: pointer; }
 .material-item[role="button"]:focus-visible, .supply-target-button:focus-visible, .supply-ingredient:focus-visible, .supply-view-switch button:focus-visible, .supply-reset:focus-visible { outline: 2px solid var(--atlas-action); outline-offset: 3px; }
@@ -3929,9 +3983,10 @@ body.atlas-ui {
 .atlas-ui #atlas-stores-page[data-stores-view="ledger"] .material-group { margin: 8px 0; }
 .atlas-ui #atlas-stores-page[data-stores-view="ledger"] .material-item { min-height: 42px; padding: 7px 10px; gap: 6px; }
 .atlas-ui #atlas-stores-page[data-stores-view="ledger"] .crafted-item { padding: 10px; }
-.atlas-ui #atlas-stores-page[data-stores-view="ledger"] .crafted-item-name { font-size: 16px; }
+.atlas-ui #atlas-stores-page[data-stores-view="ledger"] .crafted-item-name { min-width: 0; flex-wrap: wrap; font-size: 16px; }
 .atlas-ui #atlas-stores-page[data-stores-view="ledger"] .crafted-item-effect { font-size: 12px; line-height: 1.5; }
 .atlas-ui #atlas-stores-page[data-stores-view="ledger"] .crafted-panel { margin-top: 16px; }
+.atlas-ui #atlas-stores-page[data-stores-view="ledger"] .supply-equipment .crafted-item-actions .btn { flex-basis: 100%; }
 
 @media (max-width: 1199px) {
   #atlas-stores-page { padding-inline: 16px; }
@@ -3989,6 +4044,36 @@ body.atlas-ui {
   .atlas-ui .atlas-header { padding-block: 12px; min-height: 88px; }
   .atlas-ui .atlas-brand h1 { font-size: 24px; }
   .atlas-ui .atlas-brand > .atlas-icon { width: 36px; height: 36px; }
+}
+
+/* The middle layout uses the tablet's width for the map, then two columns for
+   the dossier. A narrow desktop-style map was losing most of its geography. */
+@media (min-width: 761px) and (max-width: 1000px) {
+  .atlas-workspace { order: 3; grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .atlas-nav { flex-direction: row; justify-content: space-around; gap: 0; padding: 0; border-right: 0; border-bottom: 1px solid var(--atlas-rule); }
+  .atlas-nav > button { flex: 1; flex-direction: row; gap: 8px; min-height: 48px; }
+  .atlas-nav > button[aria-pressed="true"]:before { top: auto; bottom: 0; left: 18px; right: 18px; width: auto; height: 2px; }
+  .atlas-map { height: 500px; min-height: 500px; }
+  .atlas-map-legend { right: auto; max-width: 40%; }
+  .atlas-page { grid-column: 1/-1; }
+  .atlas-ui .top-bar { order: 1; border-top: 0; border-bottom: 1px solid var(--atlas-rule); }
+  .atlas-ui #onboarding-invitation { order: 2; }
+  .atlas-dossier { display: grid; grid-template-columns: minmax(180px, .7fr) minmax(0, 1fr); gap: 0 28px; max-height: none; overflow: visible; border-left: 0; border-top: 1px solid var(--atlas-rule); padding: 24px; }
+  .atlas-dossier-label { grid-column: 1/-1; }
+  .atlas-current-events { grid-column: 1/-1; grid-row: 2; }
+  .atlas-dossier-beast { grid-column: 1; grid-row: 3; flex-direction: column; align-self: start; text-align: center; border-bottom: 0; }
+  .atlas-dossier-beast > img { width: 100%; height: 200px; }
+  .atlas-ui #atlas-regions-host { grid-column: 2; grid-row: 3; min-width: 0; }
+  .atlas-search-action { grid-column: 1/-1; }
+}
+
+@media (pointer: coarse) {
+  .atlas-ui #atlas-stores-page[data-stores-view] .supply-view-switch button,
+  .atlas-ui #atlas-stores-page[data-stores-view] .supply-reset,
+  .atlas-ui #atlas-stores-page[data-stores-view] .supply-target-button,
+  .atlas-ui #atlas-stores-page[data-stores-view] .supply-ingredient,
+  .atlas-ui #atlas-stores-page[data-stores-view] .crafted-item-actions .btn,
+  .atlas-ui #atlas-stores-page[data-stores-view] .material-item { min-width: 44px; min-height: 44px; }
 }
 
 /* Developer workshop: fixed navigation and feedback around a stable editor. */
@@ -4206,6 +4291,10 @@ body.atlas-ui {
 .village-building[aria-pressed="true"] .village-building-label { color: var(--atlas-on-selected); border-color: var(--atlas-selected); background: var(--atlas-selected); }
 .village-building[aria-pressed="true"] .village-building-label small { color: #e8e2c8; }
 .village-tower[data-state="destroyed"] .village-building-label, .village-tower.has-faults .village-building-label { border-bottom: 2px solid var(--atlas-danger); }
+.village-tower-health { --tower-health-size: clamp(8.4px, .75vw, 10.8px); position: absolute; top: 5%; left: calc(100% - 4px); display: grid; grid-template-columns: var(--tower-health-size); gap: 3px; pointer-events: none; }
+.village-tower-health-cell { width: var(--tower-health-size); height: var(--tower-health-size); border: 1px solid var(--atlas-paper-raised); border-radius: 2.4px; background: var(--atlas-disabled); }
+.village-tower-health-cell.remaining { background: var(--atlas-health-remaining); }
+.village-tower-health-cell.lost { background: var(--atlas-health-lost); }
 .village-totem-mark { display: none; position: absolute; top: 7%; right: 4%; width: 25px; height: 25px; border: 1px solid var(--atlas-refined); border-radius: 50%; background: #f0e5bd; color: var(--atlas-refined); }
 .village-totem-mark .atlas-icon { width: 19px; height: 19px; }
 .village-tower.has-totem .village-totem-mark { display: grid; place-items: center; }

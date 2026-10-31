@@ -1,0 +1,46 @@
+{
+  "tool": "built-in image_gen.imagegen",
+  "mode": "generate; one transparent 3×3 beast-material sprite atlas",
+  "art_direction": "复古奇幻制图风：版画式线描＋低饱和水彩淡彩；透明背景",
+  "source": "/Users/str/.codex/generated_images/01a18d3e-7206-7052-846e-c3bf5ba3937b/exec-c538c3fc-45e6-456c-b997-503878063a42.png",
+  "reference": [
+    "assets/atlas/loadout-items.webp"
+  ],
+  "output": "assets/atlas/combat-loot.webp",
+  "prompt": "Use case: stylized-concept.\nAsset type: one production square transparent 3 by 3 equal-cell monster MATERIAL icon sprite atlas, 1024x1024, for a vintage fantasy cartography browser game.\nInput image: the game's existing equipment/item icon atlas is a STYLE and line-weight reference only. Draw NEW raw monster materials, not crafted equipment.\nStyle: fine sepia/charcoal engraved outlines, selective parallel hatching and delicate crosshatching, low-saturation translucent watercolor washes, lightly hand printed fantasy bestiary feeling. Clear distinct silhouettes readable at 32-40px on parchment. Flat illustrated objects, pale ivory, umber, muted sage, slate, dark rusty red. No photo realism, no glossy 3D, no realistic lighting, no heavy shadows.\nComposition: a strict THREE BY THREE equal-cell grid. Exactly seven centered icons; final two cells empty transparent. No visible grid or frame. Entire complete object centered within each cell with at least 18% transparent padding, no overlap between cells.\nExact cells left-to-right:\nROW ONE: (1) Foul Blood — a small stoppered rough glass vial containing dark rusty crimson beast blood, plain raw material, no pendant pebble or crafted lure. (2) Beast Pelt — a small folded grey-brown furry hide with irregular natural edges. (3) Oily Meat — a raw deep muted red cut of beast meat with a few pale fatty bands.\nROW TWO: (1) Dragon Smoke — a squat old glass collection jar, corked, containing curling dark smoke, no glow. (2) Sacred Feathers — three pale ivory and muted grey feathers tied at their ends with a small plain string. (3) Nightmare Chitin — two irregular blue-grey and umber raw crab shell shards with ridges and one short spine, NOT a finished armour breastplate.\nROW THREE: (1) Troll Ash — a shallow small clay bowl holding a mound of pale grey ash with one faint dusty wisp. (2) EMPTY transparent. (3) EMPTY transparent.\nConstraints: genuine alpha transparency surrounding objects and in empty cells. No parchment background, checkerboard, text, letters, labels, numbers, watermark, coins, UI, buttons, people, monsters or decorative frame. Seven icons only in this exact grid.",
+  "transparent_background": true,
+  "grid": [
+    3,
+    3
+  ],
+  "cells": {
+    "foul_blood": [
+      0,
+      0
+    ],
+    "beast_pelt": [
+      1,
+      0
+    ],
+    "oily_meat": [
+      2,
+      0
+    ],
+    "dragon_smoke": [
+      0,
+      1
+    ],
+    "sacred_feathers": [
+      1,
+      1
+    ],
+    "nightmare_chitin": [
+      2,
+      1
+    ],
+    "troll_ash": [
+      0,
+      2
+    ]
+  }
+}

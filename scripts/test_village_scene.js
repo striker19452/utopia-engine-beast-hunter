@@ -45,6 +45,8 @@ const server = http.createServer((req, res) => {
         assert.equal(metrics.overflow,false);assert.equal(metrics.badTargets,0);assert.equal(metrics.han,false);assert.equal(metrics.art,1536);assert.equal(metrics.huts,9);assert.equal(metrics.towers,3);
       };
       await shot('initial');
+      assert.equal(await page.locator('.village-tower-health-cell').count(),18,'Each of the three towers has six health squares.');
+      assert.equal(await page.locator('.village-tower-health-cell.remaining, .village-tower-health-cell.lost').count(),0,'Unbuilt towers have neutral health squares.');
       for (const key of ['tower:west','tower:south','tower:east',...Array.from({length:9},(_,i)=>`hut:${i}`),'hall','smithy','camp']) {
         await select(key);assert.equal(await page.evaluate(()=>VillageUI.selection),key);
         assert.equal(await page.locator(`.village-building[data-village-select="${key}"]`).getAttribute('aria-pressed'),'true');
@@ -71,6 +73,22 @@ const server = http.createServer((req, res) => {
       assert.equal(await page.locator('.village-tower[data-state="destroyed"]').count(),1);
       assert.equal(await page.locator('.village-hut[data-state="destroyed"]').count(),2);
       assert.equal((await page.locator('[data-village-count="huts"]').innerText()).replaceAll(' ',''),'7/9');
+      const southHealth=page.locator('.village-tower[data-village-select="tower:south"]');
+      const eastHealth=page.locator('.village-tower[data-village-select="tower:east"]');
+      assert.equal(await southHealth.locator('.village-tower-health-cell.remaining').count(),6,'An intact protected tower keeps six green squares.');
+      assert.equal(await eastHealth.locator('.village-tower-health-cell.lost').count(),6,'A destroyed tower stays all red even after its grid is cleared.');
+      await page.evaluate(()=>{Game.debugSetTowerComplete('west',true);Events.applyTowerDamage('west',GameState.towers.west,2);UI.render();});
+      const westHealth=page.locator('.village-tower[data-village-select="tower:west"]');
+      assert.equal(await westHealth.locator('.village-tower-health-cell.remaining').count(),4);
+      assert.equal(await westHealth.locator('.village-tower-health-cell.lost').count(),2);
+      assert.equal(await westHealth.locator('.village-tower-health').textContent(),'','Tower health has no visible text.');
+      assert.equal(await page.locator('.village-tower-health-value, .village-tower-vitals').count(),0,'No health number or nameplate extension.');
+      assert.deepEqual(await westHealth.locator('.village-tower-health-cell').evaluateAll(cells=>cells.map(cell=>cell.classList.contains('lost')?'lost':'remaining')),['lost','lost','remaining','remaining','remaining','remaining'],'Lost red squares are above the remaining green squares.');
+      assert.ok((await westHealth.getAttribute('aria-label')).includes('HP 4/6'));
+      await select('tower:west');
+      assert.equal(await westHealth.locator('.village-tower-health').isVisible(),true,'Selecting a tower brings its health squares into view.');
+      const healthPosition=await westHealth.evaluate(tower=>{const r=tower.getBoundingClientRect(),bar=tower.querySelector('.village-tower-health').getBoundingClientRect();return {right:bar.left>=r.right-5,vertical:bar.height>bar.width*5};});
+      assert.deepEqual(healthPosition,{right:true,vertical:true},'Six squares form a vertical column at the tower’s right side.');
       await shot('damaged');
       await select('hut:1');await shot('huts');
       const translatedLabel=await page.locator('.village-hut[data-village-select="hut:1"]').getAttribute('aria-label');
@@ -84,6 +102,7 @@ const server = http.createServer((req, res) => {
       await page.evaluate(()=>{const before=GameState.materials.stone;VillageUI.act('build');if(GameState.materials.stone!==before||GameState.build)throw Error('Pending settlement bypass');GameState.pendingDayAction=null;Game.newGame();});
       assert.equal(await page.locator('.village-hut[data-state="intact"]').count(),9);
       assert.equal(await page.locator('.village-tower[data-state="unfinished"]').count(),3);
+      assert.equal(await page.locator('.village-tower-health-cell.remaining, .village-tower-health-cell.lost').count(),0,'Starting a new game clears previous tower damage indicators.');
       await select('hall');
       await page.locator('.village-building[data-village-select="hall"]').focus();await page.keyboard.press('Enter');
       assert.equal(await page.evaluate(()=>VillageUI.selection),'hall');
